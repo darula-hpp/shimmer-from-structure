@@ -124,7 +124,8 @@ const isLoading = ref(true);
 ```svelte
 <script>
 import { Shimmer } from '@shimmer-from-structure/svelte';
-let isLoading = true;
+
+let isLoading = $state(true);
 </script>
 
 <Shimmer loading={isLoading}>
@@ -205,8 +206,9 @@ const userTemplate = {
 import { Shimmer } from '@shimmer-from-structure/svelte';
 import UserCard from './UserCard.svelte';
 
-export let user;
-let loading = true;
+let { user } = $props();
+let loading = $state(true);
+
 const userTemplate = {
   name: 'Loading...',
   role: 'Loading role...',
@@ -534,7 +536,9 @@ provideShimmerConfig({
 <!-- App.svelte or any parent component -->
 <script>
 import { setShimmerConfig } from '@shimmer-from-structure/svelte';
+import Dashboard from './Dashboard.svelte';
 
+// Must be called at the top level during component initialization
 setShimmerConfig({
   shimmerColor: 'rgba(56, 189, 248, 0.4)',
   backgroundColor: 'rgba(56, 189, 248, 0.1)',

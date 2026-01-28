@@ -1,24 +1,30 @@
 <script lang="ts">
-  import { onMount, tick } from 'svelte';
+  import { onMount, tick, type Snippet } from 'svelte';
   import { extractElementInfo, type ElementInfo } from '@shimmer-from-structure/core';
   import { getShimmerConfig } from './ShimmerContext';
+  import type { ShimmerProps } from './types';
 
-  export let loading: boolean = true;
-  export let shimmerColor: string | undefined = undefined;
-  export let backgroundColor: string | undefined = undefined;
-  export let duration: number | undefined = undefined;
-  export let fallbackBorderRadius: number | undefined = undefined;
-  export let templateProps: Record<string, any> | undefined = undefined;
+  let {
+    loading = true,
+    shimmerColor = undefined,
+    backgroundColor = undefined,
+    duration = undefined,
+    fallbackBorderRadius = undefined,
+    templateProps = undefined,
+    children,
+  }: ShimmerProps & { children: Snippet } = $props();
 
-  let measureRef: HTMLDivElement;
-  let elements: ElementInfo[] = [];
+  let measureRef: HTMLDivElement | undefined = $state();
+  let elements: ElementInfo[] = $state([]);
 
   const contextConfig = getShimmerConfig();
 
-  $: resolvedShimmerColor = shimmerColor ?? contextConfig.shimmerColor;
-  $: resolvedBackgroundColor = backgroundColor ?? contextConfig.backgroundColor;
-  $: resolvedDuration = duration ?? contextConfig.duration;
-  $: resolvedFallbackBorderRadius = fallbackBorderRadius ?? contextConfig.fallbackBorderRadius;
+  const resolvedShimmerColor = $derived(shimmerColor ?? contextConfig.shimmerColor);
+  const resolvedBackgroundColor = $derived(backgroundColor ?? contextConfig.backgroundColor);
+  const resolvedDuration = $derived(duration ?? contextConfig.duration);
+  const resolvedFallbackBorderRadius = $derived(fallbackBorderRadius ?? contextConfig.fallbackBorderRadius);
+
+  let observer: MutationObserver | undefined;
 
   async function measureElements() {
     if (!loading || !measureRef) return;
@@ -52,11 +58,11 @@
   }
 
   // Re-measure when loading state changes
-  $: if (loading && measureRef) {
-    measureElements();
-  }
-
-  let observer: MutationObserver | undefined;
+  $effect(() => {
+    if (loading && measureRef) {
+      measureElements();
+    }
+  });
 
   onMount(() => {
     measureElements();
@@ -91,7 +97,7 @@
 </script>
 
 {#if !loading}
-  <slot></slot>
+  {@render children()}
 {:else}
   <div style="position: relative;">
     <!-- Measure container with transparent text -->
@@ -101,12 +107,7 @@
       style="pointer-events: none;"
       aria-hidden="true"
     >
-      {#if templateProps}
-        <!-- Slot with template props injected via context -->
-        <slot shimmerTemplateProps={templateProps}></slot>
-      {:else}
-        <slot></slot>
-      {/if}
+      {@render children()}
     </div>
 
     <!-- Shimmer overlay - isolated from mutation observer -->

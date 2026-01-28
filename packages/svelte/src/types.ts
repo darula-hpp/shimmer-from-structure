@@ -1,3 +1,5 @@
+import type { Snippet } from 'svelte';
+
 export interface ShimmerProps {
   loading?: boolean;
   shimmerColor?: string;
@@ -15,6 +17,10 @@ export interface ShimmerProps {
    * Example: { user: { name: "Lorem" }, settings: { theme: "dark" } }
    */
   templateProps?: Record<string, unknown>;
+  /**
+   * The content to render inside the shimmer component.
+   */
+  children?: Snippet;
 }
 
 // Re-export core types for convenience

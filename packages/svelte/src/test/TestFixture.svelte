@@ -3,14 +3,23 @@
   import { setShimmerConfig } from '../ShimmerContext';
   import type { ShimmerConfig } from '@shimmer-from-structure/core';
 
-  export let loading: boolean = true;
-  export let shimmerColor: string | undefined = undefined;
-  export let backgroundColor: string | undefined = undefined;
-  export let duration: number | undefined = undefined;
-  export let fallbackBorderRadius: number | undefined = undefined;
+  interface Props {
+    loading?: boolean;
+    shimmerColor?: string;
+    backgroundColor?: string;
+    duration?: number;
+    fallbackBorderRadius?: number;
+    config?: ShimmerConfig;
+  }
 
-  // Optional config for context testing
-  export let config: ShimmerConfig | undefined = undefined;
+  let {
+    loading = true,
+    shimmerColor = undefined,
+    backgroundColor = undefined,
+    duration = undefined,
+    fallbackBorderRadius = undefined,
+    config = undefined,
+  }: Props = $props();
 
   if (config) {
     setShimmerConfig(config);

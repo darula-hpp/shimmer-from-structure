@@ -17,6 +17,10 @@ export default defineConfig({
       include: ['src'],
     }),
   ],
+  resolve: {
+    // Ensure we use the browser bundle for testing
+    conditions: ['browser'],
+  },
   build: {
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),

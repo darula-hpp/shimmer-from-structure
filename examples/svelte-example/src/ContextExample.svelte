@@ -8,9 +8,13 @@
     avatar: string;
   }
 
-  export let loadingContextExample: boolean;
-  export let contextData: TeamMember[] | null;
-  export let teamTemplate: TeamMember[];
+  interface Props {
+    loadingContextExample: boolean;
+    contextData: TeamMember[] | null;
+    teamTemplate: TeamMember[];
+  }
+
+  let { loadingContextExample, contextData, teamTemplate }: Props = $props();
 
   // Apply custom shimmer config during initialization (must be top-level in script)
   setShimmerConfig({
@@ -25,7 +29,7 @@
   <div class="members-grid">
     {#each contextData || teamTemplate.slice(0, 2) as member}
       <div class="member-card">
-        <div style="width: 40px; height: 40px; border-radius: 50%; background: #333;" />
+        <div style="width: 40px; height: 40px; border-radius: 50%; background: #333;"></div>
         <p class="member-name">{member.name}</p>
         <span class="member-role">{member.role}</span>
       </div>

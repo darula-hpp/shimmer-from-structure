@@ -1,3 +1,85 @@
+# Migration Guide
+
+---
+
+## v1.x → v2.0.0 (Svelte 5 Migration)
+
+### Overview
+
+Version 2.0.0 migrates the Svelte adapter to **Svelte 5**. This is a **breaking change** for Svelte users.
+
+### Who Is Affected?
+
+- **Svelte users**: Must upgrade to Svelte 5
+- **React users**: No changes required
+- **Vue users**: No changes required
+
+### Breaking Changes
+
+1. **Svelte 4 is no longer supported**
+   - Peer dependency changed from `^4.0.0 || ^5.0.0` to `^5.0.0`
+
+2. **App mounting syntax changed**
+
+   ```diff
+   - import App from './App.svelte';
+   - const app = new App({ target: document.getElementById('app') });
+
+   + import { mount } from 'svelte';
+   + import App from './App.svelte';
+   + const app = mount(App, { target: document.getElementById('app') });
+   ```
+
+3. **Component props syntax changed** (if you're extending Shimmer)
+
+   ```diff
+   - export let loading = true;
+   - export let shimmerColor = undefined;
+
+   + let { loading = true, shimmerColor = undefined } = $props();
+   ```
+
+4. **Reactive state syntax changed** (in your own components)
+
+   ```diff
+   - let isLoading = true;
+
+   + let isLoading = $state(true);
+   ```
+
+### Migration Steps for Svelte Projects
+
+1. **Update dependencies**
+
+   ```bash
+   npm install svelte@^5.0.0 @sveltejs/vite-plugin-svelte@^4.0.0 svelte-check@^4.0.0
+   ```
+
+2. **Update your `main.ts`** (if using the old mounting syntax)
+
+   ```typescript
+   import { mount } from 'svelte';
+   import App from './App.svelte';
+
+   mount(App, { target: document.getElementById('app')! });
+   ```
+
+3. **Update your components** to use Svelte 5 runes (optional but recommended)
+   - `export let prop` → `let { prop } = $props()`
+   - `let x = value` → `let x = $state(value)`
+   - `$: derived = ...` → `const derived = $derived(...)`
+   - `$: { ... }` → `$effect(() => { ... })`
+
+### Staying on Svelte 4?
+
+If you cannot upgrade to Svelte 5, pin your dependency to v1.x:
+
+```bash
+npm install @shimmer-from-structure/svelte@^1.1.0
+```
+
+---
+
 # Migration Guide: v0.7.0 → v1.0.0
 
 ## Overview

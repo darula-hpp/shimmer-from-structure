@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2026-01-29
+
+### Breaking Changes
+
+- **Svelte 5 Migration**: The Svelte adapter now requires Svelte 5
+  - Dropped support for Svelte 4 (peer dependency changed from `^4.0.0 || ^5.0.0` to `^5.0.0`)
+  - Component internals rewritten using Svelte 5 runes (`$props()`, `$state()`, `$derived()`, `$effect()`)
+  - Slots replaced with `{@render children()}` snippet pattern
+  - App mounting changed from `new App({...})` to `mount(App, {...})`
+
+### Changed
+
+- **Svelte Package**: Updated dependencies
+  - `svelte`: `^5.0.0`
+  - `svelte-check`: `^4.0.0`
+  - `@sveltejs/vite-plugin-svelte`: `^4.0.0`
+- **Documentation**: Updated all Svelte examples in README to use Svelte 5 syntax
+
+### Fixed
+
+- **Svelte Testing**: Added `resolve.conditions: ['browser']` to vite config for proper Svelte 5 test environment
+
 ## [1.1.0] - 2026-01-27
 
 ### Major Features Added
