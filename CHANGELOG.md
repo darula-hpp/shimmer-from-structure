@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0] - 2026-02-02
+
+### Added
+
+- **React: Responsive Shimmer Layout**: Shimmer overlay now automatically adapts to layout changes during loading
+  - Implemented `ResizeObserver` to detect container dimension changes
+  - Uses `requestAnimationFrame` for smooth, real-time updates at 60fps
+  - Automatically handles viewport resize, responsive breakpoints, and dynamic content reflow
+  - Observer disconnects when loading completes (zero performance impact when not loading)
+  - Fixes misalignment issues when layout changes occur during loading state
+
 ## [2.0.0] - 2026-01-29
 
 ### Breaking Changes

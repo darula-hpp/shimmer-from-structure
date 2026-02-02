@@ -62,16 +62,44 @@ export const Shimmer: React.FC<ShimmerProps> = ({
     if (!loading || !measureRef.current) return;
 
     const container = measureRef.current;
-    const containerRect = container.getBoundingClientRect();
+    let rafId: number | null = null;
 
-    // Extract all element dimensions
-    const extractedElements: ElementInfo[] = [];
-    Array.from(container.children).forEach((child) => {
-      extractedElements.push(...extractElementInfo(child, containerRect));
+    const measureElements = () => {
+      const containerRect = container.getBoundingClientRect();
+
+      // Extract all element dimensions
+      const extractedElements: ElementInfo[] = [];
+      Array.from(container.children).forEach((child) => {
+        extractedElements.push(...extractElementInfo(child, containerRect));
+      });
+
+      setElements(extractedElements);
+    };
+
+    // Initial measurement
+    measureElements();
+
+    // Set up ResizeObserver to re-measure on layout changes
+    const resizeObserver = new ResizeObserver(() => {
+      // Use requestAnimationFrame for smooth, real-time updates
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+      }
+      rafId = requestAnimationFrame(() => {
+        measureElements();
+        rafId = null;
+      });
     });
 
-    // eslint-disable-next-line
-    setElements(extractedElements);
+    resizeObserver.observe(container);
+
+    // Cleanup
+    return () => {
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+      }
+      resizeObserver.disconnect();
+    };
   }, [loading, childrenToRender]);
 
   if (!loading) {
