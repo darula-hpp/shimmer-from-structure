@@ -628,54 +628,55 @@ function App() {
   const [contextData, setContextData] = useState<TeamMember[] | null>(null);
 
   // Simulate independent API calls with different response times
+  // TEMPORARILY INCREASED FOR TESTING RESIZE OBSERVER
   useEffect(() => {
     // User loads first (fast)
     setTimeout(() => {
       setUser(realUser);
       setLoadingUser(false);
-    }, 800);
+    }, 8000); // was 800ms
 
     // Stats load second
     setTimeout(() => {
       setStats(realStats);
       setLoadingStats(false);
-    }, 1200);
+    }, 12000); // was 1200ms
 
     // Chart loads third
     setTimeout(() => {
       setChartData(realChartData);
       setLoadingChart(false);
-    }, 1400);
+    }, 14000); // was 1400ms
 
     // Team loads fourth
     setTimeout(() => {
       setTeam(realTeam);
       setLoadingTeam(false);
-    }, 1600);
+    }, 16000); // was 1600ms
 
     // Activity loads fifth
     setTimeout(() => {
       setActivity(realActivity);
       setLoadingActivity(false);
-    }, 2000);
+    }, 20000); // was 2000ms
 
     // Transactions load last (slowest API)
     setTimeout(() => {
       setTransactions(realTransactions);
       setLoadingTransactions(false);
-    }, 2500);
+    }, 25000); // was 2500ms
 
     // Orders load independently
     setTimeout(() => {
       setOrders(realOrders);
       setLoadingOrders(false);
-    }, 1800);
+    }, 18000); // was 1800ms
 
     // Context Example loads extra slow (to show off the theme)
     setTimeout(() => {
       setContextData(realTeam.slice(0, 2)); // Use subset of team data
       setLoadingContextExample(false);
-    }, 4000);
+    }, 40000); // was 4000ms
   }, []);
 
   // Reset all data
@@ -698,45 +699,46 @@ function App() {
     setContextData(null); // Reset context data
 
     // Re-trigger the effect
+    // TEMPORARILY INCREASED FOR TESTING RESIZE OBSERVER
     setTimeout(() => {
       setUser(realUser);
       setLoadingUser(false);
-    }, 800);
+    }, 8000); // was 800ms
 
     setTimeout(() => {
       setStats(realStats);
       setLoadingStats(false);
-    }, 1200);
+    }, 12000); // was 1200ms
 
     setTimeout(() => {
       setChartData(realChartData);
       setLoadingChart(false);
-    }, 1400);
+    }, 14000); // was 1400ms
 
     setTimeout(() => {
       setTeam(realTeam);
       setLoadingTeam(false);
-    }, 1600);
+    }, 16000); // was 1600ms
 
     setTimeout(() => {
       setActivity(realActivity);
       setLoadingActivity(false);
-    }, 2000);
+    }, 20000); // was 2000ms
 
     setTimeout(() => {
       setTransactions(realTransactions);
       setLoadingTransactions(false);
-    }, 2500);
+    }, 25000); // was 2500ms
 
     setTimeout(() => {
       setOrders(realOrders);
       setLoadingOrders(false);
-    }, 1800);
+    }, 18000); // was 1800ms
 
     setTimeout(() => {
       setContextData(realTeam.slice(0, 2));
       setLoadingContextExample(false);
-    }, 4000);
+    }, 40000); // was 4000ms
   };
 
   return (
