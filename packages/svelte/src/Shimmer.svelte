@@ -42,6 +42,8 @@
     // Wait for DOM update
     await tick();
 
+    if (!measureRef) return;
+
     const container = measureRef;
     const containerRect = container.getBoundingClientRect();
     const extractedElements: ElementInfo[] = [];
