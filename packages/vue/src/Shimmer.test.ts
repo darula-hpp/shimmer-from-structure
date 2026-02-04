@@ -89,9 +89,11 @@ describe('Shimmer.vue', () => {
 
     await nextTick();
     await nextTick(); // Wait for measurement to complete
+    await nextTick(); // Wait for re-render after elements update
 
     // The component should use fallbackBorderRadius for elements with 0px border-radius
     const shimmerBlocks = wrapper.findAll('[style*="border-radius"]');
+    console.log('Test HTML (fallbackBorderRadius):', wrapper.html());
     expect(shimmerBlocks.length).toBeGreaterThan(0);
   });
 
@@ -115,6 +117,7 @@ describe('Shimmer.vue', () => {
 
     const wrapper = mount(TestComponent);
 
+    await nextTick();
     await nextTick();
     await nextTick();
 

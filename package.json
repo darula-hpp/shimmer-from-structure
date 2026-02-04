@@ -1,14 +1,16 @@
 {
   "name": "shimmer-from-structure",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "private": true,
   "description": "Universal UI skeleton generator for React, Vue and Svelte. Auto-adapts to your component structure with zero maintenance and pixel-perfect accuracy.",
   "workspaces": [
     "packages/*",
-    "examples/*"
+    "examples/*",
+    "!examples/solid-example",
+    "!packages/solid"
   ],
   "scripts": {
-    "build": "npm run build:core && npm run build:react && npm run build:vue && npm run build:svelte && npm run build:solid && npm run build:main",
+    "build": "npm run build:core && npm run build:react && npm run build:vue && npm run build:svelte && npm run build:main",
     "build:core": "npm run build -w @shimmer-from-structure/core",
     "build:react": "npm run build -w @shimmer-from-structure/react",
     "build:vue": "npm run build -w @shimmer-from-structure/vue",
@@ -49,6 +51,7 @@
     "url": "git+https://github.com/darula-hpp/shimmer-from-structure.git"
   },
   "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^4.0.4",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@types/node": "^25.0.9",
@@ -72,6 +75,7 @@
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "recharts": "^3.6.0",
+    "svelte": "^5.49.1",
     "typescript": "^5.3.0",
     "typescript-eslint": "^8.53.1",
     "vite": "^5.0.0",

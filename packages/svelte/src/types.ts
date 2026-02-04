@@ -12,13 +12,11 @@ export interface ShimmerProps {
    */
   fallbackBorderRadius?: number;
   /**
-   * Object mapping prop names to their mock/template values.
-   * These props will be injected into the slot when loading.
-   * Example: { user: { name: "Lorem" }, settings: { theme: "dark" } }
+   * This will be removed in a future version
    */
   templateProps?: Record<string, unknown>;
   /**
-   * The content to render inside the shimmer component.
+   * This defines the layout structure that will be measured to generate the shimmer effect.
    */
   children?: Snippet;
 }
