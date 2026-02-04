@@ -16,8 +16,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Svelte**:
   - Fixed animation scoping issue (keyframes now injected dynamically).
 
-## [2.1.0] - 2026-02-04
-
 ### Added
 
 - **Core**: Added `createResizeObserver` utility
