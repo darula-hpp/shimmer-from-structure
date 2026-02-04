@@ -29,10 +29,11 @@ export default defineConfig({
       fileName: (format: string) => `index.${format === 'es' ? 'esm.js' : 'js'}`,
     },
     rollupOptions: {
-      external: ['svelte', '@shimmer-from-structure/core'],
+      external: [/^svelte(\/|$)/, '@shimmer-from-structure/core'],
       output: {
         globals: {
           svelte: 'Svelte',
+          'svelte/internal/client': 'SvelteInternalClient',
           '@shimmer-from-structure/core': 'ShimmerCore',
         },
       },
