@@ -33,6 +33,7 @@ export default defineConfig({
       output: {
         globals: {
           svelte: 'Svelte',
+          'svelte/internal/client': 'SvelteInternalClient',
           '@shimmer-from-structure/core': 'ShimmerCore',
         },
       },
