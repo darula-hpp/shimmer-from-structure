@@ -5,10 +5,12 @@
   "description": "Universal UI skeleton generator for React, Vue and Svelte. Auto-adapts to your component structure with zero maintenance and pixel-perfect accuracy.",
   "workspaces": [
     "packages/*",
-    "examples/*"
+    "examples/*",
+    "!examples/solid-example",
+    "!packages/solid"
   ],
   "scripts": {
-    "build": "npm run build:core && npm run build:react && npm run build:vue && npm run build:svelte && npm run build:solid && npm run build:main",
+    "build": "npm run build:core && npm run build:react && npm run build:vue && npm run build:svelte && npm run build:main",
     "build:core": "npm run build -w @shimmer-from-structure/core",
     "build:react": "npm run build -w @shimmer-from-structure/react",
     "build:vue": "npm run build -w @shimmer-from-structure/vue",
