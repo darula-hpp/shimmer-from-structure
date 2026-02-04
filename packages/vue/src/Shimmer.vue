@@ -32,8 +32,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, nextTick, watch } from 'vue';
-import { extractElementInfo, type ElementInfo } from '@shimmer-from-structure/core';
+import { ref, computed, onUnmounted, nextTick, watch } from 'vue';
+import {
+  extractElementInfo,
+  createResizeObserver,
+  type ElementInfo,
+} from '@shimmer-from-structure/core';
 import { useShimmerConfig } from './composables/useShimmerConfig';
 
 interface Props {
@@ -82,10 +86,36 @@ const measureElements = async () => {
   elements.value = extractedElements;
 };
 
-// Watch for loading state changes
-watch(() => props.loading, measureElements, { immediate: true });
+// Track cleanup function for ResizeObserver
+let cleanupObserver: (() => void) | null = null;
 
-onMounted(measureElements);
+// Watch for loading state changes and manage ResizeObserver lifecycle
+watch(
+  () => props.loading,
+  async (isLoading) => {
+    // Clean up existing observer when loading changes
+    if (cleanupObserver) {
+      cleanupObserver();
+      cleanupObserver = null;
+    }
+
+    if (isLoading) {
+      await measureElements();
+
+      // Set up ResizeObserver when loading starts
+      if (measureRef.value) {
+        cleanupObserver = createResizeObserver(measureRef.value, measureElements);
+      }
+    }
+  },
+  { immediate: true }
+);
+
+onUnmounted(() => {
+  if (cleanupObserver) {
+    cleanupObserver();
+  }
+});
 
 // Computed styles
 const measureStyles = computed(
