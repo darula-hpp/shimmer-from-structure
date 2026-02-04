@@ -71,6 +71,7 @@ const resolvedFallbackBorderRadius = computed(
 
 // Measurement logic
 const measureElements = async () => {
+  console.log('measureElements called', { loading: props.loading, hasRef: !!measureRef.value });
   if (!props.loading || !measureRef.value) return;
 
   await nextTick();
@@ -91,9 +92,9 @@ let cleanupObserver: (() => void) | null = null;
 
 // Watch for loading state changes and manage ResizeObserver lifecycle
 watch(
-  () => props.loading,
-  async (isLoading) => {
-    // Clean up existing observer when loading changes
+  [() => props.loading, measureRef],
+  async ([isLoading, element]) => {
+    // Clean up existing observer when loading changes or element changes
     if (cleanupObserver) {
       cleanupObserver();
       cleanupObserver = null;
@@ -102,9 +103,9 @@ watch(
     if (isLoading) {
       await measureElements();
 
-      // Set up ResizeObserver when loading starts
-      if (measureRef.value) {
-        cleanupObserver = createResizeObserver(measureRef.value, measureElements);
+      // Set up ResizeObserver when loading starts and element is available
+      if (element) {
+        cleanupObserver = createResizeObserver(element, measureElements);
       }
     }
   },
