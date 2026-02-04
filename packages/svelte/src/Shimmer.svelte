@@ -1,6 +1,10 @@
 <script lang="ts">
   import { onMount, tick, type Snippet } from 'svelte';
-  import { extractElementInfo, type ElementInfo } from '@shimmer-from-structure/core';
+  import {
+    extractElementInfo,
+    createResizeObserver,
+    type ElementInfo,
+  } from '@shimmer-from-structure/core';
   import { getShimmerConfig } from './ShimmerContext';
   import type { ShimmerProps } from './types';
 
@@ -10,7 +14,6 @@
     backgroundColor = undefined,
     duration = undefined,
     fallbackBorderRadius = undefined,
-    templateProps = undefined,
     children,
   }: ShimmerProps & { children: Snippet } = $props();
 
@@ -22,9 +25,12 @@
   const resolvedShimmerColor = $derived(shimmerColor ?? contextConfig.shimmerColor);
   const resolvedBackgroundColor = $derived(backgroundColor ?? contextConfig.backgroundColor);
   const resolvedDuration = $derived(duration ?? contextConfig.duration);
-  const resolvedFallbackBorderRadius = $derived(fallbackBorderRadius ?? contextConfig.fallbackBorderRadius);
+  const resolvedFallbackBorderRadius = $derived(
+    fallbackBorderRadius ?? contextConfig.fallbackBorderRadius
+  );
 
   let observer: MutationObserver | undefined;
+  let resizeCleanup: (() => void) | undefined;
 
   async function measureElements() {
     if (!loading || !measureRef) return;
@@ -35,6 +41,8 @@
 
     // Wait for DOM update
     await tick();
+
+    if (!measureRef) return;
 
     const container = measureRef;
     const containerRect = container.getBoundingClientRect();
@@ -57,17 +65,40 @@
     }
   }
 
-  // Re-measure when loading state changes
+  // Re-measure when loading state changes and manage ResizeObserver lifecycle
   $effect(() => {
     if (loading && measureRef) {
       measureElements();
+
+      // Clean up existing ResizeObserver if any
+      if (resizeCleanup) {
+        resizeCleanup();
+      }
+
+      // Set up ResizeObserver for this loading session
+      resizeCleanup = createResizeObserver(measureRef, measureElements);
+    } else {
+      // Clean up ResizeObserver when not loading
+      if (resizeCleanup) {
+        resizeCleanup();
+        resizeCleanup = undefined;
+      }
     }
+
+    // Cleanup on effect re-run or component unmount
+    return () => {
+      if (resizeCleanup) {
+        resizeCleanup();
+        resizeCleanup = undefined;
+      }
+    };
   });
 
   onMount(() => {
     measureElements();
 
     if (measureRef) {
+      // MutationObserver: watches for DOM content changes (new children, text changes)
       observer = new MutationObserver(() => {
         // Only observe changes in the measure container (slot content changes)
         // Don't trigger when we're not loading
@@ -94,6 +125,7 @@
   export function remeasure() {
     measureElements();
   }
+  const styleTag = 'style';
 </script>
 
 {#if !loading}
@@ -122,6 +154,15 @@
         pointer-events: none;
       "
     >
+      <svelte:element this={styleTag}>
+        {`
+          @keyframes shimmer-animation {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+          }
+        `}
+      </svelte:element>
+
       {#each elements as element, index (index)}
         <div
           style="
@@ -162,13 +203,5 @@
   .shimmer-measure-container :global(svg),
   .shimmer-measure-container :global(video) {
     opacity: 0;
-  }
-  @keyframes shimmer-animation {
-    0% {
-      transform: translateX(-100%);
-    }
-    100% {
-      transform: translateX(100%);
-    }
   }
 </style>

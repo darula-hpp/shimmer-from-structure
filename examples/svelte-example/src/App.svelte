@@ -353,36 +353,36 @@
     setTimeout(() => {
       user = realUser;
       loadingUser = false;
-    }, 800);
+    }, 8000);
     setTimeout(() => {
       stats = realStats;
       loadingStats = false;
-    }, 1200);
+    }, 12000);
     setTimeout(() => {
       chartData = realChartData;
       loadingChart = false;
-    }, 1400);
+    }, 14000);
     setTimeout(() => {
       team = realTeam;
       loadingTeam = false;
-    }, 1600);
+    }, 16000);
     setTimeout(() => {
       orders = realOrders;
       loadingOrders = false;
-    }, 1800);
+    }, 18000);
     setTimeout(() => {
       activity = realActivity;
       loadingActivity = false;
-    }, 2000);
+    }, 20000);
     setTimeout(() => {
       transactions = realTransactions;
       loadingTransactions = false;
-    }, 2500);
+    }, 25000);
     // Async component demo - simulate network delay
     setTimeout(() => {
       notifications = realNotifications;
       loadingNotifications = false;
-    }, 3000);
+    }, 30000);
     // Context example loads extra slow
     setTimeout(() => {
       contextData = realTeam.slice(0, 2);
@@ -406,7 +406,7 @@
 
   <!-- User Profile Section -->
   <section class="dashboard-section">
-    <Shimmer loading={loadingUser} templateProps={{ user: userTemplate }}>
+    <Shimmer loading={loadingUser}>
       {@const u = user || userTemplate}
       <div class="user-profile">
         <img src={u.avatar} alt={u.name} class="user-avatar" />
@@ -425,7 +425,7 @@
 
   <!-- Stats Section -->
   <section class="dashboard-section">
-    <Shimmer loading={loadingStats} templateProps={{ stats: statsTemplate }}>
+    <Shimmer loading={loadingStats}>
       <div class="stats-grid">
         {#each stats || statsTemplate as stat}
           <div class="stat-card">
@@ -446,7 +446,6 @@
     <div class="suspense-label">⚡ Async Component Loading Demo</div>
     <Shimmer
       loading={loadingNotifications}
-      templateProps={{ notifications: notificationsTemplate }}
     >
       <div class="notifications-panel">
         <h3 class="section-title">🔔 Notifications (Async Demo)</h3>
@@ -467,7 +466,7 @@
 
   <!-- Orders Table Section -->
   <section class="dashboard-section">
-    <Shimmer loading={loadingOrders} templateProps={{ orders: ordersTemplate }}>
+    <Shimmer loading={loadingOrders}>
       <div class="orders-table-container">
         <h3 class="section-title">Recent Orders</h3>
         <table
@@ -520,7 +519,7 @@
 
   <!-- Revenue Chart Section -->
   <section class="dashboard-section">
-    <Shimmer loading={loadingChart} templateProps={{ data: chartTemplate }}>
+    <Shimmer loading={loadingChart}>
       <div class="revenue-chart">
         <h3 class="section-title">Weekly Revenue</h3>
         <div class="chart-container" style="height: 250px; width: 100%; position: relative;">
@@ -598,7 +597,7 @@
   <div class="content-grid">
     <!-- Transactions -->
     <section class="dashboard-section">
-      <Shimmer loading={loadingTransactions} templateProps={{ transactions: transactionsTemplate }}>
+      <Shimmer loading={loadingTransactions}>
         <div class="transactions-list">
           <h3 class="section-title">Recent Transactions</h3>
           <div class="transactions">
@@ -623,7 +622,7 @@
     <div class="sidebar">
       <!-- Activity Feed -->
       <section class="dashboard-section">
-        <Shimmer loading={loadingActivity} templateProps={{ activities: activityTemplate }}>
+        <Shimmer loading={loadingActivity}>
           <div class="activity-feed">
             <h3 class="section-title">Recent Activity</h3>
             <div class="activities">
@@ -647,7 +646,7 @@
 
       <!-- Team Members -->
       <section class="dashboard-section">
-        <Shimmer loading={loadingTeam} templateProps={{ members: teamTemplate }}>
+        <Shimmer loading={loadingTeam}>
           <div class="team-members">
             <h3 class="section-title">Team</h3>
             <div class="members-grid">
@@ -681,7 +680,7 @@
     <p>
       Each section loads independently with its own shimmer effect.
       <br />
-      <code>templateProps</code> injects mock data to generate the skeleton structure.
+      Mock data is used to generate the skeleton structure.
     </p>
   </footer>
 </div>

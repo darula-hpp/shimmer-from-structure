@@ -32,8 +32,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, nextTick, watch } from 'vue';
-import { extractElementInfo, type ElementInfo } from '@shimmer-from-structure/core';
+import { ref, computed, onUnmounted, nextTick, watch } from 'vue';
+import {
+  extractElementInfo,
+  createResizeObserver,
+  type ElementInfo,
+} from '@shimmer-from-structure/core';
 import { useShimmerConfig } from './composables/useShimmerConfig';
 
 interface Props {
@@ -67,6 +71,7 @@ const resolvedFallbackBorderRadius = computed(
 
 // Measurement logic
 const measureElements = async () => {
+  console.log('measureElements called', { loading: props.loading, hasRef: !!measureRef.value });
   if (!props.loading || !measureRef.value) return;
 
   await nextTick();
@@ -82,10 +87,36 @@ const measureElements = async () => {
   elements.value = extractedElements;
 };
 
-// Watch for loading state changes
-watch(() => props.loading, measureElements, { immediate: true });
+// Track cleanup function for ResizeObserver
+let cleanupObserver: (() => void) | null = null;
 
-onMounted(measureElements);
+// Watch for loading state changes and manage ResizeObserver lifecycle
+watch(
+  [() => props.loading, measureRef],
+  async ([isLoading, element]) => {
+    // Clean up existing observer when loading changes or element changes
+    if (cleanupObserver) {
+      cleanupObserver();
+      cleanupObserver = null;
+    }
+
+    if (isLoading) {
+      await measureElements();
+
+      // Set up ResizeObserver when loading starts and element is available
+      if (element) {
+        cleanupObserver = createResizeObserver(element, measureElements);
+      }
+    }
+  },
+  { immediate: true }
+);
+
+onUnmounted(() => {
+  if (cleanupObserver) {
+    cleanupObserver();
+  }
+});
 
 // Computed styles
 const measureStyles = computed(
