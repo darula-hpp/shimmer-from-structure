@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] - 2026-02-04
+
+### Changed
+
+- **Standardization:** All framework adapters (React, Vue, Svelte) now use the shared `createResizeObserver` utility from `@shimmer-from-structure/core`.
+- **React**: Removed unused refs and updated implementation to use core utility.
+- **Vue**:
+  - Aligned implementation with other adapters.
+- **Svelte**:
+  - Fixed animation scoping issue (keyframes now injected dynamically).
+
+### Added
+
+- **Core**: Added `createResizeObserver` utility
+  - Centralized resize observation logic with `requestAnimationFrame` throttling.
+  - Provides a consistent foundation for all framework adapters.
+
 ## [2.1.1] - 2026-02-04
 
 ### Fixed

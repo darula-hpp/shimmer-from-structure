@@ -1,7 +1,11 @@
 import React, { useLayoutEffect, useState, useRef } from 'react';
 import { ShimmerProps } from './types';
 import { useShimmerConfig } from './ShimmerContext';
-import { extractElementInfo, type ElementInfo } from '@shimmer-from-structure/core';
+import {
+  extractElementInfo,
+  createResizeObserver,
+  type ElementInfo,
+} from '@shimmer-from-structure/core';
 
 /**
  * Shimmer component that adapts to the actual rendered structure of its children
@@ -25,7 +29,6 @@ export const Shimmer: React.FC<ShimmerProps> = ({
   const resolvedFallbackBorderRadius = fallbackBorderRadius ?? contextConfig.fallbackBorderRadius;
 
   const [elements, setElements] = useState<ElementInfo[]>([]);
-  const contentRef = useRef<HTMLDivElement>(null);
   const measureRef = useRef<HTMLDivElement>(null);
 
   // Prepare children with injected template props when loading
@@ -62,7 +65,6 @@ export const Shimmer: React.FC<ShimmerProps> = ({
     if (!loading || !measureRef.current) return;
 
     const container = measureRef.current;
-    let rafId: number | null = null;
 
     const measureElements = () => {
       const containerRect = container.getBoundingClientRect();
@@ -80,26 +82,10 @@ export const Shimmer: React.FC<ShimmerProps> = ({
     measureElements();
 
     // Set up ResizeObserver to re-measure on layout changes
-    const resizeObserver = new ResizeObserver(() => {
-      // Use requestAnimationFrame for smooth, real-time updates
-      if (rafId) {
-        cancelAnimationFrame(rafId);
-      }
-      rafId = requestAnimationFrame(() => {
-        measureElements();
-        rafId = null;
-      });
-    });
-
-    resizeObserver.observe(container);
+    const cleanup = createResizeObserver(container, measureElements);
 
     // Cleanup
-    return () => {
-      if (rafId) {
-        cancelAnimationFrame(rafId);
-      }
-      resizeObserver.disconnect();
-    };
+    return cleanup;
   }, [loading, childrenToRender]);
 
   if (!loading) {
@@ -134,7 +120,6 @@ export const Shimmer: React.FC<ShimmerProps> = ({
 
       {/* Shimmer overlay based on measured dimensions */}
       <div
-        ref={contentRef}
         style={{
           position: 'absolute',
           top: 0,
