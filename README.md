@@ -43,7 +43,7 @@ Shimmer From Structure provides dedicated packages for **React and Vue**.
 
 ### React
 
-React support is built-in to the main package for backward compatibility:
+React support is built into the main package for backward compatibility:
 
 ```javascript
 // React projects (or @shimmer-from-structure/react)
