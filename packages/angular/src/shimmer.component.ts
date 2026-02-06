@@ -42,10 +42,12 @@ import { injectShimmerConfig } from './shimmer-config.service';
   template: `
     <div style="position: relative;">
       <!-- Always render content -->
-      <div #measureContainer
+      <div
+        #measureContainer
         [class.shimmer-measure-container]="loading()"
         [attr.aria-hidden]="loading() ? 'true' : null"
-        [style.pointer-events]="loading() ? 'none' : null">
+        [style.pointer-events]="loading() ? 'none' : null"
+      >
         <ng-content></ng-content>
       </div>
 
@@ -70,14 +72,18 @@ import { injectShimmerConfig } from './shimmer-config.service';
               [style.width.px]="element.width"
               [style.height.px]="element.height"
               [style.backgroundColor]="resolvedBackgroundColor()"
-              [style.borderRadius]="element.borderRadius === '0px'
-                ? resolvedFallbackBorderRadius() + 'px'
-                : element.borderRadius"
+              [style.borderRadius]="
+                element.borderRadius === '0px'
+                  ? resolvedFallbackBorderRadius() + 'px'
+                  : element.borderRadius
+              "
               [style.overflow]="'hidden'"
             >
               <div
                 class="shimmer-animation-element"
-                [style.background]="'linear-gradient(90deg, transparent, ' + resolvedShimmerColor() + ', transparent)'"
+                [style.background]="
+                  'linear-gradient(90deg, transparent, ' + resolvedShimmerColor() + ', transparent)'
+                "
                 [style.animationDuration]="resolvedDuration() + 's'"
               ></div>
             </div>
@@ -86,39 +92,41 @@ import { injectShimmerConfig } from './shimmer-config.service';
       }
     </div>
   `,
-  styles: [`
-    :host {
-      display: contents;
-    }
-
-    .shimmer-measure-container * {
-      color: transparent !important;
-    }
-
-    .shimmer-measure-container img,
-    .shimmer-measure-container svg,
-    .shimmer-measure-container video {
-      opacity: 0;
-    }
-
-    .shimmer-animation-element {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      animation: shimmer-animation 1.5s infinite;
-    }
-
-    @keyframes shimmer-animation {
-      0% {
-        transform: translateX(-100%);
+  styles: [
+    `
+      :host {
+        display: contents;
       }
-      100% {
-        transform: translateX(100%);
+
+      .shimmer-measure-container * {
+        color: transparent !important;
       }
-    }
-  `],
+
+      .shimmer-measure-container img,
+      .shimmer-measure-container svg,
+      .shimmer-measure-container video {
+        opacity: 0;
+      }
+
+      .shimmer-animation-element {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        animation: shimmer-animation 1.5s infinite;
+      }
+
+      @keyframes shimmer-animation {
+        0% {
+          transform: translateX(-100%);
+        }
+        100% {
+          transform: translateX(100%);
+        }
+      }
+    `,
+  ],
 })
 export class ShimmerComponent implements AfterViewInit, OnDestroy {
   // Inputs using Angular signals
@@ -138,15 +146,11 @@ export class ShimmerComponent implements AfterViewInit, OnDestroy {
   private contextConfig = injectShimmerConfig();
 
   // Resolved values (props > context > defaults)
-  resolvedShimmerColor = computed(
-    () => this.shimmerColor() ?? this.contextConfig.shimmerColor
-  );
+  resolvedShimmerColor = computed(() => this.shimmerColor() ?? this.contextConfig.shimmerColor);
   resolvedBackgroundColor = computed(
     () => this.backgroundColor() ?? this.contextConfig.backgroundColor
   );
-  resolvedDuration = computed(
-    () => this.duration() ?? this.contextConfig.duration
-  );
+  resolvedDuration = computed(() => this.duration() ?? this.contextConfig.duration);
   resolvedFallbackBorderRadius = computed(
     () => this.fallbackBorderRadius() ?? this.contextConfig.fallbackBorderRadius
   );
@@ -157,25 +161,33 @@ export class ShimmerComponent implements AfterViewInit, OnDestroy {
 
   constructor() {
     // Effect to re-measure when loading state changes
-    effect(() => {
+    effect((onCleanup) => {
       const isLoading = this.loading();
       const container = this.measureContainer();
 
       if (isLoading && container) {
+        // Clean up existing observers before setting up new ones
+        this.cleanup();
+
+        // Set up observers for this loading session
+        this.setupObservers();
+
         // Defer measurement to next frame to ensure content is rendered
         requestAnimationFrame(() => this.measureElements());
       } else {
         // Cleanup when not loading
         this.cleanup();
       }
+
+      // Cleanup on effect re-run or component destruction
+      onCleanup(() => {
+        this.cleanup();
+      });
     });
   }
 
   ngAfterViewInit(): void {
-    if (this.loading()) {
-      this.setupObservers();
-      this.measureElements();
-    }
+    // Effect will handle setup when container becomes available
   }
 
   ngOnDestroy(): void {
