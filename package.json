@@ -53,6 +53,7 @@
     "url": "git+https://github.com/darula-hpp/shimmer-from-structure.git"
   },
   "devDependencies": {
+    "@exodus/bytes": "^1.0.0",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@types/node": "^25.0.9",
