@@ -2,7 +2,11 @@
   "compilerOptions": {
     "target": "ES2020",
     "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "lib": [
+      "ES2020",
+      "DOM",
+      "DOM.Iterable"
+    ],
     "module": "ESNext",
     "skipLibCheck": true,
     "jsx": "react-jsx",
@@ -22,7 +26,16 @@
     "declarationDir": "./dist",
     "outDir": "./dist"
   },
-  "include": ["src", "example", "benchmark", "vitest.config.ts"],
+  "include": [
+    "src",
+    "example",
+    "benchmark",
+    "vitest.config.ts",
+    "packages/angular/src/**/*",
+    "packages/angular/**/*.config.ts",
+    "examples/angular-example/src/**/*",
+    "examples/angular-example/**/*.config.ts"
+  ],
   "references": [
     {
       "path": "./tsconfig.node.json"

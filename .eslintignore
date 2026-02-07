@@ -1,0 +1,4 @@
+# Angular test and config files
+packages/angular/**/*.test.ts
+packages/angular/**/*.config.ts
+examples/angular-example/**/*.config.ts
