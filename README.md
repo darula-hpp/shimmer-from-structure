@@ -1,10 +1,11 @@
 # ✨ Shimmer From Structure
 
-A **React, Vue & Svelte** shimmer/skeleton library that **automatically adapts to your component's runtime structure**. Unlike traditional shimmer libraries that require pre-defined skeleton structures, this library analyzes your actual component's DOM at runtime and generates a shimmer effect that perfectly matches its layout.
+A **React, Vue, Svelte & Angular** shimmer/skeleton library that **automatically adapts to your component's runtime structure**. Unlike traditional shimmer libraries that require pre-defined skeleton structures, this library analyzes your actual component's DOM at runtime and generates a shimmer effect that perfectly matches its layout.
 
 ![React](https://img.shields.io/badge/React-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 ![Vue](https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D)
 ![Svelte](https://img.shields.io/badge/Svelte-ff3e00?style=for-the-badge&logo=svelte&logoColor=white)
+![Angular](https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white)
 
 ![Shimmer From Structure Demo](https://github.com/darula-hpp/shimmer-from-structure/raw/main/example/preview.gif)
 
@@ -18,7 +19,7 @@ Traditional shimmer libraries require you to:
 
 **Shimmer From Structure** eliminates all of that:
 
-- ✅ **Works with React, Vue & Svelte** - Simple, framework-specific drivers
+- ✅ **Works with React, Vue, Svelte & Angular** - Simple, framework-specific adapters
 - ✅ Automatically measures your component's structure at runtime
 - ✅ Generates shimmer effects that match actual dimensions
 - ✅ Zero maintenance - works with any layout changes
@@ -66,6 +67,15 @@ Svelte support is provided via its own adapter:
 ```javascript
 // Svelte projects
 import { Shimmer } from '@shimmer-from-structure/svelte';
+```
+
+### Angular
+
+Angular support requires importing from the specific adapter:
+
+```typescript
+// Angular projects
+import { ShimmerComponent } from '@shimmer-from-structure/angular';
 ```
 
 ---
@@ -135,6 +145,33 @@ let isLoading = $state(true);
     <p>Software Engineer</p>
   </div>
 </Shimmer>
+```
+
+## Angular
+
+### Static Content
+
+```typescript
+import { Component, signal } from '@angular/core';
+import { ShimmerComponent } from '@shimmer-from-structure/angular';
+
+@Component({
+  selector: 'app-user-card',
+  standalone: true,
+  imports: [ShimmerComponent],
+  template: `
+    <shimmer [loading]="isLoading()">
+      <div class="card">
+        <img src="avatar.jpg" class="avatar" />
+        <h2>John Doe</h2>
+        <p>Software Engineer</p>
+      </div>
+    </shimmer>
+  `,
+})
+export class UserCardComponent {
+  isLoading = signal(true);
+}
 ```
 
 ---
@@ -221,6 +258,35 @@ const userTemplate = {
 </Shimmer>
 ```
 
+**Angular**
+
+```typescript
+import { Component, signal } from '@angular/core';
+import { ShimmerComponent } from '@shimmer-from-structure/angular';
+import { UserCardComponent } from './user-card.component';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [ShimmerComponent, UserCardComponent],
+  template: `
+    <shimmer [loading]="loading()" [templateProps]="{ user: userTemplate }">
+      <app-user-card [user]="user() || userTemplate" />
+    </shimmer>
+  `,
+})
+export class AppComponent {
+  loading = signal(true);
+  user = signal<User | null>(null);
+
+  userTemplate = {
+    name: 'Loading...',
+    role: 'Loading role...',
+    avatar: 'placeholder.jpg',
+  };
+}
+```
+
 The `templateProps` object is spread onto the first child component when loading, allowing it to render with mock data for measurement.
 
 ## 🎨 API Reference
@@ -291,6 +357,25 @@ The `templateProps` object is spread onto the first child component when loading
 >
   <MyComponent {user} {settings} />
 </Shimmer>
+```
+
+**Angular**
+
+```typescript
+<shimmer
+  [loading]="isLoading()"
+  shimmerColor="rgba(255, 255, 255, 0.2)"
+  backgroundColor="rgba(255, 255, 255, 0.1)"
+  [duration]="2"
+  [fallbackBorderRadius]="8"
+  [templateProps]="{
+    user: userTemplate,
+    settings: settingsTemplate
+  }">
+  <app-my-component
+    [user]="user()"
+    [settings]="settings()" />
+</shimmer>
 ```
 
 ## 🔧 How It Works
@@ -378,6 +463,33 @@ function Dashboard() {
 </Shimmer>
 ```
 
+**Angular**
+
+```typescript
+@Component({
+  template: `
+    <!-- User profile section -->
+    <shimmer [loading]="loadingUser()" [templateProps]="{ user: userTemplate }">
+      <app-user-profile [user]="user()" />
+    </shimmer>
+
+    <!-- Stats section - with custom colors -->
+    <shimmer
+      [loading]="loadingStats()"
+      [templateProps]="{ stats: statsTemplate }"
+      shimmerColor="rgba(20, 184, 166, 0.2)"
+    >
+      <app-stats-grid [stats]="stats()" />
+    </shimmer>
+  `,
+})
+export class DashboardComponent {
+  loadingUser = signal(true);
+  loadingStats = signal(true);
+  // ...
+}
+```
+
 ### Transactions List
 
 **React**
@@ -404,6 +516,16 @@ function Dashboard() {
 </Shimmer>
 ```
 
+**Angular**
+
+```typescript
+<shimmer
+  [loading]="loadingTransactions()"
+  [templateProps]="{ transactions: transactionsTemplate }">
+  <app-transactions-list [transactions]="transactions()" />
+</shimmer>
+```
+
 ### Team Members Grid
 
 **React**
@@ -428,6 +550,16 @@ function Dashboard() {
 <Shimmer loading={loadingTeam} templateProps={{ members: teamTemplate }}>
   <TeamMembers members={team} />
 </Shimmer>
+```
+
+**Angular**
+
+```typescript
+<shimmer
+  [loading]="loadingTeam()"
+  [templateProps]="{ members: teamTemplate }">
+  <app-team-members [members]="team()" />
+</shimmer>
 ```
 
 ## 🔄 Using with React Suspense
@@ -550,6 +682,26 @@ setShimmerConfig({
 <Dashboard />
 ```
 
+### Angular (Dependency Injection)
+
+```typescript
+// main.ts or bootstrapApplication
+import { bootstrapApplication } from '@angular/platform-browser';
+import { provideShimmerConfig } from '@shimmer-from-structure/angular';
+import { AppComponent } from './app/app.component';
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideShimmerConfig({
+      shimmerColor: 'rgba(56, 189, 248, 0.4)',
+      backgroundColor: 'rgba(56, 189, 248, 0.1)',
+      duration: 2.5,
+      fallbackBorderRadius: 8,
+    }),
+  ],
+});
+```
+
 ---
 
 Components inside the provider automatically inherit values. You can still override them locally:
@@ -584,6 +736,16 @@ Components inside the provider automatically inherit values. You can still overr
 <Shimmer loading={true} duration={0.5}><FastCard /></Shimmer>
 ```
 
+**Angular**
+
+```typescript
+<!-- Inherits blue theme from injected config -->
+<shimmer [loading]="true"><app-user-card /></shimmer>
+
+<!-- Overrides injected settings -->
+<shimmer [loading]="true" [duration]="0.5"><app-fast-card /></shimmer>
+```
+
 ### Accessing Config in Hooks/Composables
 
 If you need to access the current configuration in your own components:
@@ -615,6 +777,21 @@ import { getShimmerConfig } from '@shimmer-from-structure/svelte';
 
 const config = getShimmerConfig();
 console.log(config.backgroundColor);
+```
+
+**Angular**
+
+```typescript
+import { Component, inject } from '@angular/core';
+import { injectShimmerConfig } from '@shimmer-from-structure/angular';
+
+@Component({
+  selector: 'app-my-component',
+  template: `<div [style.background]="config.backgroundColor">...</div>`,
+})
+export class MyComponent {
+  config = injectShimmerConfig();
+}
 ```
 
 ## Best Practices
@@ -706,15 +883,16 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 This library is organized as a monorepo with four packages:
 
-| Package                          | Description                                 | Size     |
-| -------------------------------- | ------------------------------------------- | -------- |
-| `@shimmer-from-structure/core`   | Framework-agnostic DOM utilities            | 1.44 kB  |
-| `@shimmer-from-structure/react`  | React adapter                               | 12.84 kB |
-| `@shimmer-from-structure/vue`    | Vue 3 adapter                               | 3.89 kB  |
-| `@shimmer-from-structure/svelte` | Svelte adapter                              | 4.60 kB  |
-| `shimmer-from-structure`         | Main package (React backward compatibility) | 0.93 kB  |
+| Package                           | Description                                 | Size     |
+| --------------------------------- | ------------------------------------------- | -------- |
+| `@shimmer-from-structure/core`    | Framework-agnostic DOM utilities            | 1.44 kB  |
+| `@shimmer-from-structure/react`   | React adapter                               | 12.84 kB |
+| `@shimmer-from-structure/vue`     | Vue 3 adapter                               | 3.89 kB  |
+| `@shimmer-from-structure/svelte`  | Svelte adapter                              | 4.60 kB  |
+| `@shimmer-from-structure/angular` | Angular adapter                             | 6.83 kB  |
+| `shimmer-from-structure`          | Main package (React backward compatibility) | 0.93 kB  |
 
-The core package contains all DOM measurement logic, while React and Vue packages are thin wrappers that provide framework-specific APIs.
+The core package contains all DOM measurement logic, while React, Vue, Svelte and Angular packages are thin wrappers that provide framework-specific APIs.
 
 ## 🚧 Roadmap
 
@@ -723,6 +901,7 @@ The core package contains all DOM measurement logic, while React and Vue package
 - [x] Container background visibility
 - [x] **Vue.js adapter**
 - [x] **Svelte adapter**
+- [x] **Angular adapter**
 - [ ] Better async component support
 - [ ] Customizable shimmer direction (vertical, diagonal)
 - [ ] React Native support

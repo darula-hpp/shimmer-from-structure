@@ -5,7 +5,39 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.2.0] - 2026-02-04
+## [2.2.3] - 2026-02-07
+
+### Fixed
+
+- **Angular: SSR Compatibility**: Fixed `ResizeObserver is not defined` error during Server-Side Rendering (SSR).
+  - All browser-specific APIs (`ResizeObserver`, `MutationObserver`, `getBoundingClientRect`) are now properly guarded with `isPlatformBrowser`.
+  - Effect execution is skipped on the server side.
+  - Dependencies now correctly inject `PLATFORM_ID`.
+
+## [2.2.2] - 2026-02-07
+
+### Fixed
+
+- **Angular: Module Resolution**: Fixed an issue where the package was published with incorrect structure, causing "Cannot find module" errors in consumer applications.
+  - Now correctly publishes the compiled `dist` directory containing FESM bundles and type definitions.
+
+## [2.2.1] - 2026-02-07
+
+### Added
+
+- **Angular: Extended Version Support**: Added support for Angular 19, 20, and 21.
+  - Peer dependencies updated to allow broader range: `^19.0.0 || ^20.0.0 || ^21.0.0`.
+
+## [2.2.0] - 2026-02-07
+
+### Added
+
+- **Angular Support**: Introduced full support for Angular with a dedicated adapter package (`@shimmer-from-structure/angular`)
+  - Native `<shimmer>` component using Angular Signals
+  - Dependency Injection based configuration (`provideShimmerConfig`)
+  - Full support for `templateProps` and reactive inputs
+  - Supports Standalone Components and Signals API
+  - Parity with React, Vue, and Svelte adapters
 
 ### Changed
 
