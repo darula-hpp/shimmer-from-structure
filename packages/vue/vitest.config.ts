@@ -5,6 +5,7 @@ import vue from '@vitejs/plugin-vue';
 export default defineConfig({
   plugins: [vue()],
   test: {
+    pool: 'threads',
     globals: true,
     environment: 'jsdom',
     setupFiles: './src/test/setup.ts',
