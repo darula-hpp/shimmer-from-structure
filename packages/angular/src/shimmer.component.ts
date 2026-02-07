@@ -10,8 +10,10 @@ import {
   OnDestroy,
   ChangeDetectionStrategy,
   ViewEncapsulation,
+  inject,
+  PLATFORM_ID,
 } from '@angular/core';
-import { NgIf, NgFor } from '@angular/common';
+import { NgIf, NgFor, isPlatformBrowser } from '@angular/common';
 import {
   extractElementInfo,
   createResizeObserver,
@@ -142,8 +144,10 @@ export class ShimmerComponent implements AfterViewInit, OnDestroy {
   // Internal state
   elements = signal<ElementInfo[]>([]);
 
-  // Inject global config
+  // Inject dependencies
   private contextConfig = injectShimmerConfig();
+  private platformId = inject(PLATFORM_ID);
+  private isBrowser = isPlatformBrowser(this.platformId);
 
   // Resolved values (props > context > defaults)
   resolvedShimmerColor = computed(() => this.shimmerColor() ?? this.contextConfig.shimmerColor);
@@ -162,6 +166,9 @@ export class ShimmerComponent implements AfterViewInit, OnDestroy {
   constructor() {
     // Effect to re-measure when loading state changes
     effect((onCleanup) => {
+      // Skip effect on server
+      if (!this.isBrowser) return;
+
       const isLoading = this.loading();
       const container = this.measureContainer();
 
@@ -195,6 +202,8 @@ export class ShimmerComponent implements AfterViewInit, OnDestroy {
   }
 
   private setupObservers(): void {
+    if (!this.isBrowser) return;
+
     const container = this.measureContainer()?.nativeElement;
     if (!container) return;
 
@@ -217,6 +226,8 @@ export class ShimmerComponent implements AfterViewInit, OnDestroy {
   }
 
   private measureElements(): void {
+    if (!this.isBrowser) return;
+
     const container = this.measureContainer()?.nativeElement;
     if (!container || !this.loading()) return;
 
@@ -259,6 +270,8 @@ export class ShimmerComponent implements AfterViewInit, OnDestroy {
    * Useful when content changes programmatically.
    */
   remeasure(): void {
-    this.measureElements();
+    if (this.isBrowser) {
+      this.measureElements();
+    }
   }
 }

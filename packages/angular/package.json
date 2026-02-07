@@ -1,10 +1,10 @@
 {
   "name": "@shimmer-from-structure/angular",
-  "version": "2.2.0",
+  "version": "2.2.3",
   "description": "Angular adapter for shimmer-from-structure",
   "peerDependencies": {
-    "@angular/core": "^19.0.0",
-    "@angular/common": "^19.0.0"
+    "@angular/core": "^19.0.0 || ^20.0.0 || ^21.0.0",
+    "@angular/common": "^19.0.0 || ^20.0.0 || ^21.0.0"
   },
   "dependencies": {
     "@shimmer-from-structure/core": "*"
