@@ -42,6 +42,7 @@ export default defineConfig({
   },
   // @ts-expect-error vitest types are not automatically included in vite config type
   test: {
+    pool: 'threads',
     globals: true,
     environment: 'jsdom',
     setupFiles: './src/test/setup.ts',

@@ -71,7 +71,7 @@ interface Notification {
   standalone: true,
   imports: [CommonModule, ShimmerComponent],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit, OnDestroy {
   // Loading states
@@ -113,10 +113,34 @@ export class AppComponent implements OnInit, OnDestroy {
   ];
 
   transactionsTemplate: Transaction[] = [
-    { id: '1', description: 'Loading transaction...', amount: '$0.00', date: 'Jan 00', status: 'pending' },
-    { id: '2', description: 'Loading transaction...', amount: '$0.00', date: 'Jan 00', status: 'pending' },
-    { id: '3', description: 'Loading transaction...', amount: '$0.00', date: 'Jan 00', status: 'pending' },
-    { id: '4', description: 'Loading transaction...', amount: '$0.00', date: 'Jan 00', status: 'pending' },
+    {
+      id: '1',
+      description: 'Loading transaction...',
+      amount: '$0.00',
+      date: 'Jan 00',
+      status: 'pending',
+    },
+    {
+      id: '2',
+      description: 'Loading transaction...',
+      amount: '$0.00',
+      date: 'Jan 00',
+      status: 'pending',
+    },
+    {
+      id: '3',
+      description: 'Loading transaction...',
+      amount: '$0.00',
+      date: 'Jan 00',
+      status: 'pending',
+    },
+    {
+      id: '4',
+      description: 'Loading transaction...',
+      amount: '$0.00',
+      date: 'Jan 00',
+      status: 'pending',
+    },
   ];
 
   activityTemplate: ActivityItem[] = [
@@ -127,17 +151,57 @@ export class AppComponent implements OnInit, OnDestroy {
 
   teamTemplate: TeamMember[] = [
     { id: '1', name: 'Loading...', role: 'Role', avatar: 'https://via.placeholder.com/40' },
-    { id: '2', name: 'Loading...', role: 'Lead Developer', avatar: 'https://via.placeholder.com/40' },
+    {
+      id: '2',
+      name: 'Loading...',
+      role: 'Lead Developer',
+      avatar: 'https://via.placeholder.com/40',
+    },
     { id: '3', name: 'Loading...', role: 'Role', avatar: 'https://via.placeholder.com/40' },
-    { id: '4', name: 'Loading...', role: 'Backend Developer', avatar: 'https://via.placeholder.com/40' },
+    {
+      id: '4',
+      name: 'Loading...',
+      role: 'Backend Developer',
+      avatar: 'https://via.placeholder.com/40',
+    },
   ];
 
   ordersTemplate: Order[] = [
-    { id: '1', customer: 'Loading Name...', product: 'Loading Product...', amount: '$000.00', status: 'Processing' },
-    { id: '2', customer: 'Loading Name...', product: 'Loading Product...', amount: '$000.00', status: 'Processing' },
-    { id: '3', customer: 'Loading Name...', product: 'Loading Product...', amount: '$000.00', status: 'Processing' },
-    { id: '4', customer: 'Loading Name...', product: 'Loading Product...', amount: '$000.00', status: 'Processing' },
-    { id: '5', customer: 'Loading Name...', product: 'Loading Product...', amount: '$000.00', status: 'Processing' },
+    {
+      id: '1',
+      customer: 'Loading Name...',
+      product: 'Loading Product...',
+      amount: '$000.00',
+      status: 'Processing',
+    },
+    {
+      id: '2',
+      customer: 'Loading Name...',
+      product: 'Loading Product...',
+      amount: '$000.00',
+      status: 'Processing',
+    },
+    {
+      id: '3',
+      customer: 'Loading Name...',
+      product: 'Loading Product...',
+      amount: '$000.00',
+      status: 'Processing',
+    },
+    {
+      id: '4',
+      customer: 'Loading Name...',
+      product: 'Loading Product...',
+      amount: '$000.00',
+      status: 'Processing',
+    },
+    {
+      id: '5',
+      customer: 'Loading Name...',
+      product: 'Loading Product...',
+      amount: '$000.00',
+      status: 'Processing',
+    },
   ];
 
   chartTemplate: ChartDataPoint[] = [
@@ -151,9 +215,27 @@ export class AppComponent implements OnInit, OnDestroy {
   ];
 
   notificationsTemplate: Notification[] = [
-    { id: '1', title: 'Loading...', message: 'Notification message loading...', time: '0m', type: 'info' },
-    { id: '2', title: 'Loading...', message: 'Notification message loading...', time: '0m', type: 'info' },
-    { id: '3', title: 'Loading...', message: 'Notification message loading...', time: '0m', type: 'info' },
+    {
+      id: '1',
+      title: 'Loading...',
+      message: 'Notification message loading...',
+      time: '0m',
+      type: 'info',
+    },
+    {
+      id: '2',
+      title: 'Loading...',
+      message: 'Notification message loading...',
+      time: '0m',
+      type: 'info',
+    },
+    {
+      id: '3',
+      title: 'Loading...',
+      message: 'Notification message loading...',
+      time: '0m',
+      type: 'info',
+    },
   ];
 
   // Real data
@@ -173,31 +255,107 @@ export class AppComponent implements OnInit, OnDestroy {
   ];
 
   realTransactions: Transaction[] = [
-    { id: '1', description: 'Premium Subscription', amount: '$99.00', date: 'Jan 20', status: 'completed' },
-    { id: '2', description: 'API Credits Purchase', amount: '$250.00', date: 'Jan 19', status: 'completed' },
-    { id: '3', description: 'Team License Upgrade', amount: '$499.00', date: 'Jan 18', status: 'pending' },
-    { id: '4', description: 'Support Add-on', amount: '$49.00', date: 'Jan 17', status: 'completed' },
+    {
+      id: '1',
+      description: 'Premium Subscription',
+      amount: '$99.00',
+      date: 'Jan 20',
+      status: 'completed',
+    },
+    {
+      id: '2',
+      description: 'API Credits Purchase',
+      amount: '$250.00',
+      date: 'Jan 19',
+      status: 'completed',
+    },
+    {
+      id: '3',
+      description: 'Team License Upgrade',
+      amount: '$499.00',
+      date: 'Jan 18',
+      status: 'pending',
+    },
+    {
+      id: '4',
+      description: 'Support Add-on',
+      amount: '$49.00',
+      date: 'Jan 17',
+      status: 'completed',
+    },
   ];
 
   realActivity: ActivityItem[] = [
-    { id: '1', user: 'Mike Chen', action: 'deployed', target: 'v2.4.1 to production', time: '5m ago' },
-    { id: '2', user: 'Emily Davis', action: 'approved', target: 'design review for Dashboard', time: '23m ago' },
+    {
+      id: '1',
+      user: 'Mike Chen',
+      action: 'deployed',
+      target: 'v2.4.1 to production',
+      time: '5m ago',
+    },
+    {
+      id: '2',
+      user: 'Emily Davis',
+      action: 'approved',
+      target: 'design review for Dashboard',
+      time: '23m ago',
+    },
     { id: '3', user: 'Alex Rivera', action: 'commented on', target: 'Issue #847', time: '1h ago' },
   ];
 
   realTeam: TeamMember[] = [
-    { id: '1', name: 'Mike Chen', role: 'Lead Developer', avatar: 'https://i.pravatar.cc/40?img=11' },
+    {
+      id: '1',
+      name: 'Mike Chen',
+      role: 'Lead Developer',
+      avatar: 'https://i.pravatar.cc/40?img=11',
+    },
     { id: '2', name: 'Emily Davis', role: 'UX Designer', avatar: 'https://i.pravatar.cc/40?img=9' },
-    { id: '3', name: 'Alex Rivera', role: 'Backend Engineer', avatar: 'https://i.pravatar.cc/40?img=12' },
+    {
+      id: '3',
+      name: 'Alex Rivera',
+      role: 'Backend Engineer',
+      avatar: 'https://i.pravatar.cc/40?img=12',
+    },
     { id: '4', name: 'Jordan Lee', role: 'DevOps', avatar: 'https://i.pravatar.cc/40?img=15' },
   ];
 
   realOrders: Order[] = [
-    { id: '101', customer: 'Alice Freeman', product: 'Pro Plan (Monthly)', amount: '$29.00', status: 'Delivered' },
-    { id: '102', customer: 'Bob Smith', product: 'Enterprise License', amount: '$499.00', status: 'Processing' },
-    { id: '103', customer: 'Charlie Brown', product: 'Basic Plan (Yearly)', amount: '$99.00', status: 'Cancelled' },
-    { id: '104', customer: 'David Wilson', product: 'Pro Plan (Monthly)', amount: '$29.00', status: 'Delivered' },
-    { id: '105', customer: 'Eva Green', product: 'Consulting Hour', amount: '$150.00', status: 'Delivered' },
+    {
+      id: '101',
+      customer: 'Alice Freeman',
+      product: 'Pro Plan (Monthly)',
+      amount: '$29.00',
+      status: 'Delivered',
+    },
+    {
+      id: '102',
+      customer: 'Bob Smith',
+      product: 'Enterprise License',
+      amount: '$499.00',
+      status: 'Processing',
+    },
+    {
+      id: '103',
+      customer: 'Charlie Brown',
+      product: 'Basic Plan (Yearly)',
+      amount: '$99.00',
+      status: 'Cancelled',
+    },
+    {
+      id: '104',
+      customer: 'David Wilson',
+      product: 'Pro Plan (Monthly)',
+      amount: '$29.00',
+      status: 'Delivered',
+    },
+    {
+      id: '105',
+      customer: 'Eva Green',
+      product: 'Consulting Hour',
+      amount: '$150.00',
+      status: 'Delivered',
+    },
   ];
 
   realChartData: ChartDataPoint[] = [
@@ -211,9 +369,27 @@ export class AppComponent implements OnInit, OnDestroy {
   ];
 
   realNotifications: Notification[] = [
-    { id: '1', title: 'New Comment', message: 'Sarah commented on your pull request #42', time: '2m', type: 'info' },
-    { id: '2', title: 'Build Passed', message: 'CI pipeline completed successfully', time: '15m', type: 'success' },
-    { id: '3', title: 'Security Alert', message: 'New login detected from Safari on macOS', time: '1h', type: 'warning' },
+    {
+      id: '1',
+      title: 'New Comment',
+      message: 'Sarah commented on your pull request #42',
+      time: '2m',
+      type: 'info',
+    },
+    {
+      id: '2',
+      title: 'Build Passed',
+      message: 'CI pipeline completed successfully',
+      time: '15m',
+      type: 'success',
+    },
+    {
+      id: '3',
+      title: 'Security Alert',
+      message: 'New login detected from Safari on macOS',
+      time: '1h',
+      type: 'warning',
+    },
   ];
 
   private timeouts: number[] = [];
@@ -223,7 +399,7 @@ export class AppComponent implements OnInit, OnDestroy {
     console.log('Initial loading states:', {
       user: this.loadingUser(),
       stats: this.loadingStats(),
-      transactions: this.loadingTransactions()
+      transactions: this.loadingTransactions(),
     });
     this.loadData();
   }
@@ -236,60 +412,78 @@ export class AppComponent implements OnInit, OnDestroy {
     console.log('loadData() called - setting up timeouts');
 
     // User loads first (fast)
-    this.timeouts.push(window.setTimeout(() => {
-      console.log('User timeout fired - setting loading to false');
-      this.user.set(this.realUser);
-      this.loadingUser.set(false);
-      console.log('loadingUser is now:', this.loadingUser());
-    }, 4800));
+    this.timeouts.push(
+      window.setTimeout(() => {
+        console.log('User timeout fired - setting loading to false');
+        this.user.set(this.realUser);
+        this.loadingUser.set(false);
+        console.log('loadingUser is now:', this.loadingUser());
+      }, 4800)
+    );
 
     // Stats load second
-    this.timeouts.push(window.setTimeout(() => {
-      this.stats.set(this.realStats);
-      this.loadingStats.set(false);
-    }, 8200));
+    this.timeouts.push(
+      window.setTimeout(() => {
+        this.stats.set(this.realStats);
+        this.loadingStats.set(false);
+      }, 8200)
+    );
 
     // Chart loads third
-    this.timeouts.push(window.setTimeout(() => {
-      this.chartData.set(this.realChartData);
-      this.loadingChart.set(false);
-    }, 5400));
+    this.timeouts.push(
+      window.setTimeout(() => {
+        this.chartData.set(this.realChartData);
+        this.loadingChart.set(false);
+      }, 5400)
+    );
 
     // Team loads fourth
-    this.timeouts.push(window.setTimeout(() => {
-      this.team.set(this.realTeam);
-      this.loadingTeam.set(false);
-    }, 4600));
+    this.timeouts.push(
+      window.setTimeout(() => {
+        this.team.set(this.realTeam);
+        this.loadingTeam.set(false);
+      }, 4600)
+    );
 
     // Activity loads fifth
-    this.timeouts.push(window.setTimeout(() => {
-      this.activity.set(this.realActivity);
-      this.loadingActivity.set(false);
-    }, 8000));
+    this.timeouts.push(
+      window.setTimeout(() => {
+        this.activity.set(this.realActivity);
+        this.loadingActivity.set(false);
+      }, 8000)
+    );
 
     // Transactions load last
-    this.timeouts.push(window.setTimeout(() => {
-      this.transactions.set(this.realTransactions);
-      this.loadingTransactions.set(false);
-    }, 9500));
+    this.timeouts.push(
+      window.setTimeout(() => {
+        this.transactions.set(this.realTransactions);
+        this.loadingTransactions.set(false);
+      }, 9500)
+    );
 
     // Orders load independently
-    this.timeouts.push(window.setTimeout(() => {
-      this.orders.set(this.realOrders);
-      this.loadingOrders.set(false);
-    }, 7800));
+    this.timeouts.push(
+      window.setTimeout(() => {
+        this.orders.set(this.realOrders);
+        this.loadingOrders.set(false);
+      }, 7800)
+    );
 
     // Notifications (delayed like lazy loading)
-    this.timeouts.push(window.setTimeout(() => {
-      this.notifications.set(this.realNotifications);
-      this.loadingNotifications.set(false);
-    }, 8000));
+    this.timeouts.push(
+      window.setTimeout(() => {
+        this.notifications.set(this.realNotifications);
+        this.loadingNotifications.set(false);
+      }, 8000)
+    );
 
     // Context Example loads extra slow
-    this.timeouts.push(window.setTimeout(() => {
-      this.contextData.set(this.realTeam.slice(0, 2));
-      this.loadingContextExample.set(false);
-    }, 9000));
+    this.timeouts.push(
+      window.setTimeout(() => {
+        this.contextData.set(this.realTeam.slice(0, 2));
+        this.loadingContextExample.set(false);
+      }, 9000)
+    );
   }
 
   handleReload() {
@@ -323,7 +517,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   getChartHeight(data: ChartDataPoint[], maxHeight: number): number {
-    const maxRevenue = Math.max(...data.map(d => d.revenue));
+    const maxRevenue = Math.max(...data.map((d) => d.revenue));
     return maxHeight * (maxRevenue / 10000);
   }
 }

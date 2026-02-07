@@ -1,237 +1,287 @@
 <div class="dashboard">
-    <!-- Header -->
-    <header class="dashboard-header">
-        <div class="header-content">
-            <h1>✨ Shimmer From Structure</h1>
-            <p>Real-world dashboard demo with independent loading states</p>
-        </div>
-        <button class="reload-btn" (click)="handleReload()">
-            ↻ Reload Demo
-        </button>
-    </header>
-
-    <!-- User Profile Section -->
-    <section class="dashboard-section">
-        <shimmer [loading]="loadingUser()" shimmerColor="rgba(139, 92, 246, 0.4)"
-            backgroundColor="rgba(139, 92, 246, 0.1)">
-            <div class="user-profile">
-                <img [src]="(user() || userTemplate).avatar" [alt]="(user() || userTemplate).name"
-                    class="user-avatar" />
-                <div class="user-info">
-                    <h2>{{ (user() || userTemplate).name }}</h2>
-                    <p class="user-email">{{ (user() || userTemplate).email }}</p>
-                    <span class="user-status">{{ (user() || userTemplate).role }}</span>
-                </div>
-                <div class="status-indicator" [class.online]="(user() || userTemplate).status === 'online'"
-                    [class.away]="(user() || userTemplate).status === 'away'">
-                    <span class="status-dot"></span>
-                    {{ (user() || userTemplate).status }}
-                </div>
-            </div>
-        </shimmer>
-    </section>
-
-    <!-- Stats Section -->
-    <section class="dashboard-section">
-        <shimmer [loading]="loadingStats()" shimmerColor="rgba(16, 185, 129, 0.4)"
-            backgroundColor="rgba(16, 185, 129, 0.1)">
-            <div class="stats-grid">
-                @for (stat of (stats() || statsTemplate); track stat.label) {
-                <div class="stat-card">
-                    <p class="stat-label">{{ stat.label }}</p>
-                    <h3 class="stat-value">{{ stat.value }}</h3>
-                    <span class="stat-change" [class.up]="stat.trend === 'up'" [class.down]="stat.trend === 'down'">
-                        {{ stat.trend === 'up' ? '↑' : '↓' }} {{ stat.change }}
-                    </span>
-                </div>
-                }
-            </div>
-        </shimmer>
-    </section>
-
-    <!-- Notifications Panel (Simulated lazy load) -->
-    <section class="dashboard-section suspense-section">
-        <div class="suspense-label">⚡ Simulated Lazy Loading</div>
-        <shimmer [loading]="loadingNotifications()" shimmerColor="rgba(251, 191, 36, 0.4)"
-            backgroundColor="rgba(251, 191, 36, 0.1)">
-            <div class="notifications-panel">
-                <h3 class="section-title">🔔 Notifications</h3>
-                <div class="notifications-list">
-                    @for (notif of (notifications() || notificationsTemplate); track notif.id) {
-                    <div class="notification-item" [class]="notif.type">
-                        <div class="notification-header">
-                            <span class="notification-title">{{ notif.title }}</span>
-                            <span class="notification-time">{{ notif.time }}</span>
-                        </div>
-                        <p class="notification-message">{{ notif.message }}</p>
-                    </div>
-                    }
-                </div>
-            </div>
-        </shimmer>
-    </section>
-
-    <!-- Orders Table Section -->
-    <section class="dashboard-section">
-        <shimmer [loading]="loadingOrders()">
-            <div class="orders-table-container">
-                <h3 class="section-title">Recent Orders</h3>
-                <table class="orders-table">
-                    <thead>
-                        <tr>
-                            <th style="width: 25%">Customer</th>
-                            <th style="width: 40%">Product</th>
-                            <th style="width: 20%">Amount</th>
-                            <th style="width: 15%">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @for (order of (orders() || ordersTemplate); track order.id) {
-                        <tr>
-                            <td style="font-weight: 500">{{ order.customer }}</td>
-                            <td style="color: #888">{{ order.product }}</td>
-                            <td style="font-weight: 600">{{ order.amount }}</td>
-                            <td>
-                                <span class="order-status" [class.delivered]="order.status === 'Delivered'"
-                                    [class.processing]="order.status === 'Processing'"
-                                    [class.cancelled]="order.status === 'Cancelled'">
-                                    {{ order.status }}
-                                </span>
-                            </td>
-                        </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </shimmer>
-    </section>
-
-    <!-- Revenue Chart Section -->
-    <section class="dashboard-section">
-        <shimmer [loading]="loadingChart()">
-            <div class="revenue-chart">
-                <h3 class="section-title">Weekly Revenue</h3>
-                <div class="chart-container">
-                    <!-- Simple SVG bar chart -->
-                    <svg width="100%" height="250" style="overflow: visible;" viewBox="0 0 700 250">
-                        @for (point of (chartData() || chartTemplate); track point.name; let i = $index) {
-                        <g [attr.transform]="'translate(' + (i * 100 + 35) + ', 0)'">
-                            <!-- Revenue bar -->
-                            <rect x="0" [attr.y]="250 - (point.revenue / 100)" width="42"
-                                [attr.height]="point.revenue / 100" fill="#14b8a6" opacity="0.6" rx="4" />
-                            <!-- Orders bar -->
-                            <rect x="49" [attr.y]="250 - (point.orders * 2.5)" width="42"
-                                [attr.height]="point.orders * 2.5" fill="#06b6d4" opacity="0.6" rx="4" />
-                            <!-- Label -->
-                            <text x="42" y="245" fill="rgba(255,255,255,0.5)" font-size="12" text-anchor="middle">
-                                {{ point.name }}
-                            </text>
-                        </g>
-                        }
-                    </svg>
-                </div>
-            </div>
-        </shimmer>
-    </section>
-
-    <!-- Main Content Grid -->
-    <div class="content-grid">
-        <!-- Transactions -->
-        <section class="dashboard-section">
-            <shimmer [loading]="loadingTransactions()">
-                <div class="transactions-list">
-                    <h3 class="section-title">Recent Transactions</h3>
-                    <div class="transactions">
-                        @for (tx of (transactions() || transactionsTemplate); track tx.id) {
-                        <div class="transaction-item">
-                            <div class="tx-info">
-                                <p class="tx-description">{{ tx.description }}</p>
-                                <span class="tx-date">{{ tx.date }}</span>
-                            </div>
-                            <div class="tx-right">
-                                <span class="tx-amount">{{ tx.amount }}</span>
-                                <span class="tx-status" [class]="tx.status">{{ tx.status }}</span>
-                            </div>
-                        </div>
-                        }
-                    </div>
-                </div>
-            </shimmer>
-        </section>
-
-        <!-- Right Sidebar -->
-        <div class="sidebar">
-            <!-- Activity Feed -->
-            <section class="dashboard-section">
-                <shimmer [loading]="loadingActivity()">
-                    <div class="activity-feed">
-                        <h3 class="section-title">Recent Activity</h3>
-                        <div class="activities">
-                            @for (act of (activity() || activityTemplate); track act.id) {
-                            <div class="activity-item">
-                                <div class="activity-dot"></div>
-                                <div class="activity-content">
-                                    <p>
-                                        <strong>{{ act.user }}</strong> {{ act.action }}
-                                        <span class="activity-target">{{ act.target }}</span>
-                                    </p>
-                                    <span class="activity-time">{{ act.time }}</span>
-                                </div>
-                            </div>
-                            }
-                        </div>
-                    </div>
-                </shimmer>
-            </section>
-
-            <!-- Team Members -->
-            <section class="dashboard-section">
-                <shimmer [loading]="loadingTeam()">
-                    <div class="team-members">
-                        <h3 class="section-title">Team</h3>
-                        <div class="members-grid">
-                            @for (member of (team() || teamTemplate); track member.id) {
-                            <div class="member-card">
-                                <img [src]="member.avatar" [alt]="member.name" class="member-avatar" />
-                                <p class="member-name">{{ member.name }}</p>
-                                <span class="member-role">{{ member.role }}</span>
-                            </div>
-                            }
-                        </div>
-                    </div>
-                </shimmer>
-            </section>
-        </div>
+  <!-- Header -->
+  <header class="dashboard-header">
+    <div class="header-content">
+      <h1>✨ Shimmer From Structure</h1>
+      <p>Real-world dashboard demo with independent loading states</p>
     </div>
+    <button class="reload-btn" (click)="handleReload()">↻ Reload Demo</button>
+  </header>
 
-    <!-- Context API Example -->
-    <section class="dashboard-section context-section">
-        <h3 class="section-title">🎨 Config Provider Example (Custom Theme)</h3>
-        <p>
-            This section uses custom shimmer configuration to apply a global blue theme.
-        </p>
+  <!-- User Profile Section -->
+  <section class="dashboard-section">
+    <shimmer
+      [loading]="loadingUser()"
+      shimmerColor="rgba(139, 92, 246, 0.4)"
+      backgroundColor="rgba(139, 92, 246, 0.1)"
+    >
+      <div class="user-profile">
+        <img
+          [src]="(user() || userTemplate).avatar"
+          [alt]="(user() || userTemplate).name"
+          class="user-avatar"
+        />
+        <div class="user-info">
+          <h2>{{ (user() || userTemplate).name }}</h2>
+          <p class="user-email">{{ (user() || userTemplate).email }}</p>
+          <span class="user-status">{{ (user() || userTemplate).role }}</span>
+        </div>
+        <div
+          class="status-indicator"
+          [class.online]="(user() || userTemplate).status === 'online'"
+          [class.away]="(user() || userTemplate).status === 'away'"
+        >
+          <span class="status-dot"></span>
+          {{ (user() || userTemplate).status }}
+        </div>
+      </div>
+    </shimmer>
+  </section>
 
-        <shimmer [loading]="loadingContextExample()" shimmerColor="rgba(56, 189, 248, 0.4)"
-            backgroundColor="rgba(56, 189, 248, 0.1)" [duration]="3" [fallbackBorderRadius]="16">
-            <div class="members-grid">
-                @for (member of (contextData() || teamTemplate.slice(0, 2)); track member.id) {
-                <div class="member-card">
-                    <div style="width: 40px; height: 40px; border-radius: 50%; background: #333; margin-bottom: 8px;">
-                    </div>
-                    <p class="member-name">{{ member.name }}</p>
-                    <span class="member-role">{{ member.role }}</span>
-                </div>
-                }
+  <!-- Stats Section -->
+  <section class="dashboard-section">
+    <shimmer
+      [loading]="loadingStats()"
+      shimmerColor="rgba(16, 185, 129, 0.4)"
+      backgroundColor="rgba(16, 185, 129, 0.1)"
+    >
+      <div class="stats-grid">
+        @for (stat of stats() || statsTemplate; track stat.label) {
+          <div class="stat-card">
+            <p class="stat-label">{{ stat.label }}</p>
+            <h3 class="stat-value">{{ stat.value }}</h3>
+            <span
+              class="stat-change"
+              [class.up]="stat.trend === 'up'"
+              [class.down]="stat.trend === 'down'"
+            >
+              {{ stat.trend === 'up' ? '↑' : '↓' }} {{ stat.change }}
+            </span>
+          </div>
+        }
+      </div>
+    </shimmer>
+  </section>
+
+  <!-- Notifications Panel (Simulated lazy load) -->
+  <section class="dashboard-section suspense-section">
+    <div class="suspense-label">⚡ Simulated Lazy Loading</div>
+    <shimmer
+      [loading]="loadingNotifications()"
+      shimmerColor="rgba(251, 191, 36, 0.4)"
+      backgroundColor="rgba(251, 191, 36, 0.1)"
+    >
+      <div class="notifications-panel">
+        <h3 class="section-title">🔔 Notifications</h3>
+        <div class="notifications-list">
+          @for (notif of notifications() || notificationsTemplate; track notif.id) {
+            <div class="notification-item" [class]="notif.type">
+              <div class="notification-header">
+                <span class="notification-title">{{ notif.title }}</span>
+                <span class="notification-time">{{ notif.time }}</span>
+              </div>
+              <p class="notification-message">{{ notif.message }}</p>
             </div>
-        </shimmer>
+          }
+        </div>
+      </div>
+    </shimmer>
+  </section>
+
+  <!-- Orders Table Section -->
+  <section class="dashboard-section">
+    <shimmer [loading]="loadingOrders()">
+      <div class="orders-table-container">
+        <h3 class="section-title">Recent Orders</h3>
+        <table class="orders-table">
+          <thead>
+            <tr>
+              <th style="width: 25%">Customer</th>
+              <th style="width: 40%">Product</th>
+              <th style="width: 20%">Amount</th>
+              <th style="width: 15%">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (order of orders() || ordersTemplate; track order.id) {
+              <tr>
+                <td style="font-weight: 500">{{ order.customer }}</td>
+                <td style="color: #888">{{ order.product }}</td>
+                <td style="font-weight: 600">{{ order.amount }}</td>
+                <td>
+                  <span
+                    class="order-status"
+                    [class.delivered]="order.status === 'Delivered'"
+                    [class.processing]="order.status === 'Processing'"
+                    [class.cancelled]="order.status === 'Cancelled'"
+                  >
+                    {{ order.status }}
+                  </span>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </shimmer>
+  </section>
+
+  <!-- Revenue Chart Section -->
+  <section class="dashboard-section">
+    <shimmer [loading]="loadingChart()">
+      <div class="revenue-chart">
+        <h3 class="section-title">Weekly Revenue</h3>
+        <div class="chart-container">
+          <!-- Simple SVG bar chart -->
+          <svg width="100%" height="250" style="overflow: visible" viewBox="0 0 700 250">
+            @for (point of chartData() || chartTemplate; track point.name; let i = $index) {
+              <g [attr.transform]="'translate(' + (i * 100 + 35) + ', 0)'">
+                <!-- Revenue bar -->
+                <rect
+                  x="0"
+                  [attr.y]="250 - point.revenue / 100"
+                  width="42"
+                  [attr.height]="point.revenue / 100"
+                  fill="#14b8a6"
+                  opacity="0.6"
+                  rx="4"
+                />
+                <!-- Orders bar -->
+                <rect
+                  x="49"
+                  [attr.y]="250 - point.orders * 2.5"
+                  width="42"
+                  [attr.height]="point.orders * 2.5"
+                  fill="#06b6d4"
+                  opacity="0.6"
+                  rx="4"
+                />
+                <!-- Label -->
+                <text
+                  x="42"
+                  y="245"
+                  fill="rgba(255,255,255,0.5)"
+                  font-size="12"
+                  text-anchor="middle"
+                >
+                  {{ point.name }}
+                </text>
+              </g>
+            }
+          </svg>
+        </div>
+      </div>
+    </shimmer>
+  </section>
+
+  <!-- Main Content Grid -->
+  <div class="content-grid">
+    <!-- Transactions -->
+    <section class="dashboard-section">
+      <shimmer [loading]="loadingTransactions()">
+        <div class="transactions-list">
+          <h3 class="section-title">Recent Transactions</h3>
+          <div class="transactions">
+            @for (tx of transactions() || transactionsTemplate; track tx.id) {
+              <div class="transaction-item">
+                <div class="tx-info">
+                  <p class="tx-description">{{ tx.description }}</p>
+                  <span class="tx-date">{{ tx.date }}</span>
+                </div>
+                <div class="tx-right">
+                  <span class="tx-amount">{{ tx.amount }}</span>
+                  <span class="tx-status" [class]="tx.status">{{ tx.status }}</span>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </shimmer>
     </section>
 
-    <!-- Footer -->
-    <footer class="dashboard-footer">
-        <p>
-            Each section loads independently with its own shimmer effect.
-            <br />
-            Angular signals track loading states for reactive shimmer updates.
-        </p>
-    </footer>
+    <!-- Right Sidebar -->
+    <div class="sidebar">
+      <!-- Activity Feed -->
+      <section class="dashboard-section">
+        <shimmer [loading]="loadingActivity()">
+          <div class="activity-feed">
+            <h3 class="section-title">Recent Activity</h3>
+            <div class="activities">
+              @for (act of activity() || activityTemplate; track act.id) {
+                <div class="activity-item">
+                  <div class="activity-dot"></div>
+                  <div class="activity-content">
+                    <p>
+                      <strong>{{ act.user }}</strong> {{ act.action }}
+                      <span class="activity-target">{{ act.target }}</span>
+                    </p>
+                    <span class="activity-time">{{ act.time }}</span>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        </shimmer>
+      </section>
+
+      <!-- Team Members -->
+      <section class="dashboard-section">
+        <shimmer [loading]="loadingTeam()">
+          <div class="team-members">
+            <h3 class="section-title">Team</h3>
+            <div class="members-grid">
+              @for (member of team() || teamTemplate; track member.id) {
+                <div class="member-card">
+                  <img [src]="member.avatar" [alt]="member.name" class="member-avatar" />
+                  <p class="member-name">{{ member.name }}</p>
+                  <span class="member-role">{{ member.role }}</span>
+                </div>
+              }
+            </div>
+          </div>
+        </shimmer>
+      </section>
+    </div>
+  </div>
+
+  <!-- Context API Example -->
+  <section class="dashboard-section context-section">
+    <h3 class="section-title">🎨 Config Provider Example (Custom Theme)</h3>
+    <p>This section uses custom shimmer configuration to apply a global blue theme.</p>
+
+    <shimmer
+      [loading]="loadingContextExample()"
+      shimmerColor="rgba(56, 189, 248, 0.4)"
+      backgroundColor="rgba(56, 189, 248, 0.1)"
+      [duration]="3"
+      [fallbackBorderRadius]="16"
+    >
+      <div class="members-grid">
+        @for (member of contextData() || teamTemplate.slice(0, 2); track member.id) {
+          <div class="member-card">
+            <div
+              style="
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background: #333;
+                margin-bottom: 8px;
+              "
+            ></div>
+            <p class="member-name">{{ member.name }}</p>
+            <span class="member-role">{{ member.role }}</span>
+          </div>
+        }
+      </div>
+    </shimmer>
+  </section>
+
+  <!-- Footer -->
+  <footer class="dashboard-footer">
+    <p>
+      Each section loads independently with its own shimmer effect.
+      <br />
+      Angular signals track loading states for reactive shimmer updates.
+    </p>
+  </footer>
 </div>

@@ -25,7 +25,7 @@ export const SHIMMER_CONFIG = new InjectionToken<ShimmerConfig>('SHIMMER_CONFIG'
  * ```
  */
 export function provideShimmerConfig(config: ShimmerConfig) {
-    return { provide: SHIMMER_CONFIG, useValue: config };
+  return { provide: SHIMMER_CONFIG, useValue: config };
 }
 
 /**
@@ -34,14 +34,14 @@ export function provideShimmerConfig(config: ShimmerConfig) {
  * Returns fully resolved ShimmerContextValue with all properties defined.
  */
 export function injectShimmerConfig(): ShimmerContextValue {
-    const config = inject(SHIMMER_CONFIG, { optional: true }) ?? {};
+  const config = inject(SHIMMER_CONFIG, { optional: true }) ?? {};
 
-    return {
-        shimmerColor: config.shimmerColor ?? shimmerDefaults.shimmerColor,
-        backgroundColor: config.backgroundColor ?? shimmerDefaults.backgroundColor,
-        duration: config.duration ?? shimmerDefaults.duration,
-        fallbackBorderRadius: config.fallbackBorderRadius ?? shimmerDefaults.fallbackBorderRadius,
-    };
+  return {
+    shimmerColor: config.shimmerColor ?? shimmerDefaults.shimmerColor,
+    backgroundColor: config.backgroundColor ?? shimmerDefaults.backgroundColor,
+    duration: config.duration ?? shimmerDefaults.duration,
+    fallbackBorderRadius: config.fallbackBorderRadius ?? shimmerDefaults.fallbackBorderRadius,
+  };
 }
 
 // Re-export defaults for testing and reference
