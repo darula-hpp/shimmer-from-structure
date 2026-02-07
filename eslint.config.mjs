@@ -90,6 +90,18 @@ export default tseslint.config(
     },
   },
 
+  // Angular Package Configuration
+  {
+    files: ['packages/angular/**/*.ts'],
+    languageOptions: {
+      parserOptions: {
+        projectService: false,
+        project: 'packages/angular/tsconfig.eslint.json',
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+  },
+
   // Disable type-checking rules for JS files
   {
     files: ['**/*.js', '**/*.mjs'],
