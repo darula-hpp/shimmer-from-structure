@@ -1,11 +1,12 @@
 # ✨ Shimmer From Structure
 
-A **React, Vue, Svelte & Angular** shimmer/skeleton library that **automatically adapts to your component's runtime structure**. Unlike traditional shimmer libraries that require pre-defined skeleton structures, this library analyzes your actual component's DOM at runtime and generates a shimmer effect that perfectly matches its layout.
+A **React, Vue, Svelte, Angular & SolidJS** shimmer/skeleton library that **automatically adapts to your component's runtime structure**. Unlike traditional shimmer libraries that require pre-defined skeleton structures, this library analyzes your actual component's DOM at runtime and generates a shimmer effect that perfectly matches its layout.
 
 ![React](https://img.shields.io/badge/React-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 ![Vue](https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D)
 ![Svelte](https://img.shields.io/badge/Svelte-ff3e00?style=for-the-badge&logo=svelte&logoColor=white)
 ![Angular](https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white)
+![SolidJS](https://img.shields.io/badge/SolidJS-%232c4f7c?style=for-the-badge&logo=solid&logoColor=white)
 
 ![Shimmer From Structure Demo](https://github.com/darula-hpp/shimmer-from-structure/raw/main/example/preview.gif)
 
@@ -19,7 +20,7 @@ Traditional shimmer libraries require you to:
 
 **Shimmer From Structure** eliminates all of that:
 
-- ✅ **Works with React, Vue, Svelte & Angular** - Simple, framework-specific adapters
+- ✅ **Works with React, Vue, Svelte, Angular & SolidJS** - Simple, framework-specific adapters
 - ✅ Automatically measures your component's structure at runtime
 - ✅ Generates shimmer effects that match actual dimensions
 - ✅ Zero maintenance - works with any layout changes
@@ -76,6 +77,15 @@ Angular support requires importing from the specific adapter:
 ```typescript
 // Angular projects
 import { ShimmerComponent } from '@shimmer-from-structure/angular';
+```
+
+### SolidJS
+
+SolidJS support requires importing from the specific adapter:
+
+```tsx
+// SolidJS projects
+import { Shimmer } from '@shimmer-from-structure/solid';
 ```
 
 ---
@@ -171,6 +181,29 @@ import { ShimmerComponent } from '@shimmer-from-structure/angular';
 })
 export class UserCardComponent {
   isLoading = signal(true);
+}
+```
+
+## SolidJS
+
+### Static Content
+
+```tsx
+import { createSignal } from 'solid-js';
+import { Shimmer } from '@shimmer-from-structure/solid';
+
+function UserCard() {
+  const [isLoading, setIsLoading] = createSignal(true);
+
+  return (
+    <Shimmer loading={isLoading()}>
+      <div class="card">
+        <img src="avatar.jpg" class="avatar" />
+        <h2>John Doe</h2>
+        <p>Software Engineer</p>
+      </div>
+    </Shimmer>
+  );
 }
 ```
 
@@ -287,6 +320,31 @@ export class AppComponent {
 }
 ```
 
+**SolidJS**
+
+```tsx
+import { createSignal } from 'solid-js';
+import { Shimmer } from '@shimmer-from-structure/solid';
+import { UserCard } from './UserCard';
+
+function App() {
+  const [loading, setLoading] = createSignal(true);
+  const [user, setUser] = createSignal(null);
+
+  const userTemplate = {
+    name: 'Loading...',
+    role: 'Loading role...',
+    avatar: 'placeholder.jpg',
+  };
+
+  return (
+    <Shimmer loading={loading()} templateProps={{ user: userTemplate }}>
+      <UserCard user={user() || userTemplate} />
+    </Shimmer>
+  );
+}
+```
+
 The `templateProps` object is spread onto the first child component when loading, allowing it to render with mock data for measurement.
 
 ## 🎨 API Reference
@@ -376,6 +434,24 @@ The `templateProps` object is spread onto the first child component when loading
     [user]="user()"
     [settings]="settings()" />
 </shimmer>
+```
+
+**SolidJS**
+
+```tsx
+<Shimmer
+  loading={isLoading()}
+  shimmerColor="rgba(255, 255, 255, 0.2)"
+  backgroundColor="rgba(255, 255, 255, 0.1)"
+  duration={2}
+  fallbackBorderRadius={8}
+  templateProps={{
+    user: userTemplate,
+    settings: settingsTemplate,
+  }}
+>
+  <MyComponent user={user()} settings={settings()} />
+</Shimmer>
 ```
 
 ## 🔧 How It Works
@@ -702,6 +778,27 @@ bootstrapApplication(AppComponent, {
 });
 ```
 
+### SolidJS (ShimmerProvider)
+
+```tsx
+import { Shimmer, ShimmerProvider } from '@shimmer-from-structure/solid';
+
+function App() {
+  return (
+    <ShimmerProvider
+      config={{
+        shimmerColor: 'rgba(56, 189, 248, 0.4)',
+        backgroundColor: 'rgba(56, 189, 248, 0.1)',
+        duration: 2.5,
+        fallbackBorderRadius: 8,
+      }}
+    >
+      <Dashboard />
+    </ShimmerProvider>
+  );
+}
+```
+
 ---
 
 Components inside the provider automatically inherit values. You can still override them locally:
@@ -744,6 +841,16 @@ Components inside the provider automatically inherit values. You can still overr
 
 <!-- Overrides injected settings -->
 <shimmer [loading]="true" [duration]="0.5"><app-fast-card /></shimmer>
+```
+
+**SolidJS**
+
+```tsx
+<!-- Inherits blue theme from provider -->
+<Shimmer loading={true()}><UserCard /></Shimmer>
+
+<!-- Overrides provider settings -->
+<Shimmer loading={true()} duration={0.5}><FastCard /></Shimmer>
 ```
 
 ### Accessing Config in Hooks/Composables
@@ -791,6 +898,17 @@ import { injectShimmerConfig } from '@shimmer-from-structure/angular';
 })
 export class MyComponent {
   config = injectShimmerConfig();
+}
+```
+
+**SolidJS**
+
+```tsx
+import { useShimmerConfig } from '@shimmer-from-structure/solid';
+
+function MyComponent() {
+  const config = useShimmerConfig();
+  return <div style={{ background: config.backgroundColor }}>...</div>;
 }
 ```
 
@@ -890,9 +1008,10 @@ This library is organized as a monorepo with four packages:
 | `@shimmer-from-structure/vue`     | Vue 3 adapter                               | 3.89 kB  |
 | `@shimmer-from-structure/svelte`  | Svelte adapter                              | 4.60 kB  |
 | `@shimmer-from-structure/angular` | Angular adapter                             | 6.83 kB  |
+| `@shimmer-from-structure/solid`   | SolidJS adapter                             | 4.01 kB  |
 | `shimmer-from-structure`          | Main package (React backward compatibility) | 0.93 kB  |
 
-The core package contains all DOM measurement logic, while React, Vue, Svelte and Angular packages are thin wrappers that provide framework-specific APIs.
+The core package contains all DOM measurement logic, while React, Vue, Svelte, Angular and SolidJS packages are thin wrappers that provide framework-specific APIs.
 
 ## 🚧 Roadmap
 
@@ -902,6 +1021,7 @@ The core package contains all DOM measurement logic, while React, Vue, Svelte an
 - [x] **Vue.js adapter**
 - [x] **Svelte adapter**
 - [x] **Angular adapter**
+- [x] **SolidJS adapter**
 - [ ] Better async component support
 - [ ] Customizable shimmer direction (vertical, diagonal)
 - [ ] React Native support

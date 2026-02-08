@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.0] - 2026-02-08
+
+### Added
+
+- **SolidJS Support**: Introduced full support for SolidJS with a dedicated adapter package (`@shimmer-from-structure/solid`).
+  - Native `<Shimmer>` component using SolidJS's fine-grained reactivity.
+  - Context-based configuration using `ShimmerProvider`.
+  - Full support for `templateProps` and reactive signals.
+  - Parity with React, Vue, Svelte, and Angular adapters.
+- **SolidJS Example App**: Added a high-fidelity dashboard demo showcasing independent loading states and reactive reflow in SolidJS (`examples/solid-example`).
+- **CI/CD Integration**: Integrated SolidJS adapter into the automated build and test pipeline.
+
+### Changed
+
+- **Monorepo Versioning**: Synchronized all packages to version `2.3.0` for consistency.
+- **CI Pipeline**: Re-enabled build and test steps in GitHub Actions for all frameworks.
+
 ## [2.2.3] - 2026-02-07
 
 ### Fixed

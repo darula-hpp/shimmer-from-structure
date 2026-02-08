@@ -1,6 +1,6 @@
 {
   "name": "@shimmer-from-structure/react",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "React adapter for shimmer-from-structure",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
