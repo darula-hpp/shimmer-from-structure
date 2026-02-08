@@ -13,9 +13,12 @@ export interface ShimmerProps {
    */
   fallbackBorderRadius?: number;
   /**
-   * Object mapping prop names to their mock/template values.
-   * These props will be injected into the first child when loading.
-   * Example: { user: { name: "Lorem" }, settings: { theme: "dark" } }
+   * Optional parameter for API consistency with React/Vue/Angular adapters.
+   * In SolidJS, you typically use explicit conditionals instead:
+   * `<UserCard user={user() || userTemplate} />`
+   *
+   * This parameter doesn't inject props automatically - you control data flow yourself.
+   * @example { user: { name: "Lorem" }, settings: { theme: "dark" } }
    */
   templateProps?: Record<string, unknown>;
 }

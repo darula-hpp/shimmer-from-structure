@@ -68,9 +68,16 @@ function UserCard() {
 }
 ```
 
-### Dynamic Content with `templateProps`
+### Dynamic Content with Template Data
 
-For components that receive dynamic data via props, use `templateProps` to provide mock data for skeleton generation:
+**Important: SolidJS Pattern**  
+Unlike React/Vue where `templateProps` automatically injects data, SolidJS uses an **explicit, developer-controlled** approach. You pass the template data directly to your child components using conditionals (e.g., `user() || userTemplate`). This is **more idiomatic** for SolidJS because:
+
+- ✅ **Explicit over implicit** - you see exactly what data is being used
+- ✅ **Type-safe** - TypeScript can infer correct types
+- ✅ **No magic** - no hidden element cloning
+
+The `templateProps` parameter exists for **API consistency** across frameworks and for **documentation purposes**, but you control the data flow yourself.
 
 ```tsx
 import { Shimmer } from '@shimmer-from-structure/solid';
@@ -104,14 +111,28 @@ function App() {
   const [user, setUser] = createSignal<User | null>(null);
 
   return (
-    <Shimmer loading={loading()} templateProps={{ user: userTemplate }}>
+    <Shimmer loading={loading()}>
       <UserCard user={user() || userTemplate} />
     </Shimmer>
   );
 }
 ```
 
-The `templateProps` object is passed to the first child component when loading, allowing it to render with mock data for measurement.
+**Pattern Summary:**
+
+```tsx
+// ✅ SolidJS way: explicit conditional (templateProps is optional)
+<Shimmer loading={loading()}>
+  <MyComponent data={realData() || template} />
+</Shimmer>
+
+// Also valid (for API consistency with other frameworks)
+<Shimmer loading={loading()} templateProps={{ data: template }}>
+  <MyComponent data={realData() || template} />
+</Shimmer>
+```
+
+> **Note:** The `templateProps` parameter exists for API consistency with React/Vue/Angular, but it's **not required** in SolidJS. You control the data flow directly with conditionals, which is more idiomatic.
 
 ## API Reference
 

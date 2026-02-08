@@ -38,20 +38,12 @@ export const Shimmer = (props: ShimmerProps) => {
   const resolvedChildren = resolveChildren(() => merged.children);
 
   // Prepare children with injected template props when loading
+  // NOTE: Unlike React/Vue, SolidJS doesn't clone elements with injected props.
+  // Instead, developers use explicit conditionals: <UserCard user={user() || template} />
+  // This is more idiomatic for SolidJS (explicit over implicit, type-safe, no magic).
+  // The templateProps parameter exists for API consistency across frameworks.
   const childrenToRender = () => {
-    if (!merged.loading || !merged.templateProps) {
-      return resolvedChildren();
-    }
-
-    const childArray = resolvedChildren();
-    if (!childArray) {
-      return childArray;
-    }
-
-    // For SolidJS, we need to handle the children differently
-    // We'll pass the template props directly to the component
-    // This is a simplified approach - in reality, you might need to clone elements
-    return childArray;
+    return resolvedChildren();
   };
 
   // Measure the structure using createEffect (SolidJS equivalent of useLayoutEffect)

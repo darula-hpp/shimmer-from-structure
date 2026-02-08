@@ -335,14 +335,14 @@ const App: Component = () => {
 
       {/* User Profile Section */}
       <section class="dashboard-section">
-        <Shimmer loading={loadingUser()} templateProps={{ user: userTemplate }}>
+        <Shimmer loading={loadingUser()}>
           <UserProfile user={user() || userTemplate} />
         </Shimmer>
       </section>
 
       {/* Stats Section */}
       <section class="dashboard-section">
-        <Shimmer loading={loadingStats()} templateProps={{ stats: statsTemplate }}>
+        <Shimmer loading={loadingStats()}>
           <StatsGrid stats={stats() || statsTemplate} />
         </Shimmer>
       </section>
@@ -351,10 +351,7 @@ const App: Component = () => {
       <div class="content-grid">
         {/* Transactions */}
         <section class="dashboard-section">
-          <Shimmer
-            loading={loadingTransactions()}
-            templateProps={{ transactions: transactionsTemplate }}
-          >
+          <Shimmer loading={loadingTransactions()}>
             <TransactionsList transactions={transactions() || transactionsTemplate} />
           </Shimmer>
         </section>
@@ -363,7 +360,7 @@ const App: Component = () => {
         <div class="sidebar">
           {/* Team Members */}
           <section class="dashboard-section">
-            <Shimmer loading={loadingTeam()} templateProps={{ members: teamTemplate }}>
+            <Shimmer loading={loadingTeam()}>
               <TeamMembers members={team() || teamTemplate} />
             </Shimmer>
           </section>
@@ -398,10 +395,7 @@ const App: Component = () => {
                 fallbackBorderRadius: 8,
               }}
             >
-              <Shimmer
-                loading={loadingContextExample()}
-                templateProps={{ members: teamTemplate.slice(0, 2) }}
-              >
+              <Shimmer loading={loadingContextExample()}>
                 <TeamMembers members={contextData() || teamTemplate.slice(0, 2)} />
               </Shimmer>
             </ShimmerProvider>
