@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import { defineConfig } from 'vite';
 import { svelte, vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import { resolve } from 'path';
@@ -40,7 +41,6 @@ export default defineConfig({
       },
     },
   },
-  // @ts-expect-error vitest types are not automatically included in vite config type
   test: {
     pool: 'threads',
     globals: true,
@@ -48,4 +48,5 @@ export default defineConfig({
     setupFiles: './src/test/setup.ts',
     css: true,
   },
-});
+  /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+} as any);
