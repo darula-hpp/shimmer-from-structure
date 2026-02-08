@@ -102,6 +102,17 @@ export default tseslint.config(
     },
   },
 
+  // SolidJS Package Configuration
+  {
+    files: ['packages/solid/**/*.{ts,tsx}', 'examples/solid-example/**/*.{ts,tsx}'],
+    rules: {
+      'react-hooks/rules-of-hooks': 'off',
+      'react-hooks/exhaustive-deps': 'off',
+      'react-hooks/refs': 'off',
+      'react-refresh/only-export-components': 'off',
+    },
+  },
+
   // Disable type-checking rules for JS files
   {
     files: ['**/*.js', '**/*.mjs'],
