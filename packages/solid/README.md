@@ -1,32 +1,111 @@
-# ✨ Shimmer From Structure - SolidJS Adapter
+# ✨ Shimmer From Structure
 
-A **SolidJS** shimmer/skeleton library that **automatically adapts to your component's runtime structure**. Unlike traditional shimmer libraries that require pre-defined skeleton structures, this library analyzes your actual component's DOM at runtime and generates a shimmer effect that perfectly matches its layout.
+A **React, Vue, Svelte, Angular & SolidJS** shimmer/skeleton library that **automatically adapts to your component's runtime structure**. Unlike traditional shimmer libraries that require pre-defined skeleton structures, this library analyzes your actual component's DOM at runtime and generates a shimmer effect that perfectly matches its layout.
 
-![SolidJS](https://img.shields.io/badge/SolidJS-%2335495e?style=for-the-badge&logo=solid&logoColor=%234FC08D)
+![React](https://img.shields.io/badge/React-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![Vue](https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D)
+![Svelte](https://img.shields.io/badge/Svelte-ff3e00?style=for-the-badge&logo=svelte&logoColor=white)
+![Angular](https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white)
+![SolidJS](https://img.shields.io/badge/SolidJS-%232c4f7c?style=for-the-badge&logo=solid&logoColor=white)
+
+![Shimmer From Structure Demo](https://github.com/darula-hpp/shimmer-from-structure/raw/main/example/preview.gif)
+
+## Why This Library?
+
+Traditional shimmer libraries require you to:
+
+- Manually create skeleton components that mirror your real components
+- Maintain two versions of each component (real + skeleton)
+- Update skeletons every time your layout changes
+
+**Shimmer From Structure** eliminates all of that:
+
+- ✅ **Works with React, Vue, Svelte, Angular & SolidJS** - Simple, framework-specific adapters
+- ✅ Automatically measures your component's structure at runtime
+- ✅ Generates shimmer effects that match actual dimensions
+- ✅ Zero maintenance - works with any layout changes
+- ✅ Works with complex nested structures
+- ✅ Supports dynamic data with `templateProps`
+- ✅ Preserves container backgrounds during loading
+- ✅ Auto-detects border-radius from your CSS
 
 ## Installation
 
 ```bash
-npm install @shimmer-from-structure/solid
+npm install shimmer-from-structure
 # or
-yarn add @shimmer-from-structure/solid
+yarn add shimmer-from-structure
 # or
-pnpm add @shimmer-from-structure/solid
+pnpm add shimmer-from-structure
 ```
 
-## Quick Start
+## 🎯 Framework Support
+
+Shimmer From Structure provides dedicated packages for **React and Vue**.
+
+### React
+
+React support is built into the main package for backward compatibility:
+
+```javascript
+// React projects (or @shimmer-from-structure/react)
+import { Shimmer } from 'shimmer-from-structure';
+```
+
+### Vue 3
+
+Vue support requires importing from the specific adapter:
+
+```javascript
+// Vue 3 projects
+import { Shimmer } from '@shimmer-from-structure/vue';
+```
+
+### Svelte
+
+Svelte support is provided via its own adapter:
+
+```javascript
+// Svelte projects
+import { Shimmer } from '@shimmer-from-structure/svelte';
+```
+
+### Angular
+
+Angular support requires importing from the specific adapter:
+
+```typescript
+// Angular projects
+import { ShimmerComponent } from '@shimmer-from-structure/angular';
+```
+
+### SolidJS
+
+SolidJS support requires importing from the specific adapter:
 
 ```tsx
+// SolidJS projects
 import { Shimmer } from '@shimmer-from-structure/solid';
-import { createSignal } from 'solid-js';
+```
+
+---
+
+# 📖 Basic Usage
+
+## React
+
+### Static Content
+
+For components with hardcoded/static content:
+
+```tsx
+import { Shimmer } from 'shimmer-from-structure';
 
 function UserCard() {
-  const [loading, setLoading] = createSignal(true);
-
   return (
-    <Shimmer loading={loading()}>
-      <div class="card">
-        <img src="avatar.jpg" class="avatar" />
+    <Shimmer loading={isLoading}>
+      <div className="card">
+        <img src="avatar.jpg" className="avatar" />
         <h2>John Doe</h2>
         <p>Software Engineer</p>
       </div>
@@ -35,27 +114,87 @@ function UserCard() {
 }
 ```
 
-## Features
-
-✅ Built with modern SolidJS primitives (`createSignal`, `createEffect`, `Show`, `For`)  
-✅ Automatically measures your component's structure at runtime  
-✅ Generates shimmer effects that match actual dimensions  
-✅ Zero maintenance - works with any layout changes  
-✅ Works with complex nested structures  
-✅ Supports dynamic data with `templateProps`  
-✅ Preserves container backgrounds during loading  
-✅ Auto-detects border-radius from your CSS
-
-## Basic Usage
+## Vue
 
 ### Static Content
 
-For components with hardcoded/static content:
+```vue
+<script setup>
+import { ref } from 'vue';
+import { Shimmer } from '@shimmer-from-structure/vue';
+
+const isLoading = ref(true);
+</script>
+
+<template>
+  <Shimmer :loading="isLoading">
+    <div class="card">
+      <img src="avatar.jpg" class="avatar" />
+      <h2>John Doe</h2>
+      <p>Software Engineer</p>
+    </div>
+  </Shimmer>
+</template>
+```
+
+## Svelte
+
+### Static Content
+
+```svelte
+<script>
+import { Shimmer } from '@shimmer-from-structure/svelte';
+
+let isLoading = $state(true);
+</script>
+
+<Shimmer loading={isLoading}>
+  <div class="card">
+    <img src="avatar.jpg" class="avatar" />
+    <h2>John Doe</h2>
+    <p>Software Engineer</p>
+  </div>
+</Shimmer>
+```
+
+## Angular
+
+### Static Content
+
+```typescript
+import { Component, signal } from '@angular/core';
+import { ShimmerComponent } from '@shimmer-from-structure/angular';
+
+@Component({
+  selector: 'app-user-card',
+  standalone: true,
+  imports: [ShimmerComponent],
+  template: `
+    <shimmer [loading]="isLoading()">
+      <div class="card">
+        <img src="avatar.jpg" class="avatar" />
+        <h2>John Doe</h2>
+        <p>Software Engineer</p>
+      </div>
+    </shimmer>
+  `,
+})
+export class UserCardComponent {
+  isLoading = signal(true);
+}
+```
+
+## SolidJS
+
+### Static Content
 
 ```tsx
+import { createSignal } from 'solid-js';
 import { Shimmer } from '@shimmer-from-structure/solid';
 
 function UserCard() {
+  const [isLoading, setIsLoading] = createSignal(true);
+
   return (
     <Shimmer loading={isLoading()}>
       <div class="card">
@@ -68,87 +207,236 @@ function UserCard() {
 }
 ```
 
-### Dynamic Content with Template Data
+---
 
-**Important: SolidJS Pattern**  
-Unlike React/Vue where `templateProps` automatically injects data, SolidJS uses an **explicit, developer-controlled** approach. You pass the template data directly to your child components using conditionals (e.g., `user() || userTemplate`). This is **more idiomatic** for SolidJS because:
+### Dynamic Content with `templateProps`
 
-- ✅ **Explicit over implicit** - you see exactly what data is being used
-- ✅ **Type-safe** - TypeScript can infer correct types
-- ✅ **No magic** - no hidden element cloning
+For components that receive dynamic data via props, use `templateProps` to provide mock data for skeleton generation:
 
-The `templateProps` parameter exists for **API consistency** across frameworks and for **documentation purposes**, but you control the data flow yourself.
+**React**
 
 ```tsx
-import { Shimmer } from '@shimmer-from-structure/solid';
-import { createSignal } from 'solid-js';
-import type { Component } from 'solid-js';
-
-interface User {
-  name: string;
-  role: string;
-  avatar: string;
-}
+import { Shimmer } from 'shimmer-from-structure';
 
 // Your component that accepts props
-const UserCard: Component<{ user: User }> = (props) => (
-  <div class="card">
-    <img src={props.user.avatar} class="avatar" />
-    <h2>{props.user.name}</h2>
-    <p>{props.user.role}</p>
+const UserCard = ({ user }) => (
+  <div className="card">
+    <img src={user.avatar} className="avatar" />
+    <h2>{user.name}</h2>
+    <p>{user.role}</p>
   </div>
 );
 
 // Template data for the skeleton
-const userTemplate: User = {
+const userTemplate = {
   name: 'Loading...',
   role: 'Loading role...',
   avatar: 'placeholder.jpg',
 };
 
 function App() {
-  const [loading, setLoading] = createSignal(true);
-  const [user, setUser] = createSignal<User | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
 
   return (
-    <Shimmer loading={loading()}>
+    <Shimmer loading={loading} templateProps={{ user: userTemplate }}>
+      <UserCard user={user || userTemplate} />
+    </Shimmer>
+  );
+}
+```
+
+**Vue**
+
+```vue
+<script setup>
+import { ref } from 'vue';
+import { Shimmer } from '@shimmer-from-structure/vue';
+import UserCard from './UserCard.vue';
+
+const loading = ref(true);
+const userTemplate = {
+  name: 'Loading...',
+  role: 'Loading role...',
+  avatar: 'placeholder.jpg',
+};
+</script>
+
+<template>
+  <Shimmer :loading="loading" :templateProps="{ user: userTemplate }">
+    <UserCard :user="user || userTemplate" />
+  </Shimmer>
+</template>
+```
+
+**Svelte**
+
+```svelte
+<script>
+import { Shimmer } from '@shimmer-from-structure/svelte';
+import UserCard from './UserCard.svelte';
+
+let { user } = $props();
+let loading = $state(true);
+
+const userTemplate = {
+  name: 'Loading...',
+  role: 'Loading role...',
+  avatar: 'placeholder.jpg',
+};
+</script>
+
+<Shimmer loading={loading} templateProps={{ user: userTemplate }}>
+  <UserCard user={user || userTemplate} />
+</Shimmer>
+```
+
+**Angular**
+
+```typescript
+import { Component, signal } from '@angular/core';
+import { ShimmerComponent } from '@shimmer-from-structure/angular';
+import { UserCardComponent } from './user-card.component';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [ShimmerComponent, UserCardComponent],
+  template: `
+    <shimmer [loading]="loading()" [templateProps]="{ user: userTemplate }">
+      <app-user-card [user]="user() || userTemplate" />
+    </shimmer>
+  `,
+})
+export class AppComponent {
+  loading = signal(true);
+  user = signal<User | null>(null);
+
+  userTemplate = {
+    name: 'Loading...',
+    role: 'Loading role...',
+    avatar: 'placeholder.jpg',
+  };
+}
+```
+
+**SolidJS**
+
+```tsx
+import { createSignal } from 'solid-js';
+import { Shimmer } from '@shimmer-from-structure/solid';
+import { UserCard } from './UserCard';
+
+function App() {
+  const [loading, setLoading] = createSignal(true);
+  const [user, setUser] = createSignal(null);
+
+  const userTemplate = {
+    name: 'Loading...',
+    role: 'Loading role...',
+    avatar: 'placeholder.jpg',
+  };
+
+  return (
+    <Shimmer loading={loading()} templateProps={{ user: userTemplate }}>
       <UserCard user={user() || userTemplate} />
     </Shimmer>
   );
 }
 ```
 
-**Pattern Summary:**
+The `templateProps` object is spread onto the first child component when loading, allowing it to render with mock data for measurement.
 
-```tsx
-// ✅ SolidJS way: explicit conditional (templateProps is optional)
-<Shimmer loading={loading()}>
-  <MyComponent data={realData() || template} />
-</Shimmer>
-
-// Also valid (for API consistency with other frameworks)
-<Shimmer loading={loading()} templateProps={{ data: template }}>
-  <MyComponent data={realData() || template} />
-</Shimmer>
-```
-
-> **Note:** The `templateProps` parameter exists for API consistency with React/Vue/Angular, but it's **not required** in SolidJS. You control the data flow directly with conditionals, which is more idiomatic.
-
-## API Reference
+## 🎨 API Reference
 
 ### `<Shimmer>` Props
 
-| Prop                   | Type                      | Default                       | Description                                               |
-| ---------------------- | ------------------------- | ----------------------------- | --------------------------------------------------------- |
-| `loading`              | `boolean`                 | `true`                        | Whether to show shimmer effect or actual content          |
-| `children`             | `JSX.Element`             | required                      | The content to render/measure                             |
-| `shimmerColor`         | `string`                  | `'rgba(255, 255, 255, 0.3)'`  | Color of the shimmer wave                                 |
-| `backgroundColor`      | `string`                  | `'rgba(255, 255, 255, 0.08)'` | Background color of shimmer blocks                        |
-| `duration`             | `number`                  | `1.5`                         | Animation duration in seconds                             |
-| `fallbackBorderRadius` | `number`                  | `4`                           | Border radius (px) for elements with no CSS border-radius |
-| `templateProps`        | `Record<string, unknown>` | -                             | Props to inject into first child for skeleton rendering   |
+| Prop                   | Type                      | Default                    | Description                                               |
+| ---------------------- | ------------------------- | -------------------------- | --------------------------------------------------------- |
+| `loading`              | `boolean`                 | `true`                     | Whether to show shimmer effect or actual content          |
+| `children`             | `React.ReactNode`         | required                   | The content to render/measure                             |
+| `shimmerColor`         | `string`                  | `'rgba(255,255,255,0.15)'` | Color of the shimmer wave                                 |
+| `backgroundColor`      | `string`                  | `'rgba(255,255,255,0.08)'` | Background color of shimmer blocks                        |
+| `duration`             | `number`                  | `1.5`                      | Animation duration in seconds                             |
+| `fallbackBorderRadius` | `number`                  | `4`                        | Border radius (px) for elements with no CSS border-radius |
+| `templateProps`        | `Record<string, unknown>` | -                          | Props to inject into first child for skeleton rendering   |
 
 ### Example with All Props
+
+**React**
+
+```tsx
+<Shimmer
+  loading={isLoading}
+  shimmerColor="rgba(255, 255, 255, 0.2)"
+  backgroundColor="rgba(255, 255, 255, 0.1)"
+  duration={2}
+  fallbackBorderRadius={8}
+  templateProps={{
+    user: userTemplate,
+    settings: settingsTemplate,
+  }}
+>
+  <MyComponent user={user} settings={settings} />
+</Shimmer>
+```
+
+**Vue**
+
+```vue
+<Shimmer
+  :loading="isLoading"
+  shimmerColor="rgba(255, 255, 255, 0.2)"
+  backgroundColor="rgba(255, 255, 255, 0.1)"
+  :duration="2"
+  :fallbackBorderRadius="8"
+  :templateProps="{
+    user: userTemplate,
+    settings: settingsTemplate,
+  }"
+>
+  <MyComponent :user="user" :settings="settings" />
+</Shimmer>
+```
+
+**Svelte**
+
+```svelte
+<Shimmer
+  loading={isLoading}
+  shimmerColor="rgba(255, 255, 255, 0.2)"
+  backgroundColor="rgba(255, 255, 255, 0.1)"
+  duration={2}
+  fallbackBorderRadius={8}
+  templateProps={{
+    user: userTemplate,
+    settings: settingsTemplate,
+  }}
+>
+  <MyComponent {user} {settings} />
+</Shimmer>
+```
+
+**Angular**
+
+```typescript
+<shimmer
+  [loading]="isLoading()"
+  shimmerColor="rgba(255, 255, 255, 0.2)"
+  backgroundColor="rgba(255, 255, 255, 0.1)"
+  [duration]="2"
+  [fallbackBorderRadius]="8"
+  [templateProps]="{
+    user: userTemplate,
+    settings: settingsTemplate
+  }">
+  <app-my-component
+    [user]="user()"
+    [settings]="settings()" />
+</shimmer>
+```
+
+**SolidJS**
 
 ```tsx
 <Shimmer
@@ -166,11 +454,11 @@ function App() {
 </Shimmer>
 ```
 
-## How It Works
+## 🔧 How It Works
 
 1. **Visible Container Rendering**: When `loading={true}`, your component renders with transparent text but **visible container backgrounds**
-2. **Template Props Injection**: If `templateProps` is provided, it's passed to the child so dynamic components can render
-3. **DOM Measurement**: Uses `createEffect` to reactively measure all leaf elements via `getBoundingClientRect()`
+2. **Template Props Injection**: If `templateProps` is provided, it's spread onto the first child so dynamic components can render
+3. **DOM Measurement**: Uses `useLayoutEffect` to synchronously measure all leaf elements via `getBoundingClientRect()`
 4. **Border Radius Detection**: Automatically captures each element's computed `border-radius` from CSS
 5. **Shimmer Generation**: Creates absolutely-positioned shimmer blocks matching measured dimensions
 6. **Animation**: Applies smooth gradient animation that sweeps across each block
@@ -188,64 +476,234 @@ function App() {
 
 Each section can have its own independent loading state:
 
-```tsx
-import { createSignal, For } from 'solid-js';
-import { Shimmer } from '@shimmer-from-structure/solid';
+**React**
 
+```tsx
 function Dashboard() {
-  const [loadingUser, setLoadingUser] = createSignal(true);
-  const [loadingStats, setLoadingStats] = createSignal(true);
+  const [loadingUser, setLoadingUser] = useState(true);
+  const [loadingStats, setLoadingStats] = useState(true);
 
   return (
     <>
       {/* User profile section */}
-      <Shimmer loading={loadingUser()} templateProps={{ user: userTemplate }}>
-        <UserProfile user={user()} />
+      <Shimmer loading={loadingUser} templateProps={{ user: userTemplate }}>
+        <UserProfile user={user} />
       </Shimmer>
 
       {/* Stats section - with custom colors */}
       <Shimmer
-        loading={loadingStats()}
+        loading={loadingStats}
         templateProps={{ stats: statsTemplate }}
         shimmerColor="rgba(20, 184, 166, 0.2)"
       >
-        <StatsGrid stats={stats()} />
+        <StatsGrid stats={stats} />
       </Shimmer>
     </>
   );
 }
 ```
 
-### Using with For Component
+**Vue**
 
-```tsx
-<Shimmer loading={loadingTeam()} templateProps={{ members: teamTemplate }}>
-  <div class="team-members">
-    <h3>Team</h3>
-    <div class="members-grid">
-      <For each={members()}>
-        {(member) => (
-          <div class="member-card">
-            <img src={member.avatar} alt={member.name} />
-            <p>{member.name}</p>
-            <span>{member.role}</span>
-          </div>
-        )}
-      </For>
-    </div>
-  </div>
+```vue
+<template>
+  <!-- User profile section -->
+  <Shimmer :loading="loadingUser" :templateProps="{ user: userTemplate }">
+    <UserProfile :user="user" />
+  </Shimmer>
+
+  <!-- Stats section - with custom colors -->
+  <Shimmer
+    :loading="loadingStats"
+    :templateProps="{ stats: statsTemplate }"
+    shimmerColor="rgba(20, 184, 166, 0.2)"
+  >
+    <StatsGrid :stats="stats" />
+  </Shimmer>
+</template>
+```
+
+**Svelte**
+
+```svelte
+<Shimmer loading={loadingUser} templateProps={{ user: userTemplate }}>
+  <UserProfile {user} />
+</Shimmer>
+
+<Shimmer
+  loading={loadingStats}
+  templateProps={{ stats: statsTemplate }}
+  shimmerColor="rgba(20, 184, 166, 0.2)"
+>
+  <StatsGrid {stats} />
 </Shimmer>
 ```
 
-## Global Configuration
+**Angular**
 
-You can set default configuration for your entire app (or specific sections) using the `ShimmerProvider`. This is perfect for maintaining consistent themes without repeating props.
+```typescript
+@Component({
+  template: `
+    <!-- User profile section -->
+    <shimmer [loading]="loadingUser()" [templateProps]="{ user: userTemplate }">
+      <app-user-profile [user]="user()" />
+    </shimmer>
+
+    <!-- Stats section - with custom colors -->
+    <shimmer
+      [loading]="loadingStats()"
+      [templateProps]="{ stats: statsTemplate }"
+      shimmerColor="rgba(20, 184, 166, 0.2)"
+    >
+      <app-stats-grid [stats]="stats()" />
+    </shimmer>
+  `,
+})
+export class DashboardComponent {
+  loadingUser = signal(true);
+  loadingStats = signal(true);
+  // ...
+}
+```
+
+### Transactions List
+
+**React**
 
 ```tsx
-import { Shimmer, ShimmerProvider } from '@shimmer-from-structure/solid';
+<Shimmer loading={loadingTransactions} templateProps={{ transactions: transactionsTemplate }}>
+  <TransactionsList transactions={transactions} />
+</Shimmer>
+```
+
+**Vue**
+
+```vue
+<Shimmer :loading="loadingTransactions" :templateProps="{ transactions: transactionsTemplate }">
+  <TransactionsList :transactions="transactions" />
+</Shimmer>
+```
+
+**Svelte**
+
+```svelte
+<Shimmer loading={loadingTransactions} templateProps={{ transactions: transactionsTemplate }}>
+  <TransactionsList {transactions} />
+</Shimmer>
+```
+
+**Angular**
+
+```typescript
+<shimmer
+  [loading]="loadingTransactions()"
+  [templateProps]="{ transactions: transactionsTemplate }">
+  <app-transactions-list [transactions]="transactions()" />
+</shimmer>
+```
+
+### Team Members Grid
+
+**React**
+
+```tsx
+<Shimmer loading={loadingTeam} templateProps={{ members: teamTemplate }}>
+  <TeamMembers members={team} />
+</Shimmer>
+```
+
+**Vue**
+
+```vue
+<Shimmer :loading="loadingTeam" :templateProps="{ members: teamTemplate }">
+  <TeamMembers :members="team" />
+</Shimmer>
+```
+
+**Svelte**
+
+```svelte
+<Shimmer loading={loadingTeam} templateProps={{ members: teamTemplate }}>
+  <TeamMembers members={team} />
+</Shimmer>
+```
+
+**Angular**
+
+```typescript
+<shimmer
+  [loading]="loadingTeam()"
+  [templateProps]="{ members: teamTemplate }">
+  <app-team-members [members]="team()" />
+</shimmer>
+```
+
+## 🔄 Using with React Suspense
+
+Shimmer works seamlessly as a Suspense fallback. When used this way, `loading` is always `true` because React automatically unmounts the fallback and replaces it with the resolved component.
+
+### Basic Suspense Pattern
+
+```tsx
+import { Suspense, lazy } from 'react';
+import { Shimmer } from 'shimmer-from-structure';
+
+const UserProfile = lazy(() => import('./UserProfile'));
 
 function App() {
   return (
+    <Suspense
+      fallback={
+        <Shimmer loading={true} templateProps={{ user: userTemplate }}>
+          <UserProfile />
+        </Shimmer>
+      }
+    >
+      <UserProfile userId="123" />
+    </Suspense>
+  );
+}
+```
+
+### Why `loading={true}` is Always Set
+
+When using Shimmer as a Suspense fallback:
+
+1. **Suspend**: React renders the fallback → Shimmer shows with `loading={true}`
+2. **Resolve**: React **replaces** the entire fallback with the real component
+3. The Shimmer is **unmounted**, not updated — so you never need to toggle `loading`
+
+### Performance Tips for Suspense
+
+**Memoize the fallback** to prevent re-renders:
+
+```tsx
+const ShimmerFallback = React.memo(() => (
+  <Shimmer loading={true} templateProps={{ user: userTemplate }}>
+    <UserProfile />
+  </Shimmer>
+));
+
+// Usage
+<Suspense fallback={<ShimmerFallback />}>
+  <UserProfile userId="123" />
+</Suspense>;
+```
+
+**Keep templates lightweight** — the DOM is measured synchronously via `useLayoutEffect`, so avoid complex logic in your template.
+
+## Global Configuration
+
+You can set default configuration for your entire app (or specific sections) using the context/provider pattern. This is perfect for maintaining consistent themes without repeating props.
+
+### React (Context API)
+
+```tsx
+import { Shimmer, ShimmerProvider } from '@shimmer-from-structure/react';
+
+function App() {
+  return (
+    // Set global defaults
     <ShimmerProvider
       config={{
         shimmerColor: 'rgba(56, 189, 248, 0.4)', // Blue shimmer
@@ -260,17 +718,190 @@ function App() {
 }
 ```
 
+### Vue (Provide/Inject)
+
+```vue
+<!-- App.vue -->
+<script setup>
+import { provideShimmerConfig } from '@shimmer-from-structure/vue';
+
+provideShimmerConfig({
+  shimmerColor: 'rgba(56, 189, 248, 0.4)',
+  backgroundColor: 'rgba(56, 189, 248, 0.1)',
+  duration: 2.5,
+  fallbackBorderRadius: 8,
+});
+</script>
+
+<template>
+  <router-view />
+</template>
+```
+
+### Svelte (setShimmerConfig)
+
+```svelte
+<!-- App.svelte or any parent component -->
+<script>
+import { setShimmerConfig } from '@shimmer-from-structure/svelte';
+import Dashboard from './Dashboard.svelte';
+
+// Must be called at the top level during component initialization
+setShimmerConfig({
+  shimmerColor: 'rgba(56, 189, 248, 0.4)',
+  backgroundColor: 'rgba(56, 189, 248, 0.1)',
+  duration: 2.5,
+  fallbackBorderRadius: 8,
+});
+</script>
+
+<Dashboard />
+```
+
+### Angular (Dependency Injection)
+
+```typescript
+// main.ts or bootstrapApplication
+import { bootstrapApplication } from '@angular/platform-browser';
+import { provideShimmerConfig } from '@shimmer-from-structure/angular';
+import { AppComponent } from './app/app.component';
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideShimmerConfig({
+      shimmerColor: 'rgba(56, 189, 248, 0.4)',
+      backgroundColor: 'rgba(56, 189, 248, 0.1)',
+      duration: 2.5,
+      fallbackBorderRadius: 8,
+    }),
+  ],
+});
+```
+
+### SolidJS (ShimmerProvider)
+
+```tsx
+import { Shimmer, ShimmerProvider } from '@shimmer-from-structure/solid';
+
+function App() {
+  return (
+    <ShimmerProvider
+      config={{
+        shimmerColor: 'rgba(56, 189, 248, 0.4)',
+        backgroundColor: 'rgba(56, 189, 248, 0.1)',
+        duration: 2.5,
+        fallbackBorderRadius: 8,
+      }}
+    >
+      <Dashboard />
+    </ShimmerProvider>
+  );
+}
+```
+
+---
+
 Components inside the provider automatically inherit values. You can still override them locally:
+
+**React**
 
 ```tsx
 // Inherits blue theme from provider
-<Shimmer loading={true()}><UserCard /></Shimmer>
+<Shimmer loading={true}><UserCard /></Shimmer>
 
 // Overrides provider settings
+<Shimmer loading={true} duration={0.5}><FastCard /></Shimmer>
+```
+
+**Vue**
+
+```vue
+<!-- Inherits blue theme from provider -->
+<Shimmer :loading="true"><UserCard /></Shimmer>
+
+<!-- Overrides provider settings -->
+<Shimmer :loading="true" :duration="0.5"><FastCard /></Shimmer>
+```
+
+**Svelte**
+
+```svelte
+<!-- Inherits blue theme from provider -->
+<Shimmer loading={true}><UserCard /></Shimmer>
+
+<!-- Overrides provider settings -->
+<Shimmer loading={true} duration={0.5}><FastCard /></Shimmer>
+```
+
+**Angular**
+
+```typescript
+<!-- Inherits blue theme from injected config -->
+<shimmer [loading]="true"><app-user-card /></shimmer>
+
+<!-- Overrides injected settings -->
+<shimmer [loading]="true" [duration]="0.5"><app-fast-card /></shimmer>
+```
+
+**SolidJS**
+
+```tsx
+<!-- Inherits blue theme from provider -->
+<Shimmer loading={true()}><UserCard /></Shimmer>
+
+<!-- Overrides provider settings -->
 <Shimmer loading={true()} duration={0.5}><FastCard /></Shimmer>
 ```
 
-### Accessing Config Programmatically
+### Accessing Config in Hooks/Composables
+
+If you need to access the current configuration in your own components:
+
+**React**
+
+```tsx
+import { useShimmerConfig } from 'shimmer-from-structure';
+
+function MyComponent() {
+  const config = useShimmerConfig();
+  return <div style={{ background: config.backgroundColor }}>...</div>;
+}
+```
+
+**Vue**
+
+```javascript
+import { useShimmerConfig } from '@shimmer-from-structure/vue';
+
+const config = useShimmerConfig();
+console.log(config.value.backgroundColor);
+```
+
+**Svelte**
+
+```javascript
+import { getShimmerConfig } from '@shimmer-from-structure/svelte';
+
+const config = getShimmerConfig();
+console.log(config.backgroundColor);
+```
+
+**Angular**
+
+```typescript
+import { Component, inject } from '@angular/core';
+import { injectShimmerConfig } from '@shimmer-from-structure/angular';
+
+@Component({
+  selector: 'app-my-component',
+  template: `<div [style.background]="config.backgroundColor">...</div>`,
+})
+export class MyComponent {
+  config = injectShimmerConfig();
+}
+```
+
+**SolidJS**
 
 ```tsx
 import { useShimmerConfig } from '@shimmer-from-structure/solid';
@@ -297,11 +928,11 @@ Wrap each section in its own Shimmer for independent loading states:
 
 ```tsx
 // ✅ Good - independent loading
-<Shimmer loading={loadingUsers()}><UserList /></Shimmer>
-<Shimmer loading={loadingPosts()}><PostList /></Shimmer>
+<Shimmer loading={loadingUsers}><UserList /></Shimmer>
+<Shimmer loading={loadingPosts}><PostList /></Shimmer>
 
 // ❌ Avoid - all-or-nothing loading
-<Shimmer loading={loadingUsers() || loadingPosts()}>
+<Shimmer loading={loadingUsers || loadingPosts}>
   <UserList />
   <PostList />
 </Shimmer>
@@ -317,49 +948,84 @@ Block elements like `<h1>`, `<p>` take full container width. If you want shimmer
 }
 ```
 
-## SolidJS-Specific Features
+### 5. Provide Container Dimensions
 
-### Reactive Measurement
+For async components (like charts), ensure containers have explicit dimensions so shimmer has something to measure.
 
-The shimmer automatically re-measures when content changes thanks to SolidJS's reactive `createEffect`:
+## ⚡ Performance Considerations
 
-```tsx
-const [data, setData] = createSignal([]);
+- Measurement happens only when `loading` changes to `true`
+- Uses `useLayoutEffect` for synchronous measurement (no flicker)
+- Minimal re-renders - only updates when loading state or children change
+- Lightweight DOM measurements using native browser APIs
 
-// Shimmer adapts when data changes
-<Shimmer loading={loading()}>
-  <For each={data()}>{(item) => <div>{item.name}</div>}</For>
-</Shimmer>;
+- Lightweight DOM measurements using native browser APIs
+
+## 🛠️ Development
+
+This is a monorepo managed with npm workspaces. Each package can be built independently:
+
+```bash
+# Install dependencies
+npm install
+
+# Build all packages
+npm run build
+
+# Build individual packages
+npm run build:core
+npm run build:react
+npm run build:vue
+npm run build:svelte
+npm run build:main
+
+# Run tests
+npm test
 ```
 
-### Performance
-
-- Measurement happens only when `loading()` signal changes to `true`
-- Uses `createEffect` for efficient reactive measurement
-- Minimal re-renders thanks to SolidJS's fine-grained reactivity
-- Automatic cleanup with `onCleanup`
-
-## TypeScript Support
-
-Full TypeScript support with proper type definitions:
-
-```tsx
-import type { Component } from 'solid-js';
-import type { ShimmerProps, ShimmerConfig } from '@shimmer-from-structure/solid';
-
-const MyShimmer: Component<ShimmerProps> = (props) => {
-  // Fully typed props
-};
-```
-
-## License
+## 📝 License
 
 MIT
 
-## Contributing
+## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
+## 🐛 Known Limitations
+
+- **Async components**: Components that render asynchronously (like charts using `ResponsiveContainer`) may need explicit container dimensions
+- **Zero-dimension elements**: Elements with `display: none` or zero dimensions won't be captured
+- **SVG internals**: Only the outer `<svg>` element is captured, not internal paths/shapes
+
+## 🏗️ Monorepo Structure
+
+This library is organized as a monorepo with four packages:
+
+| Package                           | Description                                 | Size     |
+| --------------------------------- | ------------------------------------------- | -------- |
+| `@shimmer-from-structure/core`    | Framework-agnostic DOM utilities            | 1.44 kB  |
+| `@shimmer-from-structure/react`   | React adapter                               | 12.84 kB |
+| `@shimmer-from-structure/vue`     | Vue 3 adapter                               | 3.89 kB  |
+| `@shimmer-from-structure/svelte`  | Svelte adapter                              | 4.60 kB  |
+| `@shimmer-from-structure/angular` | Angular adapter                             | 6.83 kB  |
+| `@shimmer-from-structure/solid`   | SolidJS adapter                             | 4.01 kB  |
+| `shimmer-from-structure`          | Main package (React backward compatibility) | 0.93 kB  |
+
+The core package contains all DOM measurement logic, while React, Vue, Svelte, Angular and SolidJS packages are thin wrappers that provide framework-specific APIs.
+
+## 🚧 Roadmap
+
+- [x] Dynamic data support via `templateProps`
+- [x] Auto border-radius detection
+- [x] Container background visibility
+- [x] **Vue.js adapter**
+- [x] **Svelte adapter**
+- [x] **Angular adapter**
+- [x] **SolidJS adapter**
+- [ ] Better async component support
+- [ ] Customizable shimmer direction (vertical, diagonal)
+- [ ] React Native support
+
 ---
 
-Part of the [shimmer-from-structure](https://github.com/darula-hpp/shimmer-from-structure) monorepo.
+Made with ❤️ for developers tired of maintaining skeleton screens

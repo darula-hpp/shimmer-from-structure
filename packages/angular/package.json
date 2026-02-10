@@ -1,6 +1,6 @@
 {
   "name": "@shimmer-from-structure/angular",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "Angular adapter for shimmer-from-structure",
   "peerDependencies": {
     "@angular/common": "^19.0.0 || ^20.0.0 || ^21.0.0",
@@ -30,7 +30,8 @@
     "build": "ng-packagr -p ng-package.json",
     "test": "vitest run",
     "format": "prettier --write .",
-    "prepublishOnly": "cp ../../README.md ."
+    "prepublishOnly": "cp ../../README.md .",
+    "publish:dist": "npm run build && cd dist && npm publish"
   },
   "keywords": [
     "angular",
