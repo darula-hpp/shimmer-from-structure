@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.1] - 2026-02-10
+
+### Fixed
+
+- **Angular: Publishing Outcome**: Definitively fixed the package publishing structure by enforcing publishing from the `dist` directory.
+  - Added `publish:dist` script to automate the correct workflow (`npm run build && cd dist && npm publish`).
+  - Ensures consumers receive only compiled FESM bundles and types, resolving "Cannot find module" errors.
+
 ## [2.3.0] - 2026-02-08
 
 ### Added
