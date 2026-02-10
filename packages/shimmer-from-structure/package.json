@@ -1,6 +1,6 @@
 {
   "name": "shimmer-from-structure",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "Universal UI skeleton generator for React, Vue and Svelte. Auto-adapts to your component structure with zero maintenance and pixel-perfect accuracy.",
   "main": "index.js",
   "types": "index.d.ts",
@@ -10,7 +10,9 @@
       "default": "./index.js"
     },
     "./vue": "@shimmer-from-structure/vue",
-    "./svelte": "@shimmer-from-structure/svelte"
+    "./svelte": "@shimmer-from-structure/svelte",
+    "./angular": "@shimmer-from-structure/angular",
+    "./solid": "@shimmer-from-structure/solid"
   },
   "scripts": {
     "build": "tsc",
@@ -20,7 +22,9 @@
   "dependencies": {
     "@shimmer-from-structure/react": "*",
     "@shimmer-from-structure/vue": "*",
-    "@shimmer-from-structure/svelte": "*"
+    "@shimmer-from-structure/svelte": "*",
+    "@shimmer-from-structure/angular": "*",
+    "@shimmer-from-structure/solid": "*"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",

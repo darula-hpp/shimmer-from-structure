@@ -1,6 +1,6 @@
 {
   "name": "@shimmer-from-structure/solid",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "SolidJS adapter for shimmer-from-structure",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
