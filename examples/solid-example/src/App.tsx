@@ -325,7 +325,7 @@ const App: Component = () => {
       {/* Header */}
       <header class="dashboard-header">
         <div class="header-content">
-          <h1>✨ Shimmer From Structure - SolidJS</h1>
+          <h1>Shimmer From Structure - SolidJS</h1>
           <p>Real-world dashboard demo with independent loading states</p>
         </div>
         <button class="reload-btn" onClick={handleReload}>

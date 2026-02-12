@@ -746,7 +746,7 @@ function App() {
       {/* Header */}
       <header className="dashboard-header">
         <div className="header-content">
-          <h1>✨ Shimmer From Structure</h1>
+          <h1>Shimmer From Structure</h1>
           <p>Real-world dashboard demo with independent loading states</p>
         </div>
         <button className="reload-btn" onClick={handleReload}>

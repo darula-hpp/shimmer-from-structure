@@ -398,7 +398,7 @@
 <div class="dashboard">
   <header class="dashboard-header">
     <div class="header-content">
-      <h1>✨ Shimmer From Structure (Svelte)</h1>
+      <h1>Shimmer From Structure (Svelte)</h1>
       <p>Real-world dashboard demo with independent loading states</p>
     </div>
     <button class="reload-btn" on:click={loadData}> ↻ Reload Demo </button>
