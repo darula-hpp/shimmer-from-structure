@@ -1,4 +1,5 @@
 import { DocsLayout } from '../../components/DocsLayout';
+import { CodeTabs } from '../../components/CodeTabs';
 
 export default function APIReference() {
   return (
@@ -37,10 +38,10 @@ export default function APIReference() {
                 <code>children</code>
               </td>
               <td>
-                <code>ReactNode</code>
+                <code>Component Children</code>
               </td>
               <td>required</td>
-              <td>The content to render/measure</td>
+              <td>The content to render/measure (Slot/Children)</td>
             </tr>
             <tr>
               <td>
@@ -105,8 +106,14 @@ export default function APIReference() {
 
         <h2>Example with All Props</h2>
 
-        <pre>
-          <code>{`<Shimmer
+        <CodeTabs
+          tabs={[
+            {
+              id: 'react',
+              label: 'React',
+              content: (
+                <pre>
+                  <code>{`<Shimmer
   loading={isLoading}
   shimmerColor="rgba(255, 255, 255, 0.2)"
   backgroundColor="rgba(255, 255, 255, 0.1)"
@@ -117,9 +124,97 @@ export default function APIReference() {
     settings: settingsTemplate,
   }}
 >
-  <MyComponent user={user} settings={settings} />
+  <MyComponent user={user || userTemplate} settings={settings} />
 </Shimmer>`}</code>
-        </pre>
+                </pre>
+              ),
+            },
+            {
+              id: 'vue',
+              label: 'Vue',
+              content: (
+                <pre>
+                  <code>{`<Shimmer
+  :loading="isLoading"
+  shimmerColor="rgba(255, 255, 255, 0.2)"
+  backgroundColor="rgba(255, 255, 255, 0.1)"
+  :duration="2"
+  :fallbackBorderRadius="8"
+  :templateProps="{
+    user: userTemplate,
+    settings: settingsTemplate,
+  }"
+>
+  <MyComponent :user="user || userTemplate" :settings="settings" />
+</Shimmer>`}</code>
+                </pre>
+              ),
+            },
+            {
+              id: 'svelte',
+              label: 'Svelte',
+              content: (
+                <pre>
+                  <code>{`<Shimmer
+  loading={isLoading}
+  shimmerColor="rgba(255, 255, 255, 0.2)"
+  backgroundColor="rgba(255, 255, 255, 0.1)"
+  duration={2}
+  fallbackBorderRadius={8}
+  templateProps={{
+    user: userTemplate,
+    settings: settingsTemplate,
+  }}
+>
+  <MyComponent user={user || userTemplate} {settings} />
+</Shimmer>`}</code>
+                </pre>
+              ),
+            },
+            {
+              id: 'solid',
+              label: 'Solid',
+              content: (
+                <pre>
+                  <code>{`<Shimmer
+  loading={isLoading()}
+  shimmerColor="rgba(255, 255, 255, 0.2)"
+  backgroundColor="rgba(255, 255, 255, 0.1)"
+  duration={2}
+  fallbackBorderRadius={8}
+  templateProps={{
+    user: userTemplate,
+    settings: settingsTemplate,
+  }}
+>
+  <MyComponent user={user() || userTemplate} settings={settings} />
+</Shimmer>`}</code>
+                </pre>
+              ),
+            },
+            {
+              id: 'angular',
+              label: 'Angular',
+              content: (
+                <pre>
+                  <code>{`<shimmer
+  [loading]="isLoading()"
+  shimmerColor="rgba(255, 255, 255, 0.2)"
+  backgroundColor="rgba(255, 255, 255, 0.1)"
+  [duration]="2"
+  [fallbackBorderRadius]="8"
+  [templateProps]="{
+    user: userTemplate,
+    settings: settingsTemplate,
+  }"
+>
+  <app-my-component [user]="user() || userTemplate" [settings]="settings" />
+</shimmer>`}</code>
+                </pre>
+              ),
+            },
+          ]}
+        />
 
         <h2>Global Configuration</h2>
 

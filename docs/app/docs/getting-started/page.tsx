@@ -1,4 +1,5 @@
 import { DocsLayout } from '../../components/DocsLayout';
+import { CodeTabs } from '../../components/CodeTabs';
 
 export default function GettingStarted() {
   return (
@@ -38,48 +39,90 @@ export default function GettingStarted() {
 
         <h2>Installation</h2>
 
-        <p>Install the package using your preferred package manager:</p>
+        <p>Install the package for your specific framework using your preferred package manager:</p>
 
-        <pre>
-          <code>npm install shimmer-from-structure</code>
-        </pre>
-
-        <p>Or with yarn:</p>
-
-        <pre>
-          <code>yarn add shimmer-from-structure</code>
-        </pre>
-
-        <p>Or with pnpm:</p>
-
-        <pre>
-          <code>pnpm add shimmer-from-structure</code>
-        </pre>
-
-        <h2>Framework-Specific Packages</h2>
-
-        <p>For Vue, Svelte, Angular, and SolidJS, use the framework-specific adapters:</p>
-
-        <pre>
-          <code>{`# Vue 3
-npm install @shimmer-from-structure/vue
-
-# Svelte
-npm install @shimmer-from-structure/svelte
-
-# Angular
-npm install @shimmer-from-structure/angular
-
-# SolidJS
-npm install @shimmer-from-structure/solid`}</code>
-        </pre>
+        <CodeTabs
+          tabs={[
+            {
+              id: 'react',
+              label: 'React',
+              content: (
+                <pre>
+                  <code>{`npm install @shimmer-from-structure/react
+# or
+yarn add @shimmer-from-structure/react
+# or
+pnpm add @shimmer-from-structure/react`}</code>
+                </pre>
+              ),
+            },
+            {
+              id: 'vue',
+              label: 'Vue',
+              content: (
+                <pre>
+                  <code>{`npm install @shimmer-from-structure/vue
+# or
+yarn add @shimmer-from-structure/vue
+# or
+pnpm add @shimmer-from-structure/vue`}</code>
+                </pre>
+              ),
+            },
+            {
+              id: 'svelte',
+              label: 'Svelte',
+              content: (
+                <pre>
+                  <code>{`npm install @shimmer-from-structure/svelte
+# or
+yarn add @shimmer-from-structure/svelte
+# or
+pnpm add @shimmer-from-structure/svelte`}</code>
+                </pre>
+              ),
+            },
+            {
+              id: 'solid',
+              label: 'Solid',
+              content: (
+                <pre>
+                  <code>{`npm install @shimmer-from-structure/solid
+# or
+yarn add @shimmer-from-structure/solid
+# or
+pnpm add @shimmer-from-structure/solid`}</code>
+                </pre>
+              ),
+            },
+            {
+              id: 'angular',
+              label: 'Angular',
+              content: (
+                <pre>
+                  <code>{`npm install @shimmer-from-structure/angular
+# or
+yarn add @shimmer-from-structure/angular
+# or
+pnpm add @shimmer-from-structure/angular`}</code>
+                </pre>
+              ),
+            },
+          ]}
+        />
 
         <h2>Quick Example</h2>
 
         <p>Here's a simple example with React:</p>
 
-        <pre>
-          <code>{`import { Shimmer } from 'shimmer-from-structure';
+        <CodeTabs
+          tabs={[
+            {
+              id: 'react',
+              label: 'React',
+              content: (
+                <pre>
+                  <code>{`import { Shimmer } from '@shimmer-from-structure/react';
 
 function UserCard() {
   const [loading, setLoading] = useState(true);
@@ -94,7 +137,100 @@ function UserCard() {
     </Shimmer>
   );
 }`}</code>
-        </pre>
+                </pre>
+              ),
+            },
+            {
+              id: 'vue',
+              label: 'Vue',
+              content: (
+                <pre>
+                  <code>{`<script setup>
+import { Shimmer } from '@shimmer-from-structure/vue';
+const loading = ref(true);
+</script>
+
+<template>
+  <Shimmer :loading="loading">
+    <div class="card">
+      <img src="avatar.jpg" class="avatar" />
+      <h2>John Doe</h2>
+      <p>Software Engineer</p>
+    </div>
+  </Shimmer>
+</template>`}</code>
+                </pre>
+              ),
+            },
+            {
+              id: 'svelte',
+              label: 'Svelte',
+              content: (
+                <pre>
+                  <code>{`<script>
+  import { Shimmer } from '@shimmer-from-structure/svelte';
+  let loading = true;
+</script>
+
+<Shimmer {loading}>
+  <div class="card">
+    <img src="avatar.jpg" class="avatar" />
+    <h2>John Doe</h2>
+    <p>Software Engineer</p>
+  </div>
+</Shimmer>`}</code>
+                </pre>
+              ),
+            },
+            {
+              id: 'solid',
+              label: 'Solid',
+              content: (
+                <pre>
+                  <code>{`import { Shimmer } from '@shimmer-from-structure/solid';
+
+function UserCard() {
+  const [loading, setLoading] = createSignal(true);
+
+  return (
+    <Shimmer loading={loading()}>
+      <div class="card">
+        <img src="avatar.jpg" class="avatar" />
+        <h2>John Doe</h2>
+        <p>Software Engineer</p>
+      </div>
+    </Shimmer>
+  );
+}`}</code>
+                </pre>
+              ),
+            },
+            {
+              id: 'angular',
+              label: 'Angular',
+              content: (
+                <pre>
+                  <code>{`@Component({
+  standalone: true,
+  imports: [ShimmerComponent],
+  template: \`
+    <shimmer [loading]="loading()">
+      <div class="card">
+        <img src="avatar.jpg" class="avatar" />
+        <h2>John Doe</h2>
+        <p>Software Engineer</p>
+      </div>
+    </shimmer>
+  \`
+})
+export class UserCard {
+  loading = signal(true);
+}`}</code>
+                </pre>
+              ),
+            },
+          ]}
+        />
 
         <p>
           That's it! The shimmer effect will automatically match the structure and dimensions of
