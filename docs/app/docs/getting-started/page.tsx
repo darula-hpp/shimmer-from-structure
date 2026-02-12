@@ -113,7 +113,7 @@ pnpm add @shimmer-from-structure/angular`}</code>
 
         <h2>Quick Example</h2>
 
-        <p>Here's a simple example with React:</p>
+        <p>Here's a simple example with each framework:</p>
 
         <CodeTabs
           tabs={[

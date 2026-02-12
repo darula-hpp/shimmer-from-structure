@@ -1,4 +1,5 @@
 import { DocsLayout } from '../../components/DocsLayout';
+import { CodeTabs } from '../../components/CodeTabs';
 
 export default function Installation() {
   return (
@@ -8,89 +9,116 @@ export default function Installation() {
 
         <p>Install Shimmer From Structure using your preferred package manager.</p>
 
-        <h2>React</h2>
-
-        <p>For React projects, install the main package:</p>
-
-        <pre>
-          <code>npm install shimmer-from-structure</code>
-        </pre>
-
-        <p>Or use the dedicated React package:</p>
-
-        <pre>
-          <code>npm install @shimmer-from-structure/react</code>
-        </pre>
-
-        <h3>Usage</h3>
-
-        <pre>
-          <code>{`import { Shimmer } from 'shimmer-from-structure';
-// or
-import { Shimmer } from '@shimmer-from-structure/react';`}</code>
-        </pre>
-
-        <h2>Vue 3</h2>
-
-        <p>For Vue 3 projects, install the Vue adapter:</p>
-
-        <pre>
-          <code>npm install @shimmer-from-structure/vue</code>
-        </pre>
-
-        <h3>Usage</h3>
-
-        <pre>
-          <code>{`import { Shimmer } from '@shimmer-from-structure/vue';`}</code>
-        </pre>
-
-        <h2>Svelte</h2>
-
-        <p>For Svelte projects, install the Svelte adapter:</p>
-
-        <pre>
-          <code>npm install @shimmer-from-structure/svelte</code>
-        </pre>
-
-        <h3>Usage</h3>
-
-        <pre>
-          <code>{`import { Shimmer } from '@shimmer-from-structure/svelte';`}</code>
-        </pre>
-
-        <h2>Angular</h2>
-
-        <p>For Angular projects, install the Angular adapter:</p>
-
-        <pre>
-          <code>npm install @shimmer-from-structure/angular</code>
-        </pre>
-
-        <h3>Usage</h3>
-
-        <pre>
-          <code>{`import { ShimmerComponent } from '@shimmer-from-structure/angular';
+        <CodeTabs
+          tabs={[
+            {
+              id: 'react',
+              label: 'React',
+              content: (
+                <>
+                  <h3>Installation</h3>
+                  <pre>
+                    <code>{`npm install @shimmer-from-structure/react
+# or
+yarn add @shimmer-from-structure/react
+# or
+pnpm add @shimmer-from-structure/react`}</code>
+                  </pre>
+                  <h3>Usage</h3>
+                  <pre>
+                    <code>{`import { Shimmer } from '@shimmer-from-structure/react';`}</code>
+                  </pre>
+                </>
+              ),
+            },
+            {
+              id: 'vue',
+              label: 'Vue',
+              content: (
+                <>
+                  <h3>Installation</h3>
+                  <pre>
+                    <code>{`npm install @shimmer-from-structure/vue
+# or
+yarn add @shimmer-from-structure/vue
+# or
+pnpm add @shimmer-from-structure/vue`}</code>
+                  </pre>
+                  <h3>Usage</h3>
+                  <pre>
+                    <code>{`import { Shimmer } from '@shimmer-from-structure/vue';`}</code>
+                  </pre>
+                </>
+              ),
+            },
+            {
+              id: 'svelte',
+              label: 'Svelte',
+              content: (
+                <>
+                  <h3>Installation</h3>
+                  <pre>
+                    <code>{`npm install @shimmer-from-structure/svelte
+# or
+yarn add @shimmer-from-structure/svelte
+# or
+pnpm add @shimmer-from-structure/svelte`}</code>
+                  </pre>
+                  <h3>Usage</h3>
+                  <pre>
+                    <code>{`import { Shimmer } from '@shimmer-from-structure/svelte';`}</code>
+                  </pre>
+                </>
+              ),
+            },
+            {
+              id: 'angular',
+              label: 'Angular',
+              content: (
+                <>
+                  <h3>Installation</h3>
+                  <pre>
+                    <code>{`npm install @shimmer-from-structure/angular
+# or
+yarn add @shimmer-from-structure/angular
+# or
+pnpm add @shimmer-from-structure/angular`}</code>
+                  </pre>
+                  <h3>Usage</h3>
+                  <pre>
+                    <code>{`import { ShimmerComponent } from '@shimmer-from-structure/angular';
 
 @Component({
   standalone: true,
   imports: [ShimmerComponent],
   // ...
 })`}</code>
-        </pre>
-
-        <h2>SolidJS</h2>
-
-        <p>For SolidJS projects, install the Solid adapter:</p>
-
-        <pre>
-          <code>npm install @shimmer-from-structure/solid</code>
-        </pre>
-
-        <h3>Usage</h3>
-
-        <pre>
-          <code>{`import { Shimmer } from '@shimmer-from-structure/solid';`}</code>
-        </pre>
+                  </pre>
+                </>
+              ),
+            },
+            {
+              id: 'solid',
+              label: 'Solid',
+              content: (
+                <>
+                  <h3>Installation</h3>
+                  <pre>
+                    <code>{`npm install @shimmer-from-structure/solid
+# or
+yarn add @shimmer-from-structure/solid
+# or
+pnpm add @shimmer-from-structure/solid`}</code>
+                  </pre>
+                  <h3>Usage</h3>
+                  <pre>
+                    <code>{`import { Shimmer } from '@shimmer-from-structure/solid';`}</code>
+                  </pre>
+                </>
+              ),
+            },
+          ]}
+        />
 
         <h2>Package Managers</h2>
 
