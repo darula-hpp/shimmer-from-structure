@@ -7,223 +7,122 @@ export default function BestPractices() {
         <h1>Best Practices</h1>
 
         <p>
-          Learn how to get the most out of Shimmer From Structure with these optimization techniques
-          and best practices.
+          Learn how to get the most out of Shimmer From Structure. These guidelines are divided into
+          universal principles that apply to all frameworks and specific implementation details for
+          each adapter.
         </p>
 
-        <h2>1. Use templateProps for Dynamic Data</h2>
+        <h2>Universal Guidelines</h2>
+        <p>These practices apply regardless of which framework you are using.</p>
 
+        <h3>1. Always Provide Template Props</h3>
         <p>
           When your component receives data via props, always provide <code>templateProps</code>{' '}
-          with mock data that matches the expected structure.
+          with mock data that matches the expected structure. This allows the library to render your
+          actual component with mock data to generate the skeleton.
         </p>
 
-        <pre>
-          <code>{`// ✅ Good - provides template data
-<Shimmer loading={loading} templateProps={{ user: userTemplate }}>
-  <UserCard user={user || userTemplate} />
-</Shimmer>
-
-// ❌ Avoid - no template data for dynamic component
-<Shimmer loading={loading}>
-  <UserCard user={user} />
-</Shimmer>`}</code>
-        </pre>
-
-        <h2>2. Match Template Structure to Real Data</h2>
-
+        <h3>2. Match Template Structure to Real Data</h3>
         <p>
-          Ensure your template data has the same array length and property structure as real data
-          for accurate shimmer layout.
+          Ensure your template data has the same array length and property structure as real data.
+          If your real data has 5 items, your template should also have 5 items to prevent layout
+          shifts when data loads.
         </p>
 
-        <pre>
-          <code>{`// ✅ Good - template matches real data structure
-const transactionsTemplate = Array(5).fill({
-  id: '1',
-  description: 'Loading...',
-  amount: '$0.00',
-  date: 'Jan 00',
-  status: 'pending',
-});
-
-// Real data will also have 5 items
-const realTransactions = [/* 5 items */];`}</code>
-        </pre>
-
-        <h2>3. Use Individual Shimmer Components</h2>
-
-        <p>Wrap each section in its own Shimmer for independent loading states:</p>
-
-        <pre>
-          <code>{`// ✅ Good - independent loading
-<Shimmer loading={loadingUsers}><UserList /></Shimmer>
-<Shimmer loading={loadingPosts}><PostList /></Shimmer>
-
-// ❌ Avoid - all-or-nothing loading
-<Shimmer loading={loadingUsers || loadingPosts}>
-  <UserList />
-  <PostList />
-</Shimmer>`}</code>
-        </pre>
-
-        <h2>4. Consider Element Widths</h2>
-
+        <h3>3. Use Independent Shimmer Components</h3>
         <p>
-          Block elements like <code>&lt;h1&gt;</code>, <code>&lt;p&gt;</code> take full container
-          width. If you want shimmer to match text width:
+          Wrap separate logical sections (e.g., Sidebar, Feed, Header) in their own{' '}
+          <code>Shimmer</code>
+          components. This allows parts of your UI to load independently, improving the perceived
+          performance.
         </p>
 
-        <pre>
-          <code>{`.title {
-  width: fit-content;
-}`}</code>
-        </pre>
-
-        <h2>5. Provide Container Dimensions</h2>
-
+        <h3>4. Define Container Dimensions for Async Content</h3>
         <p>
-          For async components (like charts), ensure containers have explicit dimensions so shimmer
-          has something to measure.
+          If a component loads content asynchronously (like a chart or lazy-loaded image) or has no
+          initial dimensions, wrap it in a container with explicit <code>width</code> and{' '}
+          <code>height</code>. This ensures the shimmer effect has a layout to measure immediately.
         </p>
 
-        <pre>
-          <code>{`// ✅ Good - explicit dimensions
-<div style={{ height: '300px', width: '100%' }}>
-  <Shimmer loading={loading}>
-    <Chart data={data} />
-  </Shimmer>
-</div>
-
-// ❌ Avoid - no dimensions
-<Shimmer loading={loading}>
-  <Chart data={data} />
-</Shimmer>`}</code>
-        </pre>
-
-        <h2>6. Optimize with Global Configuration</h2>
-
+        <h3>5. Use Global Configuration</h3>
         <p>
-          Use global configuration to avoid repeating props and maintain consistent themes across
-          your app:
+          Set a global theme (colors, duration, border radius) at the root of your application to
+          maintain consistency and avoid repeating props.
         </p>
 
-        <pre>
-          <code>{`// Set once at app root
-<ShimmerProvider
-  config={{
-    shimmerColor: 'rgba(56, 189, 248, 0.4)',
-    backgroundColor: 'rgba(56, 189, 248, 0.1)',
-    duration: 2,
-  }}
->
-  <App />
-</ShimmerProvider>
+        <hr className="my-8" />
 
-// Use anywhere without repeating props
-<Shimmer loading={loading}>
-  <Component />
-</Shimmer>`}</code>
-        </pre>
+        <h2>Framework-Specific Details</h2>
 
-        <h2>7. Memoize Suspense Fallbacks</h2>
-
-        <p>
-          When using with React Suspense, memoize the fallback to prevent unnecessary re-renders:
-        </p>
-
-        <pre>
-          <code>{`const ShimmerFallback = React.memo(() => (
-  <Shimmer loading={true} templateProps={{ user: userTemplate }}>
-    <UserProfile />
-  </Shimmer>
-));
-
-<Suspense fallback={<ShimmerFallback />}>
-  <UserProfile userId="123" />
-</Suspense>`}</code>
-        </pre>
-
-        <h2>8. Keep Templates Lightweight</h2>
-
-        <p>
-          The DOM is measured synchronously, so avoid complex logic in your template components:
-        </p>
-
-        <pre>
-          <code>{`// ✅ Good - simple template
-const userTemplate = {
-  name: 'Loading...',
-  role: 'Loading role...',
-  avatar: 'placeholder.jpg',
-};
-
-// ❌ Avoid - complex computations in template
-const userTemplate = {
-  name: generateRandomName(),
-  role: fetchRoleFromAPI(),
-  avatar: processImage(),
-};`}</code>
-        </pre>
-
-        <h2>9. Use Appropriate Border Radius</h2>
-
-        <p>
-          The library auto-detects border-radius from CSS. For elements without border-radius, use{' '}
-          <code>fallbackBorderRadius</code>:
-        </p>
-
-        <pre>
-          <code>{`// For rounded UI
-<Shimmer loading={loading} fallbackBorderRadius={8}>
-  <Component />
-</Shimmer>
-
-// For sharp UI
-<Shimmer loading={loading} fallbackBorderRadius={0}>
-  <Component />
-</Shimmer>`}</code>
-        </pre>
-
-        <h2>10. Test with Different Data Sizes</h2>
-
-        <p>Test your shimmer with different data sizes to ensure it looks good in all scenarios:</p>
-
-        <pre>
-          <code>{`// Test with minimum data
-const minTemplate = Array(1).fill({ /* ... */ });
-
-// Test with typical data
-const typicalTemplate = Array(5).fill({ /* ... */ });
-
-// Test with maximum data
-const maxTemplate = Array(20).fill({ /* ... */ });`}</code>
-        </pre>
-
-        <h2>Performance Considerations</h2>
-
+        <h3>React</h3>
         <ul>
-          <li>Measurement happens only when loading changes to true</li>
-          <li>Uses useLayoutEffect for synchronous measurement (no flicker)</li>
-          <li>Minimal re-renders - only updates when loading state or children change</li>
-          <li>Lightweight DOM measurements using native browser APIs</li>
+          <li>
+            <strong>Suspense Integration:</strong> Shimmer works automatically as a Suspense
+            fallback.
+          </li>
+          <li>
+            <strong>Memoization:</strong> Wrap your fallback component in <code>React.memo</code> to
+            prevent unnecessary re-renders during parent updates.
+          </li>
+          <li>
+            <strong>Measurement:</strong> The library uses <code>useLayoutEffect</code> internally
+            to measure the DOM synchronously before the browser paints, preventing flicker.
+          </li>
         </ul>
 
-        <h2>Known Limitations</h2>
-
+        <h3>Vue</h3>
         <ul>
           <li>
-            <strong>Async components:</strong> Components that render asynchronously may need
-            explicit container dimensions
+            <strong>Composition API:</strong> Use <code>ref</code> for reactive loading states.
           </li>
           <li>
-            <strong>Zero-dimension elements:</strong> Elements with display: none or zero dimensions
-            won't be captured
+            <strong>Global Config:</strong> Use <code>provideShimmerConfig</code> at your app root
+            (e.g., in <code>App.vue</code>) to set global defaults.
+          </li>
+        </ul>
+
+        <h3>Svelte</h3>
+        <ul>
+          <li>
+            <strong>Reactivity:</strong> Works with both Svelte 5 Runes (<code>$state</code>) and
+            legacy stores/variables.
           </li>
           <li>
-            <strong>SVG internals:</strong> Only the outer SVG element is captured, not internal
-            paths/shapes
+            <strong>Global Config:</strong> Use <code>setShimmerConfig</code> in your root
+            component's initialization script.
           </li>
+        </ul>
+
+        <h3>SolidJS</h3>
+        <ul>
+          <li>
+            <strong>Signals:</strong> Use <code>createSignal</code> for loading states.
+          </li>
+          <li>
+            <strong>Suspense:</strong> Compatible with Solid's <code>Suspense</code> component for
+            async resources.
+          </li>
+        </ul>
+
+        <h3>Angular</h3>
+        <ul>
+          <li>
+            <strong>Signals:</strong> The library is designed to work seamlessly with Angular
+            Signals for loading states.
+          </li>
+          <li>
+            <strong>Dependency Injection:</strong> Use <code>provideShimmerConfig</code> in your
+            application config or root module to set global styles.
+          </li>
+        </ul>
+
+        <hr className="my-8" />
+
+        <h2>Performance Considerations</h2>
+        <ul>
+          <li>Measurement happens only once when loading is true.</li>
+          <li>Zero-dimension elements (display: none) are skipped.</li>
+          <li>The library uses native APIs (ResizeObserver, getComputedStyle) for efficiency.</li>
         </ul>
       </article>
     </DocsLayout>

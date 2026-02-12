@@ -113,24 +113,71 @@ export class MyComponent {
 
         <pre>
           <code>{`@Component({
+  selector: 'app-dashboard',
+  standalone: true,
+  imports: [ShimmerComponent, CommonModule],
   template: \`
-    <shimmer [loading]="loadingUser()" [templateProps]="{ user: userTemplate }">
-      <app-user-profile [user]="user()" />
-    </shimmer>
+    <div class="dashboard">
+      <!-- User Profile -->
+      <section class="dashboard-section">
+        <shimmer [loading]="loadingUser()" [templateProps]="{ user: userTemplate }">
+          <app-user-profile [user]="user() || userTemplate" />
+        </shimmer>
+      </section>
 
-    <shimmer
-      [loading]="loadingStats()"
-      [templateProps]="{ stats: statsTemplate }"
-      shimmerColor="rgba(20, 184, 166, 0.2)"
-    >
-      <app-stats-grid [stats]="stats()" />
-    </shimmer>
+      <!-- Stats Grid -->
+      <section class="dashboard-section">
+        <shimmer
+          [loading]="loadingStats()"
+          [templateProps]="{ stats: statsTemplate }"
+          shimmerColor="rgba(20, 184, 166, 0.2)"
+        >
+          <app-stats-grid [stats]="stats() || statsTemplate" />
+        </shimmer>
+      </section>
+
+      <!-- Transactions List -->
+      <section class="dashboard-section">
+        <shimmer [loading]="loadingTransactions()" [templateProps]="{ transactions: transactionsTemplate }">
+          <app-transactions-list [transactions]="transactions() || transactionsTemplate" />
+        </shimmer>
+      </section>
+    </div>
   \`,
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
+  // Loading signals
   loadingUser = signal(true);
   loadingStats = signal(true);
-  // ...
+  loadingTransactions = signal(true);
+
+  // Data signals
+  user = signal<User | null>(null);
+  stats = signal<StatCard[] | null>(null);
+  transactions = signal<Transaction[] | null>(null);
+
+  // Templates
+  userTemplate = { name: 'Loading...', role: 'Loading...', avatar: '' };
+  statsTemplate = [/* ... placeholders ... */];
+  transactionsTemplate = [/* ... placeholders ... */];
+
+  ngOnInit() {
+    // Simulate independent API calls
+    setTimeout(() => { 
+      this.user.set(realUser); 
+      this.loadingUser.set(false); 
+    }, 1000);
+    
+    setTimeout(() => { 
+      this.stats.set(realStats); 
+      this.loadingStats.set(false); 
+    }, 2000);
+
+    setTimeout(() => {
+      this.transactions.set(realTransactions);
+      this.loadingTransactions.set(false);
+    }, 3000);
+  }
 }`}</code>
         </pre>
 

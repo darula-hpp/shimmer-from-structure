@@ -102,22 +102,43 @@ console.log(config.value.backgroundColor);`}</code>
 import { ref } from 'vue';
 import { Shimmer } from '@shimmer-from-structure/vue';
 
+// Independent loading states
 const loadingUser = ref(true);
 const loadingStats = ref(true);
+const loadingOrders = ref(true);
+
+// Mock data templates
+const userTemplate = { name: 'Loading...', role: 'Loading...', avatar: '' };
+const statsTemplate = [/* ... placeholders ... */];
+const ordersTemplate = Array(5).fill({/* ... placeholders ... */});
+
+// Simulate data loading
+setTimeout(() => { loadingUser.value = false; }, 1000);
+setTimeout(() => { loadingStats.value = false; }, 2000);
+setTimeout(() => { loadingOrders.value = false; }, 3000);
 </script>
 
 <template>
-  <Shimmer :loading="loadingUser" :templateProps="{ user: userTemplate }">
-    <UserProfile :user="user" />
-  </Shimmer>
+  <div class="dashboard">
+    <!-- User Profile with Template Props -->
+    <Shimmer :loading="loadingUser" :templateProps="{ user: userTemplate }">
+      <UserProfile :user="user || userTemplate" />
+    </Shimmer>
 
-  <Shimmer
-    :loading="loadingStats"
-    :templateProps="{ stats: statsTemplate }"
-    shimmerColor="rgba(20, 184, 166, 0.2)"
-  >
-    <StatsGrid :stats="stats" />
-  </Shimmer>
+    <!-- Stats Grid with Custom Color -->
+    <Shimmer
+      :loading="loadingStats"
+      :templateProps="{ stats: statsTemplate }"
+      shimmerColor="rgba(20, 184, 166, 0.2)"
+    >
+      <StatsGrid :stats="stats" />
+    </Shimmer>
+
+    <!-- Recent Orders Table -->
+    <Shimmer :loading="loadingOrders" :templateProps="{ orders: ordersTemplate }">
+      <OrdersTable :orders="orders" />
+    </Shimmer>
+  </div>
 </template>`}</code>
         </pre>
 

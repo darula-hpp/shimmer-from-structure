@@ -92,24 +92,59 @@ console.log(config.backgroundColor);`}</code>
         <h3>Dashboard with Multiple Sections</h3>
 
         <pre>
-          <code>{`<script>
-import { Shimmer } from '@shimmer-from-structure/svelte';
+          <code>{`<script lang="ts">
+  import { onMount } from 'svelte';
+  import { Shimmer } from '@shimmer-from-structure/svelte';
 
-let loadingUser = $state(true);
-let loadingStats = $state(true);
+  // Independent loading states
+  let loadingUser = true;
+  let loadingStats = true;
+  let loadingTransactions = true;
+
+  // Data
+  let user = null;
+  let stats = null;
+  let transactions = null;
+
+  // Template Data
+  const userTemplate = { name: 'Loading...', role: 'Loading...', avatar: '' };
+  const statsTemplate = [/* ... placeholders ... */];
+  const transactionsTemplate = Array(5).fill({/* ... placeholders ... */});
+
+  onMount(() => {
+    // Simulate independent API calls
+    setTimeout(() => { user = realUser; loadingUser = false; }, 1000);
+    setTimeout(() => { stats = realStats; loadingStats = false; }, 2000);
+    setTimeout(() => { transactions = realTransactions; loadingTransactions = false; }, 3000);
+  });
 </script>
 
-<Shimmer loading={loadingUser} templateProps={{ user: userTemplate }}>
-  <UserProfile {user} />
-</Shimmer>
+<div class="dashboard">
+  <!-- User Profile -->
+  <section class="dashboard-section">
+    <Shimmer loading={loadingUser} templateProps={{ user: userTemplate }}>
+      <UserProfile user={user || userTemplate} />
+    </Shimmer>
+  </section>
 
-<Shimmer
-  loading={loadingStats}
-  templateProps={{ stats: statsTemplate }}
-  shimmerColor="rgba(20, 184, 166, 0.2)"
->
-  <StatsGrid {stats} />
-</Shimmer>`}</code>
+  <!-- Stats Grid -->
+  <section class="dashboard-section">
+    <Shimmer
+      loading={loadingStats}
+      templateProps={{ stats: statsTemplate }}
+      shimmerColor="rgba(20, 184, 166, 0.2)"
+    >
+      <StatsGrid stats={stats || statsTemplate} />
+    </Shimmer>
+  </section>
+
+  <!-- Transactions List -->
+  <section class="dashboard-section">
+    <Shimmer loading={loadingTransactions} templateProps={{ transactions: transactionsTemplate }}>
+      <TransactionsList transactions={transactions || transactionsTemplate} />
+    </Shimmer>
+  </section>
+</div>`}</code>
         </pre>
 
         <h2>Next Steps</h2>

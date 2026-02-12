@@ -177,24 +177,68 @@ function MyComponent() {
         <h3>Dashboard with Multiple Sections</h3>
 
         <pre>
-          <code>{`function Dashboard() {
+          <code>{`import React, { useState, useEffect, Suspense, lazy } from 'react';
+import { Shimmer, ShimmerProvider } from '@shimmer-from-structure/react';
+
+// lazy-load components to demonstrate Suspense integration
+const LazyNotifications = lazy(() => import('./Notifications'));
+
+function Dashboard() {
+  // Independent loading states for each section
   const [loadingUser, setLoadingUser] = useState(true);
   const [loadingStats, setLoadingStats] = useState(true);
+  const [loadingTransactions, setLoadingTransactions] = useState(true);
+  
+  // Data states
+  const [user, setUser] = useState(null);
+  const [stats, setStats] = useState(null);
+  const [transactions, setTransactions] = useState(null);
+
+  useEffect(() => {
+    // Simulate independent API calls
+    setTimeout(() => { setUser(realUser); setLoadingUser(false); }, 800);
+    setTimeout(() => { setStats(realStats); setLoadingStats(false); }, 1200);
+    setTimeout(() => { setTransactions(realTransactions); setLoadingTransactions(false); }, 2000);
+  }, []);
 
   return (
-    <>
-      <Shimmer loading={loadingUser} templateProps={{ user: userTemplate }}>
-        <UserProfile user={user} />
-      </Shimmer>
+    <div className="dashboard">
+      {/* User Profile Section */}
+      <section className="dashboard-section">
+        <Shimmer loading={loadingUser} templateProps={{ user: userTemplate }}>
+          <UserProfile user={user || userTemplate} />
+        </Shimmer>
+      </section>
 
-      <Shimmer
-        loading={loadingStats}
-        templateProps={{ stats: statsTemplate }}
-        shimmerColor="rgba(20, 184, 166, 0.2)"
-      >
-        <StatsGrid stats={stats} />
-      </Shimmer>
-    </>
+      {/* Stats Section with Custom Color */}
+      <section className="dashboard-section">
+        <Shimmer 
+          loading={loadingStats} 
+          templateProps={{ stats: statsTemplate }}
+          shimmerColor="rgba(20, 184, 166, 0.2)"
+        >
+          <StatsGrid stats={stats || statsTemplate} />
+        </Shimmer>
+      </section>
+
+      {/* Suspense Integration */}
+      <section className="dashboard-section">
+        <Suspense fallback={
+          <Shimmer loading={true} templateProps={{ notifications: notificationsTemplate }}>
+            <NotificationsList notifications={notificationsTemplate} />
+          </Shimmer>
+        }>
+          <LazyNotifications />
+        </Suspense>
+      </section>
+
+      {/* Transactions List */}
+      <section className="dashboard-section">
+        <Shimmer loading={loadingTransactions}>
+          <TransactionsList transactions={transactions || transactionsTemplate} />
+        </Shimmer>
+      </section>
+    </div>
   );
 }`}</code>
         </pre>
