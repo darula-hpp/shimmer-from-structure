@@ -2,6 +2,8 @@
 
 A structure-aware skeleton loader that mirrors your rendered UI at runtime. Automatically generates responsive shimmer states with zero layout duplication. Built for React, Vue, Angular, Svelte and SolidJS.
 
+Documentation: ![Access Full Docs](https://shimmer-from-structure-docs.vercel.app)
+
 ![React](https://img.shields.io/badge/React-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 ![Vue](https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D)
 ![Svelte](https://img.shields.io/badge/Svelte-ff3e00?style=for-the-badge&logo=svelte&logoColor=white)
