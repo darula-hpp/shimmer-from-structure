@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
-import { Shimmer } from 'shimmer-from-structure';
+import { Shimmer } from '@shimmer-from-structure/react';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 
