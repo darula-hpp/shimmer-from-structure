@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.2] - 2026-02-21
+
+### Fixed
+
+- **Core: `<br>` Tag Handling in `isLeafElement`**: Elements containing both text and `<br />` tags (e.g. `<p>First line.<br />Second line.</p>`) are now correctly shimmered.
+  - Previously, the presence of a `<br>` child caused the parent element to be skipped as a shimmer candidate, leaving it blank during the loading state.
+  - `isLeafElement` now ignores void/formatting elements (`br`, `wbr`, `hr`) when deciding whether an element has real children, treating such containers as leaf content blocks.
+  - The workaround of wrapping text in `<span className="block">` or removing `<br>` tags is no longer required.
+
 ## [2.3.1] - 2026-02-10
 
 ### Fixed
