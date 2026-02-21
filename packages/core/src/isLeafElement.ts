@@ -10,10 +10,14 @@ export function isLeafElement(element: Element): boolean {
     return true;
   }
 
-  // Check if element has no element children (only text nodes or no children)
-  const hasElementChildren = Array.from(element.children).length > 0;
-  if (!hasElementChildren) {
-    // This is a leaf element (contains only text or is empty)
+  // Check if element has no *real* element children (ignore void/formatting
+  // elements like <br> that carry no dimensions of their own)
+  const voidElements = ['br', 'wbr', 'hr'];
+  const hasRealChildren = Array.from(element.children).some(
+    (child) => !voidElements.includes(child.tagName.toLowerCase())
+  );
+  if (!hasRealChildren) {
+    // Treat as a leaf element: contains only text and/or void elements
     return true;
   }
 

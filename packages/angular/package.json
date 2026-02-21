@@ -1,6 +1,6 @@
 {
   "name": "@shimmer-from-structure/angular",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "description": "Angular adapter for shimmer-from-structure",
   "peerDependencies": {
     "@angular/common": "^19.0.0 || ^20.0.0 || ^21.0.0",
