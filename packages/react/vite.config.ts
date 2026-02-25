@@ -20,11 +20,18 @@ export default defineConfig({
       fileName: (format: string) => `index.${format === 'es' ? 'esm.js' : 'js'}`,
     },
     rollupOptions: {
-      external: ['react', 'react-dom', '@shimmer-from-structure/core'],
+      external: [
+        'react',
+        'react-dom',
+        'react/jsx-runtime',
+        'react/jsx-dev-runtime',
+        '@shimmer-from-structure/core',
+      ],
       output: {
         globals: {
           react: 'React',
           'react-dom': 'ReactDOM',
+          'react/jsx-runtime': 'jsxRuntime',
           '@shimmer-from-structure/core': 'ShimmerCore',
         },
       },
