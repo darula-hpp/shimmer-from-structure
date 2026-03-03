@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - **CVE-2025-15265**: Fixed XSS vulnerability via hydratable components
   - Updated both `peerDependencies` and `devDependencies` to ensure secure versions are used
 
+### Changed
+
+- **React: Resilient DOM Measurement**: `measureElements` now catches and logs unexpected errors from `extractElementInfo` and `getBoundingClientRect`, allowing the shimmer to degrade gracefully (no overlays rendered) rather than propagating exceptions up the call stack.
+
 ## [2.3.3] - 2026-02-25
 
 ### Fixed
