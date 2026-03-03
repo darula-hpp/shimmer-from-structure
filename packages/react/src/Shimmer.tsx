@@ -67,15 +67,19 @@ export const Shimmer: React.FC<ShimmerProps> = ({
     const container = measureRef.current;
 
     const measureElements = () => {
-      const containerRect = container.getBoundingClientRect();
+      try {
+        const containerRect = container.getBoundingClientRect();
 
-      // Extract all element dimensions
-      const extractedElements: ElementInfo[] = [];
-      Array.from(container.children).forEach((child) => {
-        extractedElements.push(...extractElementInfo(child, containerRect));
-      });
+        // Extract all element dimensions
+        const extractedElements: ElementInfo[] = [];
+        Array.from(container.children).forEach((child) => {
+          extractedElements.push(...extractElementInfo(child, containerRect));
+        });
 
-      setElements(extractedElements);
+        setElements(extractedElements);
+      } catch (error) {
+        console.error('Error measuring elements:', error);
+      }
     };
 
     // Initial measurement
