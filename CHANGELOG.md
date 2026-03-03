@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.4] - 2026-03-03
+
+### Security
+
+- **Svelte: Security Vulnerability Patches**: Updated Svelte dependencies from `^5.0.0` to `^5.53.5` to address multiple security vulnerabilities:
+  - **CVE-2026-27125**: Fixed prototype pollution in server-side rendering attribute spreading that could cause unexpected attributes in SSR output
+  - **CVE-2026-27902**: Fixed XSS/HTML injection vulnerability where errors from `transformError` were not properly escaped before HTML embedding
+  - **CVE-2025-15265**: Fixed XSS vulnerability via hydratable components
+  - Updated both `peerDependencies` and `devDependencies` to ensure secure versions are used
+
 ## [2.3.3] - 2026-02-25
 
 ### Fixed
