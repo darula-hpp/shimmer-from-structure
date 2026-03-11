@@ -5,8 +5,8 @@ export default defineConfig({
     pool: 'threads',
     globals: true,
     environment: 'jsdom',
-    setupFiles: './src/test/setup.ts',
-    include: ['src/**/*.test.ts'],
+    setupFiles: './src/__tests__/setup.ts',
+    include: ['src/__tests__/**/*.test.ts'],
     css: true,
   },
 });

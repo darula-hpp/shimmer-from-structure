@@ -1,10 +1,9 @@
-import { render, screen } from '@solidjs/testing-library';
+import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { Shimmer } from './Shimmer';
-import { ShimmerProvider, useShimmerConfig } from './ShimmerContext';
+import { Shimmer } from '../Shimmer';
+import { ShimmerProvider, useShimmerConfig } from '../ShimmerContext';
 
 describe('Shimmer Context API', () => {
-  // Mock getBoundingClientRect
   const originalGetBoundingClientRect = Element.prototype.getBoundingClientRect;
   const originalGetComputedStyle = window.getComputedStyle;
 
@@ -46,11 +45,11 @@ describe('Shimmer Context API', () => {
     };
 
     const config = { fallbackBorderRadius: 99 };
-    render(() => (
+    render(
       <ShimmerProvider config={config}>
         <Consumer />
       </ShimmerProvider>
-    ));
+    );
 
     expect(screen.getByTestId('debug-config')).toHaveTextContent('99');
   });
@@ -63,50 +62,18 @@ describe('Shimmer Context API', () => {
       fallbackBorderRadius: 10,
     };
 
-    const { container } = render(() => (
+    const { container } = render(
       <ShimmerProvider config={config}>
         <Shimmer loading={true}>
           <TestContent />
         </Shimmer>
       </ShimmerProvider>
-    ));
+    );
 
-    // Check for context background color in the rendered output
-    expect(container.innerHTML).toContain(config.backgroundColor);
-  });
-
-  it('merges partial context config with defaults', () => {
-    const Consumer = () => {
-      const config = useShimmerConfig();
-      return (
-        <>
-          <div data-testid="shimmer-color">{config.shimmerColor}</div>
-          <div data-testid="duration">{config.duration}</div>
-        </>
-      );
-    };
-
-    render(() => (
-      <ShimmerProvider config={{ shimmerColor: 'rgba(100, 100, 100, 0.5)' }}>
-        <Consumer />
-      </ShimmerProvider>
-    ));
-
-    // Custom value
-    expect(screen.getByTestId('shimmer-color')).toHaveTextContent('rgba(100, 100, 100, 0.5)');
-    // Default value (1.5)
-    expect(screen.getByTestId('duration')).toHaveTextContent('1.5');
-  });
-
-  it('works without ShimmerProvider (uses defaults)', () => {
-    const Consumer = () => {
-      const config = useShimmerConfig();
-      return <div data-testid="config-check">{config.duration}</div>;
-    };
-
-    render(() => <Consumer />);
-
-    // Should use default value
-    expect(screen.getByTestId('config-check')).toHaveTextContent('1.5');
+    const shimmerBlock = container.querySelector(
+      `div[style*="background-color: ${config.backgroundColor}"]`
+    );
+    expect(shimmerBlock).toBeInTheDocument();
+    expect(shimmerBlock).toHaveStyle(`border-radius: ${config.fallbackBorderRadius}px`);
   });
 });

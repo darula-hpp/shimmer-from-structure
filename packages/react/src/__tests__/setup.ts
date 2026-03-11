@@ -1,15 +1,5 @@
-import 'zone.js';
-import 'zone.js/testing';
-import { vi, beforeAll } from 'vitest';
-import { TestBed } from '@angular/core/testing';
-import {
-  BrowserDynamicTestingModule,
-  platformBrowserDynamicTesting,
-} from '@angular/platform-browser-dynamic/testing';
-
-beforeAll(() => {
-  TestBed.initTestEnvironment(BrowserDynamicTestingModule, platformBrowserDynamicTesting());
-});
+import '@testing-library/jest-dom';
+import { vi } from 'vitest';
 
 // Mock getBoundingClientRect since jsdom doesn't support layout
 Element.prototype.getBoundingClientRect = vi.fn(() => ({
@@ -35,7 +25,6 @@ global.ResizeObserver = class ResizeObserver {
 const originalGetComputedStyle = window.getComputedStyle;
 window.getComputedStyle = (elt) => {
   const styles = originalGetComputedStyle(elt);
-  // Add borderRadius support for our tests
   if (!styles.borderRadius) {
     Object.defineProperty(styles, 'borderRadius', {
       value: '4px',
@@ -43,10 +32,4 @@ window.getComputedStyle = (elt) => {
     });
   }
   return styles;
-};
-
-// Mock requestAnimationFrame
-global.requestAnimationFrame = (cb) => {
-  setTimeout(cb, 0);
-  return 0;
 };

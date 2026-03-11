@@ -1,11 +1,10 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { mount } from '@vue/test-utils';
 import { nextTick } from 'vue';
-import Shimmer from './Shimmer.vue';
-import { provideShimmerConfig } from './shimmerConfig';
+import Shimmer from '../Shimmer.vue';
+import { provideShimmerConfig } from '../shimmerConfig';
 
 describe('Shimmer.vue', () => {
-  // Mock getBoundingClientRect
   const originalGetBoundingClientRect = Element.prototype.getBoundingClientRect;
 
   beforeEach(() => {
@@ -48,7 +47,6 @@ describe('Shimmer.vue', () => {
 
     await nextTick();
 
-    // Should render the measure container
     expect(wrapper.find('.shimmer-measure-container').exists()).toBe(true);
   });
 
@@ -88,10 +86,9 @@ describe('Shimmer.vue', () => {
     });
 
     await nextTick();
-    await nextTick(); // Wait for measurement to complete
-    await nextTick(); // Wait for re-render after elements update
+    await nextTick();
+    await nextTick();
 
-    // The component should use fallbackBorderRadius for elements with 0px border-radius
     const shimmerBlocks = wrapper.findAll('[style*="border-radius"]');
     console.log('Test HTML (fallbackBorderRadius):', wrapper.html());
     expect(shimmerBlocks.length).toBeGreaterThan(0);
@@ -121,7 +118,6 @@ describe('Shimmer.vue', () => {
     await nextTick();
     await nextTick();
 
-    // Check if config values are used
     const shimmerBlock = wrapper.find('[style*="background-color"]');
     expect(shimmerBlock.exists()).toBe(true);
   });
@@ -136,7 +132,6 @@ describe('Shimmer.vue', () => {
 
     await nextTick();
 
-    // Verify the style tag is injected with transparent color
     expect(wrapper.html()).toContain('color: transparent');
   });
 
@@ -153,7 +148,6 @@ describe('Shimmer.vue', () => {
 
     await nextTick();
 
-    // Props should override context
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     expect((wrapper.vm as any).resolvedShimmerColor).toBe('rgba(100, 200, 300, 0.5)');
   });

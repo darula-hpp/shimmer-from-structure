@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, act } from '@testing-library/react';
-import { Shimmer } from './Shimmer';
+import { Shimmer } from '../Shimmer';
 import React from 'react';
 
 describe('Shimmer', () => {
@@ -16,7 +16,6 @@ describe('Shimmer', () => {
     );
 
     expect(screen.getByText('Content')).toBeInTheDocument();
-    // Should not have the measure container
     expect(screen.queryByTestId('shimmer-measure-container')).not.toBeInTheDocument();
   });
 
@@ -27,8 +26,6 @@ describe('Shimmer', () => {
       </Shimmer>
     );
 
-    // Should render the measure container
-    // We didn't add a testId to the measure container in the source, but we can query by class
     const measureContainer = container.querySelector('.shimmer-measure-container');
     expect(measureContainer).toBeInTheDocument();
   });
@@ -58,13 +55,11 @@ describe('Shimmer', () => {
       </Shimmer>
     );
 
-    // Verify the style tag is injected
     expect(container.innerHTML).toContain('.shimmer-measure-container * {');
     expect(container.innerHTML).toContain('color: transparent !important');
   });
 
   it('uses fallbackBorderRadius when element has 0px border-radius', () => {
-    // Mock getComputedStyle to return 0px
     const originalGetComputedStyle = window.getComputedStyle;
     window.getComputedStyle = vi.fn().mockReturnValue({
       borderRadius: '0px',
@@ -76,17 +71,14 @@ describe('Shimmer', () => {
       </Shimmer>
     );
 
-    // Force layout effect to run
     act(() => {
       vi.runAllTimers();
     });
 
-    // Restore original
     window.getComputedStyle = originalGetComputedStyle;
   });
 
   it('retries measurement for async components that render late', async () => {
-    // Async component that renders content after a delay
     function AsyncComponent() {
       const [ready, setReady] = React.useState(false);
 
@@ -105,19 +97,14 @@ describe('Shimmer', () => {
       </Shimmer>
     );
 
-    // Initially should have no shimmer blocks (or empty container fallback)
-    // Advance timers by less than retry delay
     act(() => {
-      vi.advanceTimersByTime(50); // Component updates state
+      vi.advanceTimersByTime(50);
     });
 
-    // Advance timers to trigger Shimmer retry (retryDelay is 100ms)
     act(() => {
       vi.advanceTimersByTime(100);
     });
 
-    // Should now detect the element
-    // We expect the shimmer logic to have run again
     expect(container.querySelector('.shimmer-measure-container')).toBeInTheDocument();
   });
 });

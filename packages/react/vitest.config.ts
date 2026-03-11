@@ -8,7 +8,7 @@ export default defineConfig({
     pool: 'threads',
     globals: true,
     environment: 'jsdom',
-    setupFiles: './src/test/setup.ts',
+    setupFiles: './src/__tests__/setup.ts',
     css: true,
   },
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
