@@ -5,7 +5,7 @@ import {
   injectShimmerConfig,
   shimmerDefaults,
   SHIMMER_CONFIG,
-} from './shimmer-config.service';
+} from '../shimmer-config.service';
 
 describe('shimmer-config.service', () => {
   describe('shimmerDefaults', () => {
@@ -57,7 +57,6 @@ describe('shimmer-config.service', () => {
 
         expect(config.shimmerColor).toBe('rgba(255, 255, 255, 0.8)');
         expect(config.duration).toBe(3);
-        // Should use defaults for non-provided values
         expect(config.backgroundColor).toBe(shimmerDefaults.backgroundColor);
         expect(config.fallbackBorderRadius).toBe(shimmerDefaults.fallbackBorderRadius);
       });

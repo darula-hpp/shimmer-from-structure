@@ -2,8 +2,8 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import { Component, NO_ERRORS_SCHEMA, signal, ChangeDetectorRef } from '@angular/core';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { ShimmerComponent } from './shimmer.component';
-import { provideShimmerConfig, SHIMMER_CONFIG } from './shimmer-config.service';
+import { ShimmerComponent } from '../shimmer.component';
+import { provideShimmerConfig, SHIMMER_CONFIG } from '../shimmer-config.service';
 
 // Test wrapper component for content projection
 @Component({
@@ -34,7 +34,6 @@ describe('ShimmerComponent', () => {
     hostComponent = fixture.componentInstance;
   });
 
-  // Helper to wait for async operations
   const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms || 50));
 
   it('renders children normally when loading=false', async () => {
@@ -53,7 +52,6 @@ describe('ShimmerComponent', () => {
     expect(content).toBeTruthy();
     expect(content.textContent).toBe('Content');
 
-    // Should not have the measure container when not loading
     const measureContainer = fixture.nativeElement.querySelector('.shimmer-measure-container');
     expect(measureContainer).toBeFalsy();
   });
@@ -64,7 +62,6 @@ describe('ShimmerComponent', () => {
     await wait(0);
     fixture.detectChanges();
 
-    // Should render the measure container
     const measureContainer = fixture.nativeElement.querySelector('.shimmer-measure-container');
     expect(measureContainer).toBeTruthy();
   });
@@ -75,7 +72,6 @@ describe('ShimmerComponent', () => {
     await wait(0);
     fixture.detectChanges();
 
-    // Check that the measure container has the class
     const measureContainer = fixture.nativeElement.querySelector('.shimmer-measure-container');
     expect(measureContainer).toBeTruthy();
     expect(measureContainer.classList.contains('shimmer-measure-container')).toBe(true);
@@ -108,7 +104,6 @@ describe('ShimmerComponent with config provider', () => {
     await wait(0);
     fixture.detectChanges();
 
-    // The config should be injected - we can verify by checking the SHIMMER_CONFIG token
     const config = TestBed.inject(SHIMMER_CONFIG);
     expect(config.shimmerColor).toBe('rgba(255, 0, 0, 0.5)');
     expect(config.backgroundColor).toBe('#ff0000');
@@ -155,7 +150,6 @@ describe('ShimmerComponent input overrides', () => {
     const fixture = TestBed.createComponent(TestOverrideHostComponent);
     fixture.detectChanges();
 
-    // Manual override for input signals
     const shimmer = fixture.debugElement.children[0].componentInstance as ShimmerComponent;
     Object.defineProperty(shimmer, 'shimmerColor', { value: signal('#00ff00') });
     Object.defineProperty(shimmer, 'backgroundColor', { value: signal('#0000ff') });
@@ -166,7 +160,6 @@ describe('ShimmerComponent input overrides', () => {
     await wait(0);
     fixture.detectChanges();
 
-    // The shimmer component should use input values over config
     expect(shimmer.resolvedShimmerColor()).toBe('#00ff00');
     expect(shimmer.resolvedBackgroundColor()).toBe('#0000ff');
     expect(shimmer.resolvedDuration()).toBe(3);
