@@ -28,6 +28,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Resolved by implementing workspace-level dependency overrides, pinning the React adapter's development environment to React 18.2.0.
   - This ensures a clean, backward-compatible bundle while maintaining React 19 support across the rest of the monorepo.
 
+  ### Changed
+  - **Vue: Resilient DOM Measurement**: `measureElements` now catches and logs unexpected errors from `extractElementInfo` and `getBoundingClientRect`, allowing the shimmer to degrade gracefully (no overlays rendered) rather than propagating exceptions up the call stack.
+
 ## [2.3.2] - 2026-02-21
 
 ### Fixed
