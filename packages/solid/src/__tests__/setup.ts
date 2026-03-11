@@ -25,7 +25,6 @@ global.ResizeObserver = class ResizeObserver {
 const originalGetComputedStyle = window.getComputedStyle;
 window.getComputedStyle = (elt) => {
   const styles = originalGetComputedStyle(elt);
-  // Add borderRadius support for our tests
   if (!styles.borderRadius) {
     Object.defineProperty(styles, 'borderRadius', {
       value: '4px',

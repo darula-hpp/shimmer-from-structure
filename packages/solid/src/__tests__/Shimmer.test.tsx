@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@solidjs/testing-library';
-import { Shimmer } from './Shimmer';
+import { Shimmer } from '../Shimmer';
 
 describe('Shimmer', () => {
   beforeEach(() => {
@@ -15,7 +15,6 @@ describe('Shimmer', () => {
     ));
 
     expect(screen.getByText('Content')).toBeInTheDocument();
-    // Should not have the measure container
     expect(screen.queryByRole('presentation')).not.toBeInTheDocument();
   });
 
@@ -26,7 +25,6 @@ describe('Shimmer', () => {
       </Shimmer>
     ));
 
-    // Should render the measure container
     const measureContainer = container.querySelector('.shimmer-measure-container');
     expect(measureContainer).toBeInTheDocument();
   });
@@ -38,7 +36,6 @@ describe('Shimmer', () => {
       </Shimmer>
     ));
 
-    // Verify the style tag is injected
     expect(container.innerHTML).toContain('.shimmer-measure-container * {');
     expect(container.innerHTML).toContain('color: transparent !important');
   });
@@ -50,7 +47,6 @@ describe('Shimmer', () => {
       </Shimmer>
     ));
 
-    // Verify shimmer color is applied
     expect(container.innerHTML).toContain('rgba(255, 0, 0, 0.5)');
   });
 
@@ -61,7 +57,6 @@ describe('Shimmer', () => {
       </Shimmer>
     ));
 
-    // Verify background color would be applied (in element info)
     const measureContainer = container.querySelector('.shimmer-measure-container');
     expect(measureContainer).toBeInTheDocument();
   });
@@ -73,7 +68,6 @@ describe('Shimmer', () => {
       </Shimmer>
     ));
 
-    // Verify duration is applied in animation
     expect(container.innerHTML).toContain('animation:');
   });
 
@@ -84,7 +78,6 @@ describe('Shimmer', () => {
       </Shimmer>
     ));
 
-    // Verify the shimmer structure is rendered
     const measureContainer = container.querySelector('.shimmer-measure-container');
     expect(measureContainer).toBeInTheDocument();
   });
@@ -98,7 +91,6 @@ describe('Shimmer', () => {
       </Shimmer>
     ));
 
-    // Verify the CSS that hides images
     expect(container.innerHTML).toContain('.shimmer-measure-container img');
     expect(container.innerHTML).toContain('opacity: 0');
   });

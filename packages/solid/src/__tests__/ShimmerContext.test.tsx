@@ -1,10 +1,9 @@
 import { render, screen } from '@solidjs/testing-library';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { Shimmer } from './Shimmer';
-import { ShimmerProvider, useShimmerConfig } from './ShimmerContext';
+import { Shimmer } from '../Shimmer';
+import { ShimmerProvider, useShimmerConfig } from '../ShimmerContext';
 
 describe('Shimmer Context API', () => {
-  // Mock getBoundingClientRect
   const originalGetBoundingClientRect = Element.prototype.getBoundingClientRect;
   const originalGetComputedStyle = window.getComputedStyle;
 
@@ -71,7 +70,6 @@ describe('Shimmer Context API', () => {
       </ShimmerProvider>
     ));
 
-    // Check for context background color in the rendered output
     expect(container.innerHTML).toContain(config.backgroundColor);
   });
 
@@ -92,9 +90,7 @@ describe('Shimmer Context API', () => {
       </ShimmerProvider>
     ));
 
-    // Custom value
     expect(screen.getByTestId('shimmer-color')).toHaveTextContent('rgba(100, 100, 100, 0.5)');
-    // Default value (1.5)
     expect(screen.getByTestId('duration')).toHaveTextContent('1.5');
   });
 
@@ -106,7 +102,6 @@ describe('Shimmer Context API', () => {
 
     render(() => <Consumer />);
 
-    // Should use default value
     expect(screen.getByTestId('config-check')).toHaveTextContent('1.5');
   });
 });
