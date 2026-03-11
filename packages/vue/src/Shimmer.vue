@@ -71,20 +71,24 @@ const resolvedFallbackBorderRadius = computed(
 
 // Measurement logic
 const measureElements = async () => {
-  console.log('measureElements called', { loading: props.loading, hasRef: !!measureRef.value });
-  if (!props.loading || !measureRef.value) return;
+  try {
+    console.log('measureElements called', { loading: props.loading, hasRef: !!measureRef.value });
+    if (!props.loading || !measureRef.value) return;
 
-  await nextTick();
+    await nextTick();
 
-  const container = measureRef.value;
-  const containerRect = container.getBoundingClientRect();
+    const container = measureRef.value;
+    const containerRect = container.getBoundingClientRect();
 
-  const extractedElements: ElementInfo[] = [];
-  Array.from(container.children).forEach((child) => {
-    extractedElements.push(...extractElementInfo(child, containerRect));
-  });
+    const extractedElements: ElementInfo[] = [];
+    Array.from(container.children).forEach((child) => {
+      extractedElements.push(...extractElementInfo(child, containerRect));
+    });
 
-  elements.value = extractedElements;
+    elements.value = extractedElements;
+  } catch (error) {
+    console.error('Error measuring elements:', error);
+  }
 };
 
 // Track cleanup function for ResizeObserver
