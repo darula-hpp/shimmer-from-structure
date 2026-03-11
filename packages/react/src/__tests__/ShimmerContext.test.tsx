@@ -1,10 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { Shimmer } from './Shimmer';
-import { ShimmerProvider, useShimmerConfig } from './ShimmerContext';
+import { Shimmer } from '../Shimmer';
+import { ShimmerProvider, useShimmerConfig } from '../ShimmerContext';
 
 describe('Shimmer Context API', () => {
-  // Mock getBoundingClientRect
   const originalGetBoundingClientRect = Element.prototype.getBoundingClientRect;
   const originalGetComputedStyle = window.getComputedStyle;
 
@@ -71,13 +70,10 @@ describe('Shimmer Context API', () => {
       </ShimmerProvider>
     );
 
-    // Check for context background color
     const shimmerBlock = container.querySelector(
       `div[style*="background-color: ${config.backgroundColor}"]`
     );
     expect(shimmerBlock).toBeInTheDocument();
-
-    // This should now check against the context value, since element has 0px radius
     expect(shimmerBlock).toHaveStyle(`border-radius: ${config.fallbackBorderRadius}px`);
   });
 });
