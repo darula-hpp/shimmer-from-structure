@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, act } from '@testing-library/svelte';
-import TestFixture from './test/TestFixture.svelte';
+import TestFixture from './TestFixture.svelte';
 import { tick } from 'svelte';
 
 describe('Shimmer.svelte', () => {
@@ -30,7 +30,6 @@ describe('Shimmer.svelte', () => {
     });
 
     expect(getByText('Content')).toBeInTheDocument();
-    // Shimmer container should not exist
     expect(document.querySelector('.shimmer-measure-container')).toBeNull();
   });
 
@@ -40,13 +39,10 @@ describe('Shimmer.svelte', () => {
     });
 
     await act(() => tick());
-    await act(() => tick()); // Wait for measurement
+    await act(() => tick());
 
-    // Should render the measure container
     expect(container.querySelector('.shimmer-measure-container')).toBeInTheDocument();
 
-    // Should render shimmer overlays
-    // Since we mocked 2 children in TestFixture, we expect elements
     const overlays = container.querySelectorAll('.shimmer-measure-container + div > div');
     expect(overlays.length).toBeGreaterThan(0);
   });
@@ -67,15 +63,12 @@ describe('Shimmer.svelte', () => {
     expect(overlays.length).toBeGreaterThan(0);
     const firstOverlay = overlays[0];
 
-    // Check background color (note: browsers/jsdom normalize colors, but exact string matching might work if simple)
-    // or we check the style attribute string
     expect(firstOverlay.getAttribute('style')).toContain('background-color: rgba(0, 0, 255, 0.5)');
   });
 
   it('uses provided context configuration', async () => {
     const { container } = render(TestFixture, {
       props: {
-        // Pass config to trigger context setup
         config: {
           backgroundColor: 'rgb(0, 128, 0)',
         },
