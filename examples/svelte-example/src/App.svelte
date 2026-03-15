@@ -50,6 +50,15 @@
     status: 'Delivered' | 'Processing' | 'Cancelled';
   }
 
+  interface MetricCard {
+    id: string;
+    title: string;
+    value: string;
+    change: string;
+    trend: 'up' | 'down';
+    isLive: boolean;
+  }
+
   interface ChartDataPoint {
     name: string;
     revenue: number;
@@ -307,6 +316,18 @@
     },
   ];
 
+  const metricCardsTemplate: MetricCard[] = [
+    { id: '1', title: 'API Requests', value: '0.0k/s', change: '+0.0%', trend: 'up', isLive: true },
+    { id: '2', title: 'Error Rate', value: '0.00%', change: '-0.00%', trend: 'up', isLive: true },
+    { id: '3', title: 'Uptime', value: '00.00%', change: '+0.00%', trend: 'up', isLive: false },
+  ];
+
+  const realMetricCards: MetricCard[] = [
+    { id: '1', title: 'API Requests', value: '12.4k/s', change: '+3.2%', trend: 'up', isLive: true },
+    { id: '2', title: 'Error Rate', value: '0.08%', change: '-0.01%', trend: 'up', isLive: true },
+    { id: '3', title: 'Uptime', value: '99.98%', change: '+0.01%', trend: 'up', isLive: false },
+  ];
+
   // State
   let loadingUser = true;
   let loadingStats = true;
@@ -317,6 +338,7 @@
   let loadingChart = true;
   let loadingNotifications = true;
   let loadingContextExample = true;
+  let loadingAttributesDemo = true;
 
   let user: User | null = null;
   let stats: StatCard[] | null = null;
@@ -327,6 +349,7 @@
   let chartData: ChartDataPoint[] | null = null;
   let notifications: Notification[] | null = null;
   let contextData: TeamMember[] | null = null;
+  let attributesDemoData: MetricCard[] | null = null;
 
   function loadData() {
     loadingUser = true;
@@ -338,6 +361,7 @@
     loadingChart = true;
     loadingNotifications = true;
     loadingContextExample = true;
+    loadingAttributesDemo = true;
 
     user = null;
     stats = null;
@@ -348,6 +372,7 @@
     chartData = null;
     notifications = null;
     contextData = null;
+    attributesDemoData = null;
 
     // Simulate timeouts matching React example
     setTimeout(() => {
@@ -388,6 +413,11 @@
       contextData = realTeam.slice(0, 2);
       loadingContextExample = false;
     }, 4000);
+    // Attribute controls demo
+    setTimeout(() => {
+      attributesDemoData = realMetricCards;
+      loadingAttributesDemo = false;
+    }, 6000);
   }
 
   onMount(() => {
@@ -673,6 +703,54 @@
     </p>
 
     <ContextExample {loadingContextExample} {contextData} {teamTemplate} />
+  </section>
+
+  <!-- HTML Attribute Controls Demo -->
+  <section class="dashboard-section" style="margin-top: 2rem;">
+    <h3 class="section-title">🎛️ HTML Attribute Controls</h3>
+    <p class="attributes-demo-description">
+      Use <code>data-shimmer-ignore</code> to exclude an element and its children entirely.
+      Use <code>data-shimmer-no-children</code> to capture an element as a single shimmer block.
+    </p>
+    <Shimmer loading={loadingAttributesDemo}>
+      <div class="attributes-demo-grid">
+        {#each attributesDemoData || metricCardsTemplate as card, i}
+          <div class="attr-card">
+            <div class="attr-card-header">
+              <span class="attr-card-title">{card.title}</span>
+              <!-- data-shimmer-ignore: badge is excluded from shimmer entirely -->
+              {#if card.isLive}
+                <span class="live-badge" data-shimmer-ignore="">● LIVE</span>
+              {/if}
+            </div>
+
+            <!-- data-shimmer-no-children (card 2 only): whole block is one shimmer rect -->
+            {#if i === 1}
+              <div class="attr-card-metric" data-shimmer-no-children="">
+                <span class="attr-metric-value">{card.value}</span>
+                <span class="attr-metric-change {card.trend}">
+                  {card.trend === 'up' ? '↑' : '↓'} {card.change}
+                </span>
+              </div>
+            {:else}
+              <div class="attr-card-metric">
+                <span class="attr-metric-value">{card.value}</span>
+                <span class="attr-metric-change {card.trend}">
+                  {card.trend === 'up' ? '↑' : '↓'} {card.change}
+                </span>
+              </div>
+            {/if}
+
+            <p class="attr-card-note">
+              {#if i === 0}"LIVE" badge skipped via data-shimmer-ignore
+              {:else if i === 1}Metric block is one shimmer via data-shimmer-no-children
+              {:else}Normal shimmer (no attributes)
+              {/if}
+            </p>
+          </div>
+        {/each}
+      </div>
+    </Shimmer>
   </section>
 
   <!-- Footer -->

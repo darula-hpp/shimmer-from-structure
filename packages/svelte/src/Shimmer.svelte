@@ -3,6 +3,7 @@
   import {
     extractElementInfo,
     createResizeObserver,
+    SHIMMER_CONTAINER_STYLES,
     type ElementInfo,
   } from '@shimmer-from-structure/core';
   import { getShimmerConfig } from './ShimmerContext';
@@ -132,6 +133,7 @@
   {@render children()}
 {:else}
   <div style="position: relative;">
+    <svelte:element this={styleTag}>{SHIMMER_CONTAINER_STYLES}</svelte:element>
     <!-- Measure container with transparent text -->
     <div
       bind:this={measureRef}
@@ -194,14 +196,3 @@
     </div>
   </div>
 {/if}
-
-<style>
-  .shimmer-measure-container :global(*) {
-    color: transparent !important;
-  }
-  .shimmer-measure-container :global(img),
-  .shimmer-measure-container :global(svg),
-  .shimmer-measure-container :global(video) {
-    opacity: 0;
-  }
-</style>

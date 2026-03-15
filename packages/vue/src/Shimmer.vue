@@ -3,10 +3,7 @@
     <slot></slot>
   </div>
   <div v-else style="position: relative">
-    <!-- Styles for hiding text -->
-    <component :is="'style'">
-      {{ measureStyles }}
-    </component>
+    <component :is="'style'">{{ SHIMMER_CONTAINER_STYLES }}</component>
 
     <!-- Measure container with transparent text -->
     <div
@@ -36,6 +33,7 @@ import { ref, computed, onUnmounted, nextTick, watch } from 'vue';
 import {
   extractElementInfo,
   createResizeObserver,
+  SHIMMER_CONTAINER_STYLES,
   type ElementInfo,
 } from '@shimmer-from-structure/core';
 import { useShimmerConfig } from './composables/useShimmerConfig';
@@ -121,20 +119,6 @@ onUnmounted(() => {
     cleanupObserver();
   }
 });
-
-// Computed styles
-const measureStyles = computed(
-  () => `
-  .shimmer-measure-container * {
-    color: transparent !important;
-  }
-  .shimmer-measure-container img,
-  .shimmer-measure-container svg,
-  .shimmer-measure-container video {
-    opacity: 0;
-  }
-`
-);
 
 const shimmerKeyframes = computed(
   () => `

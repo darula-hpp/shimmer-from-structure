@@ -58,6 +58,15 @@ interface Order {
   status: 'Delivered' | 'Processing' | 'Cancelled';
 }
 
+interface MetricCard {
+  id: string;
+  title: string;
+  value: string;
+  change: string;
+  trend: 'up' | 'down';
+  isLive: boolean;
+}
+
 interface Notification {
   id: string;
   title: string;
@@ -84,6 +93,7 @@ export class AppComponent implements OnInit, OnDestroy {
   loadingChart = signal(true);
   loadingNotifications = signal(true);
   loadingContextExample = signal(true);
+  loadingAttributesDemo = signal(true);
 
   // Data signals
   user = signal<User | null>(null);
@@ -95,8 +105,28 @@ export class AppComponent implements OnInit, OnDestroy {
   chartData = signal<ChartDataPoint[] | null>(null);
   notifications = signal<Notification[] | null>(null);
   contextData = signal<TeamMember[] | null>(null);
+  attributesDemoData = signal<MetricCard[] | null>(null);
 
   // Template data
+  metricCardsTemplate: MetricCard[] = [
+    { id: '1', title: 'API Requests', value: '0.0k/s', change: '+0.0%', trend: 'up', isLive: true },
+    { id: '2', title: 'Error Rate', value: '0.00%', change: '-0.00%', trend: 'up', isLive: true },
+    { id: '3', title: 'Uptime', value: '00.00%', change: '+0.00%', trend: 'up', isLive: false },
+  ];
+
+  realMetricCards: MetricCard[] = [
+    {
+      id: '1',
+      title: 'API Requests',
+      value: '12.4k/s',
+      change: '+3.2%',
+      trend: 'up',
+      isLive: true,
+    },
+    { id: '2', title: 'Error Rate', value: '0.08%', change: '-0.01%', trend: 'up', isLive: true },
+    { id: '3', title: 'Uptime', value: '99.98%', change: '+0.01%', trend: 'up', isLive: false },
+  ];
+
   userTemplate: User = {
     name: 'Sarah Johnson',
     email: 'sarah.johnson@company.com',
@@ -484,6 +514,14 @@ export class AppComponent implements OnInit, OnDestroy {
         this.loadingContextExample.set(false);
       }, 9000)
     );
+
+    // Attribute controls demo
+    this.timeouts.push(
+      window.setTimeout(() => {
+        this.attributesDemoData.set(this.realMetricCards);
+        this.loadingAttributesDemo.set(false);
+      }, 6000)
+    );
   }
 
   handleReload() {
@@ -497,6 +535,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.loadingOrders.set(true);
     this.loadingNotifications.set(true);
     this.loadingContextExample.set(true);
+    this.loadingAttributesDemo.set(true);
 
     this.user.set(null);
     this.stats.set(null);
@@ -507,6 +546,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.team.set(null);
     this.notifications.set(null);
     this.contextData.set(null);
+    this.attributesDemoData.set(null);
 
     // Clear existing timeouts
     this.timeouts.forEach(clearTimeout);
