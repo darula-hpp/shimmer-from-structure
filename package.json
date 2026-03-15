@@ -76,7 +76,7 @@
     "react-dom": "^19.2.3",
     "recharts": "^3.6.0",
     "svelte": "^5.49.1",
-    "typescript": "^5.3.0",
+    "typescript": "5.6.3",
     "typescript-eslint": "^8.53.1",
     "vite": "^6.0.0",
     "vite-plugin-dts": "^4.5.4",
