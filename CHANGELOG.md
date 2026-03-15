@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.4.0] - 2026-03-15
+
+### Added
+
+- **Core: HTML attribute controls for shimmer flow**
+  - **`data-shimmer-ignore`**: Excludes the element and all its descendants from shimmer measurement and rendering. Elements with this attribute (and their children) are not measured, no shimmer blocks are drawn over them, and their text and media remain visible during loading (they are excluded from the “transparent text” styling).
+  - **`data-shimmer-no-children`**: Treats the element as a single shimmer block; the library does not recurse into its children and uses the element’s own bounding rect for the overlay.
+  - **`SHIMMER_CONTAINER_STYLES`**: New export from `@shimmer-from-structure/core` containing the CSS string used for the measure container (transparent text, hidden media). The rules exclude `[data-shimmer-ignore]` and `[data-shimmer-ignore] *` so ignored regions stay visible. All adapters use this constant for consistent behavior and a single place to maintain selector logic.
+
+### Changed
+
+- **React, Vue, Svelte, Angular, Solid**: Shimmer measure-container styles now use `SHIMMER_CONTAINER_STYLES` from core instead of inline or duplicated CSS. This keeps `data-shimmer-ignore` behavior (visibility during loading) consistent across adapters and centralizes future style changes in core.
+
+### Added (examples)
+
+- **React, Vue, Svelte, Angular examples**: New “HTML Attribute Controls” demo section showing `data-shimmer-ignore` (e.g. a visible “LIVE” badge during shimmer) and `data-shimmer-no-children` (one block for a metric row instead of per-child blocks).
+
+### Fixed
+
+- **Angular example**: Added `ts-morph` as a devDependency so `@analogjs/vite-plugin-angular` resolves correctly when running the Vite dev server (`npm run dev`).
+
 ## [2.3.4] - 2026-03-03
 
 ### Security

@@ -13,8 +13,16 @@ export function extractElementInfo(element: Element, parentRect: DOMRect): Eleme
     return elements;
   }
 
-  // If this is a leaf element, capture it
-  if (isLeafElement(element)) {
+  // Skip this element and all its descendants entirely
+  if (element.hasAttribute('data-shimmer-ignore')) {
+    return elements;
+  }
+
+  // Treat this element as a single block — capture it without recursing into children
+  const isNoChildren = element.hasAttribute('data-shimmer-no-children');
+
+  // If this is a leaf element (or explicitly marked as a block), capture it
+  if (isNoChildren || isLeafElement(element)) {
     // Get computed border-radius from the element's styles
     const computedStyle = window.getComputedStyle(element);
     const computedBorderRadius = computedStyle.borderRadius || '0px';

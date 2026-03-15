@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { Shimmer, provideShimmerConfig } from '@shimmer-from-structure/vue';
 
 // Set global config
@@ -13,11 +13,20 @@ provideShimmerConfig({
 const loading = ref(true);
 const loadingTeam = ref(true);
 const loadingOrders = ref(true);
+const loadingAttributesDemo = ref(true);
 
 const toggleLoading = () => {
   loading.value = !loading.value;
   loadingTeam.value = loading.value;
   loadingOrders.value = loading.value;
+  if (loading.value) {
+    loadingAttributesDemo.value = true;
+    setTimeout(() => {
+      loadingAttributesDemo.value = false;
+    }, 6000);
+  } else {
+    loadingAttributesDemo.value = false;
+  }
 };
 
 // Mock data
@@ -108,6 +117,36 @@ function getStatusColor(status: string) {
   if (status === 'Processing') return { bg: '#dbeafe', text: '#1e40af' };
   return { bg: '#fee2e2', text: '#991b1b' };
 }
+
+interface MetricCard {
+  id: string;
+  title: string;
+  value: string;
+  change: string;
+  trend: 'up' | 'down';
+  isLive: boolean;
+}
+
+const metricCardsTemplate: MetricCard[] = [
+  { id: '1', title: 'API Requests', value: '0.0k/s', change: '+0.0%', trend: 'up', isLive: true },
+  { id: '2', title: 'Error Rate', value: '0.00%', change: '-0.00%', trend: 'up', isLive: true },
+  { id: '3', title: 'Uptime', value: '00.00%', change: '+0.00%', trend: 'up', isLive: false },
+];
+
+const realMetricCards: MetricCard[] = [
+  { id: '1', title: 'API Requests', value: '12.4k/s', change: '+3.2%', trend: 'up', isLive: true },
+  { id: '2', title: 'Error Rate', value: '0.08%', change: '-0.01%', trend: 'up', isLive: true },
+  { id: '3', title: 'Uptime', value: '99.98%', change: '+0.01%', trend: 'up', isLive: false },
+];
+
+const attributesDemoData = ref<MetricCard[] | null>(null);
+
+onMounted(() => {
+  setTimeout(() => {
+    attributesDemoData.value = realMetricCards;
+    loadingAttributesDemo.value = false;
+  }, 6000);
+});
 </script>
 
 <template>
@@ -240,5 +279,48 @@ function getStatusColor(status: string) {
         </section>
       </aside>
     </div>
+
+    <!-- HTML Attribute Controls Demo -->
+    <section class="dashboard-section" style="margin-top: 2rem">
+      <h3 class="section-title">🎛️ HTML Attribute Controls</h3>
+      <p class="attributes-demo-description">
+        Use <code>data-shimmer-ignore</code> to exclude an element and its children entirely. Use
+        <code>data-shimmer-no-children</code> to capture an element as a single shimmer block.
+      </p>
+      <Shimmer :loading="loadingAttributesDemo" :template-props="{ cards: metricCardsTemplate }">
+        <div class="attributes-demo-grid">
+          <div
+            v-for="(card, i) in attributesDemoData || metricCardsTemplate"
+            :key="card.id"
+            class="attr-card"
+          >
+            <div class="attr-card-header">
+              <span class="attr-card-title">{{ card.title }}</span>
+              <!-- data-shimmer-ignore: badge is excluded from shimmer entirely -->
+              <span v-if="card.isLive" class="live-badge" data-shimmer-ignore="">● LIVE</span>
+            </div>
+
+            <!-- data-shimmer-no-children (card 2 only): whole block is one shimmer rect -->
+            <div
+              class="attr-card-metric"
+              v-bind="i === 1 ? { 'data-shimmer-no-children': '' } : {}"
+            >
+              <span class="attr-metric-value">{{ card.value }}</span>
+              <span class="attr-metric-change" :class="card.trend">
+                {{ card.trend === 'up' ? '↑' : '↓' }} {{ card.change }}
+              </span>
+            </div>
+
+            <p class="attr-card-note">
+              <template v-if="i === 0">"LIVE" badge skipped via data-shimmer-ignore</template>
+              <template v-else-if="i === 1"
+                >Metric block is one shimmer via data-shimmer-no-children</template
+              >
+              <template v-else>Normal shimmer (no attributes)</template>
+            </p>
+          </div>
+        </div>
+      </Shimmer>
+    </section>
   </div>
 </template>
