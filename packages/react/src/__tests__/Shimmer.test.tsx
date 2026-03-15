@@ -55,7 +55,9 @@ describe('Shimmer', () => {
       </Shimmer>
     );
 
-    expect(container.innerHTML).toContain('.shimmer-measure-container * {');
+    expect(container.innerHTML).toContain(
+      '.shimmer-measure-container *:not([data-shimmer-ignore], [data-shimmer-ignore] *)'
+    );
     expect(container.innerHTML).toContain('color: transparent !important');
   });
 
