@@ -37,8 +37,9 @@ export default function Home() {
         <Header />
 
         {/* Demo Button */}
-        <div className="fixed top-24 right-6 z-50">
+        <div className="fixed top-24 right-6 z-50" data-shimmer-ignore="">
           <button
+            data-shimmer-ignore=""
             onClick={handleShowDemo}
             className="px-4 py-2 bg-gray-900 dark:bg-white text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-100 rounded-lg font-medium transition-colors shadow-lg"
           >
