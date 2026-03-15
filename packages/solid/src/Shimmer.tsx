@@ -11,6 +11,7 @@ import { useShimmerConfig } from './ShimmerContext';
 import {
   extractElementInfo,
   createResizeObserver,
+  SHIMMER_CONTAINER_STYLES,
   type ElementInfo,
 } from '@shimmer-from-structure/core';
 
@@ -77,17 +78,7 @@ export const Shimmer = (props: ShimmerProps) => {
   return (
     <Show when={merged.loading} fallback={<>{merged.children}</>}>
       <div style={{ position: 'relative' }}>
-        {/* Inject styles for hiding text while preserving backgrounds */}
-        <style>{`
-          .shimmer-measure-container * {
-            color: transparent !important;
-          }
-          .shimmer-measure-container img,
-          .shimmer-measure-container svg,
-          .shimmer-measure-container video {
-            opacity: 0;
-          }
-        `}</style>
+        <style>{SHIMMER_CONTAINER_STYLES}</style>
 
         {/* Children rendered with transparent text but visible container backgrounds */}
         <div

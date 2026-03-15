@@ -69,6 +69,15 @@ interface Order {
   status: 'Delivered' | 'Processing' | 'Cancelled';
 }
 
+interface MetricCard {
+  id: string;
+  title: string;
+  value: string;
+  change: string;
+  trend: 'up' | 'down';
+  isLive: boolean;
+}
+
 // =============================================================================
 // TEMPLATE DATA (Mock data for shimmer skeletons)
 // =============================================================================
@@ -183,6 +192,12 @@ const chartTemplate: ChartDataPoint[] = [
   { name: 'Fri', revenue: 6100, orders: 61 },
   { name: 'Sat', revenue: 7000, orders: 70 },
   { name: 'Sun', revenue: 5500, orders: 55 },
+];
+
+const metricCardsTemplate: MetricCard[] = [
+  { id: '1', title: 'API Requests', value: '0.0k/s', change: '+0.0%', trend: 'up', isLive: true },
+  { id: '2', title: 'Error Rate', value: '0.00%', change: '-0.00%', trend: 'up', isLive: true },
+  { id: '3', title: 'Uptime', value: '00.00%', change: '+0.00%', trend: 'up', isLive: false },
 ];
 
 // =============================================================================
@@ -305,6 +320,12 @@ const realChartData: ChartDataPoint[] = [
   { name: 'Fri', revenue: 8400, orders: 84 },
   { name: 'Sat', revenue: 9100, orders: 91 },
   { name: 'Sun', revenue: 6800, orders: 68 },
+];
+
+const realMetricCards: MetricCard[] = [
+  { id: '1', title: 'API Requests', value: '12.4k/s', change: '+3.2%', trend: 'up', isLive: true },
+  { id: '2', title: 'Error Rate', value: '0.08%', change: '-0.01%', trend: 'up', isLive: true },
+  { id: '3', title: 'Uptime', value: '99.98%', change: '+0.01%', trend: 'up', isLive: false },
 ];
 
 // =============================================================================
@@ -502,6 +523,51 @@ const OrdersTable = ({ orders }: { orders: Order[] }) => (
     </table>
   </div>
 );
+// HTML Attribute Controls Demo
+const AttributesDemo = ({ cards }: { cards: MetricCard[] }) => (
+  <div className="attributes-demo-grid">
+    {cards.map((card, i) => (
+      <div key={card.id} className="attr-card">
+        <div className="attr-card-header">
+          <span className="attr-card-title">{card.title}</span>
+          {card.isLive && (
+            // data-shimmer-ignore: this badge is completely excluded from shimmer measurement
+            <span className="live-badge" data-shimmer-ignore="">
+              ● LIVE
+            </span>
+          )}
+        </div>
+
+        {i === 1 ? (
+          // data-shimmer-no-children: the whole block is captured as one shimmer rect
+          // instead of measuring the value and change span individually
+          <div className="attr-card-metric" data-shimmer-no-children="">
+            <span className="attr-metric-value">{card.value}</span>
+            <span className={`attr-metric-change ${card.trend}`}>
+              {card.trend === 'up' ? '↑' : '↓'} {card.change}
+            </span>
+          </div>
+        ) : (
+          <div className="attr-card-metric">
+            <span className="attr-metric-value">{card.value}</span>
+            <span className={`attr-metric-change ${card.trend}`}>
+              {card.trend === 'up' ? '↑' : '↓'} {card.change}
+            </span>
+          </div>
+        )}
+
+        <p className="attr-card-note">
+          {i === 0
+            ? '"LIVE" badge skipped via data-shimmer-ignore'
+            : i === 1
+              ? 'Metric block is one shimmer via data-shimmer-no-children'
+              : 'Normal shimmer (no attributes)'}
+        </p>
+      </div>
+    ))}
+  </div>
+);
+
 // SUSPENSE EXAMPLE - Lazy-loaded Notifications Component
 // =============================================================================
 
@@ -627,6 +693,10 @@ function App() {
   const [loadingContextExample, setLoadingContextExample] = useState(true);
   const [contextData, setContextData] = useState<TeamMember[] | null>(null);
 
+  // Attribute Controls Demo State
+  const [loadingAttributesDemo, setLoadingAttributesDemo] = useState(true);
+  const [attributesDemoData, setAttributesDemoData] = useState<MetricCard[] | null>(null);
+
   // Simulate independent API calls with different response times
   // TEMPORARILY INCREASED FOR TESTING RESIZE OBSERVER
   useEffect(() => {
@@ -677,6 +747,12 @@ function App() {
       setContextData(realTeam.slice(0, 2)); // Use subset of team data
       setLoadingContextExample(false);
     }, 40000); // was 4000ms
+
+    // Attribute Controls Demo
+    setTimeout(() => {
+      setAttributesDemoData(realMetricCards);
+      setLoadingAttributesDemo(false);
+    }, 6000);
   }, []);
 
   // Reset all data
@@ -688,7 +764,8 @@ function App() {
     setLoadingActivity(true);
     setLoadingTeam(true);
     setLoadingOrders(true);
-    setLoadingContextExample(true); // Reset context example
+    setLoadingContextExample(true);
+    setLoadingAttributesDemo(true);
     setUser(null);
     setStats(null);
     setChartData(null);
@@ -696,7 +773,8 @@ function App() {
     setOrders(null);
     setActivity(null);
     setTeam(null);
-    setContextData(null); // Reset context data
+    setContextData(null);
+    setAttributesDemoData(null);
 
     // Re-trigger the effect
     // TEMPORARILY INCREASED FOR TESTING RESIZE OBSERVER
@@ -739,6 +817,11 @@ function App() {
       setContextData(realTeam.slice(0, 2));
       setLoadingContextExample(false);
     }, 40000); // was 4000ms
+
+    setTimeout(() => {
+      setAttributesDemoData(realMetricCards);
+      setLoadingAttributesDemo(false);
+    }, 6000);
   };
 
   return (
@@ -851,6 +934,19 @@ function App() {
             </div>
           </Shimmer>
         </ShimmerProvider>
+      </section>
+
+      {/* HTML Attribute Controls Demo */}
+      <section className="dashboard-section" style={{ marginTop: '2rem' }}>
+        <h3 className="section-title">🎛️ HTML Attribute Controls</h3>
+        <p className="attributes-demo-description">
+          Use <code>data-shimmer-ignore</code> to exclude an element and its children entirely from
+          shimmer. Use <code>data-shimmer-no-children</code> to capture an element as a single
+          shimmer block instead of recursing into its children.
+        </p>
+        <Shimmer loading={loadingAttributesDemo} templateProps={{ cards: metricCardsTemplate }}>
+          <AttributesDemo cards={attributesDemoData || metricCardsTemplate} />
+        </Shimmer>
       </section>
 
       {/* Footer */}

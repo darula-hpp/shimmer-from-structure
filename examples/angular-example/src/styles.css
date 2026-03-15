@@ -682,3 +682,116 @@ body {
     margin-left: 0;
   }
 }
+
+/* =============================================================================
+   HTML ATTRIBUTE CONTROLS DEMO
+   ============================================================================= */
+
+.attributes-demo-description {
+  margin-bottom: 20px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.attributes-demo-description code {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 0.85em;
+  color: #5eead4;
+}
+
+.attributes-demo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.attr-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.attr-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.attr-card-title {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.live-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 20px;
+  padding: 2px 8px;
+  white-space: nowrap;
+  animation: pulse-badge 2s ease-in-out infinite;
+}
+
+@keyframes pulse-badge {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.attr-card-metric {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.attr-metric-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1;
+}
+
+.attr-metric-change {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.attr-metric-change.up {
+  color: #10b981;
+}
+
+.attr-metric-change.down {
+  color: #f87171;
+}
+
+.attr-card-note {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.35);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 10px;
+  font-style: italic;
+}
+
+@media (max-width: 900px) {
+  .attributes-demo-grid {
+    grid-template-columns: 1fr;
+  }
+}

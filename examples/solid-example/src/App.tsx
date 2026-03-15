@@ -36,6 +36,15 @@ interface TeamMember {
   avatar: string;
 }
 
+interface MetricCard {
+  id: string;
+  title: string;
+  value: string;
+  change: string;
+  trend: 'up' | 'down';
+  isLive: boolean;
+}
+
 // =============================================================================
 // TEMPLATE DATA (Mock data for shimmer skeletons)
 // =============================================================================
@@ -96,6 +105,18 @@ const teamTemplate: TeamMember[] = [
     role: 'Backend Developer',
     avatar: 'https://via.placeholder.com/40',
   },
+];
+
+const metricCardsTemplate: MetricCard[] = [
+  { id: '1', title: 'API Requests', value: '0.0k/s', change: '+0.0%', trend: 'up', isLive: true },
+  { id: '2', title: 'Error Rate', value: '0.00%', change: '-0.00%', trend: 'up', isLive: true },
+  { id: '3', title: 'Uptime', value: '00.00%', change: '+0.00%', trend: 'up', isLive: false },
+];
+
+const realMetricCards: MetricCard[] = [
+  { id: '1', title: 'API Requests', value: '12.4k/s', change: '+3.2%', trend: 'up', isLive: true },
+  { id: '2', title: 'Error Rate', value: '0.08%', change: '-0.01%', trend: 'up', isLive: true },
+  { id: '3', title: 'Uptime', value: '99.98%', change: '+0.01%', trend: 'up', isLive: false },
 ];
 
 // =============================================================================
@@ -228,6 +249,52 @@ const TeamMembers: Component<{ members: TeamMember[] }> = (props) => (
   </div>
 );
 
+const AttributesDemo: Component<{ cards: MetricCard[] }> = (props) => (
+  <div class="attributes-demo-grid">
+    <For each={props.cards}>
+      {(card, i) => (
+        <div class="attr-card">
+          <div class="attr-card-header">
+            <span class="attr-card-title">{card.title}</span>
+            {card.isLive && (
+              // data-shimmer-ignore: this badge is completely excluded from shimmer measurement
+              <span class="live-badge" data-shimmer-ignore="">
+                ● LIVE
+              </span>
+            )}
+          </div>
+
+          {i() === 1 ? (
+            // data-shimmer-no-children: the whole block is captured as one shimmer rect
+            // instead of measuring the value and change span individually
+            <div class="attr-card-metric" data-shimmer-no-children="">
+              <span class="attr-metric-value">{card.value}</span>
+              <span class={`attr-metric-change ${card.trend}`}>
+                {card.trend === 'up' ? '↑' : '↓'} {card.change}
+              </span>
+            </div>
+          ) : (
+            <div class="attr-card-metric">
+              <span class="attr-metric-value">{card.value}</span>
+              <span class={`attr-metric-change ${card.trend}`}>
+                {card.trend === 'up' ? '↑' : '↓'} {card.change}
+              </span>
+            </div>
+          )}
+
+          <p class="attr-card-note">
+            {i() === 0
+              ? '"LIVE" badge skipped via data-shimmer-ignore'
+              : i() === 1
+                ? 'Metric block is one shimmer via data-shimmer-no-children'
+                : 'Normal shimmer (no attributes)'}
+          </p>
+        </div>
+      )}
+    </For>
+  </div>
+);
+
 // =============================================================================
 // MAIN APP
 // =============================================================================
@@ -248,6 +315,10 @@ const App: Component = () => {
   // Context Example State
   const [loadingContextExample, setLoadingContextExample] = createSignal(true);
   const [contextData, setContextData] = createSignal<TeamMember[] | null>(null);
+
+  // Attribute Controls Demo State
+  const [loadingAttributesDemo, setLoadingAttributesDemo] = createSignal(true);
+  const [attributesDemoData, setAttributesDemoData] = createSignal<MetricCard[] | null>(null);
 
   // Simulate independent API calls with different response times
   createEffect(() => {
@@ -276,12 +347,18 @@ const App: Component = () => {
       setLoadingContextExample(false);
     }, 4000);
 
+    const attributesTimer = setTimeout(() => {
+      setAttributesDemoData(realMetricCards);
+      setLoadingAttributesDemo(false);
+    }, 6000);
+
     onCleanup(() => {
       clearTimeout(userTimer);
       clearTimeout(statsTimer);
       clearTimeout(teamTimer);
       clearTimeout(transactionsTimer);
       clearTimeout(contextTimer);
+      clearTimeout(attributesTimer);
     });
   });
 
@@ -292,11 +369,13 @@ const App: Component = () => {
     setLoadingTransactions(true);
     setLoadingTeam(true);
     setLoadingContextExample(true);
+    setLoadingAttributesDemo(true);
     setUser(null);
     setStats(null);
     setTransactions(null);
     setTeam(null);
     setContextData(null);
+    setAttributesDemoData(null);
 
     setTimeout(() => {
       setUser(realUser);
@@ -318,6 +397,10 @@ const App: Component = () => {
       setContextData(realTeam.slice(0, 2));
       setLoadingContextExample(false);
     }, 4000);
+    setTimeout(() => {
+      setAttributesDemoData(realMetricCards);
+      setLoadingAttributesDemo(false);
+    }, 6000);
   };
 
   return (
@@ -402,6 +485,19 @@ const App: Component = () => {
           </section>
         </div>
       </div>
+
+      {/* HTML Attribute Controls Demo */}
+      <section class="dashboard-section" style={{ 'margin-top': '2rem' }}>
+        <h3 class="section-title">🎛️ HTML Attribute Controls</h3>
+        <p class="attributes-demo-description">
+          Use <code>data-shimmer-ignore</code> to exclude an element and its children entirely from
+          shimmer. Use <code>data-shimmer-no-children</code> to capture an element as a single
+          shimmer block instead of recursing into its children.
+        </p>
+        <Shimmer loading={loadingAttributesDemo()}>
+          <AttributesDemo cards={attributesDemoData() || metricCardsTemplate} />
+        </Shimmer>
+      </section>
 
       {/* Footer */}
       <footer class="dashboard-footer">

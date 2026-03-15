@@ -276,6 +276,53 @@
     </shimmer>
   </section>
 
+  <!-- HTML Attribute Controls Demo -->
+  <section class="dashboard-section" style="margin-top: 2rem;">
+    <h3 class="section-title">🎛️ HTML Attribute Controls</h3>
+    <p class="attributes-demo-description">
+      Use <code>data-shimmer-ignore</code> to exclude an element and its children entirely.
+      Use <code>data-shimmer-no-children</code> to capture an element as a single shimmer block.
+    </p>
+    <shimmer [loading]="loadingAttributesDemo()">
+      <div class="attributes-demo-grid">
+        @for (card of attributesDemoData() || metricCardsTemplate; track card.id; let i = $index) {
+          <div class="attr-card">
+            <div class="attr-card-header">
+              <span class="attr-card-title">{{ card.title }}</span>
+              <!-- data-shimmer-ignore: badge is excluded from shimmer entirely -->
+              @if (card.isLive) {
+                <span class="live-badge" data-shimmer-ignore="">● LIVE</span>
+              }
+            </div>
+
+            <!-- data-shimmer-no-children (card 2 only): whole block is one shimmer rect -->
+            @if (i === 1) {
+              <div class="attr-card-metric" data-shimmer-no-children="">
+                <span class="attr-metric-value">{{ card.value }}</span>
+                <span class="attr-metric-change" [class.up]="card.trend === 'up'" [class.down]="card.trend === 'down'">
+                  {{ card.trend === 'up' ? '↑' : '↓' }} {{ card.change }}
+                </span>
+              </div>
+            } @else {
+              <div class="attr-card-metric">
+                <span class="attr-metric-value">{{ card.value }}</span>
+                <span class="attr-metric-change" [class.up]="card.trend === 'up'" [class.down]="card.trend === 'down'">
+                  {{ card.trend === 'up' ? '↑' : '↓' }} {{ card.change }}
+                </span>
+              </div>
+            }
+
+            <p class="attr-card-note">
+              @if (i === 0) { "LIVE" badge skipped via data-shimmer-ignore }
+              @else if (i === 1) { Metric block is one shimmer via data-shimmer-no-children }
+              @else { Normal shimmer (no attributes) }
+            </p>
+          </div>
+        }
+      </div>
+    </shimmer>
+  </section>
+
   <!-- Footer -->
   <footer class="dashboard-footer">
     <p>

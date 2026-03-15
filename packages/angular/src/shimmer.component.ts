@@ -17,6 +17,7 @@ import { NgIf, NgFor, isPlatformBrowser } from '@angular/common';
 import {
   extractElementInfo,
   createResizeObserver,
+  SHIMMER_CONTAINER_STYLES,
   type ElementInfo,
 } from '@shimmer-from-structure/core';
 import { injectShimmerConfig } from './shimmer-config.service';
@@ -95,19 +96,10 @@ import { injectShimmerConfig } from './shimmer-config.service';
     </div>
   `,
   styles: [
+    SHIMMER_CONTAINER_STYLES,
     `
       :host {
         display: contents;
-      }
-
-      .shimmer-measure-container * {
-        color: transparent !important;
-      }
-
-      .shimmer-measure-container img,
-      .shimmer-measure-container svg,
-      .shimmer-measure-container video {
-        opacity: 0;
       }
 
       .shimmer-animation-element {
