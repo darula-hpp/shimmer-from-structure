@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.4.1] - 2026-03-16
+
+### Fixed
+
+- **React: ReactCurrentDispatcher Conflict**: Resolved a common `TypeError` in React environments by correctly externalizing `react/jsx-runtime` and `react/jsx-dev-runtime` in the build process. This prevents React internals from being bundled into the library, avoiding conflicts with the host application's React instance.
+- **Build: Global Mapping Warnings**: Added explicit global mappings for React JSX runtimes in the Vite configuration, resolving build-time warnings about missing global names.
+
 ## [2.4.0] - 2026-03-15
 
 ### Added
