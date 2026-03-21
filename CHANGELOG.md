@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Added `"type": "module"` to all package.json files for explicit ESM declaration
   - Updated package exports to correctly map `require` to `.cjs` and `import` to `.esm.js`
   - Ensures Vite's SSR module runner correctly resolves ES module imports instead of falling back to CommonJS
-  - Affects all framework adapters: React, Vue,
+  - Affects all framework adapters: React, Vue, Svelte, Solid, and Angular
 
 ## [2.4.1] - 2026-03-16
 
