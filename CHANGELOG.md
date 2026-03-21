@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.4.2] - 2026-03-21
+
+### Fixed
+
+- **Build: CommonJS/ESM Module Resolution**: Fixed "Named export not found" errors when importing from `@shimmer-from-structure/core` in Vite SSR environments.
+  - Changed build output from UMD to proper CommonJS format with `.cjs` extension
+  - Added `"type": "module"` to all package.json files for explicit ESM declaration
+  - Updated package exports to correctly map `require` to `.cjs` and `import` to `.esm.js`
+  - Ensures Vite's SSR module runner correctly resolves ES module imports instead of falling back to CommonJS
+  - Affects all framework adapters: React, Vue,
+
 ## [2.4.1] - 2026-03-16
 
 ### Fixed

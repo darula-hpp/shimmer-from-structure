@@ -1,8 +1,9 @@
 {
   "name": "@shimmer-from-structure/react",
-  "version": "2.4.1",
+  "version": "2.4.2",
   "description": "React adapter for shimmer-from-structure",
-  "main": "dist/index.js",
+  "type": "module",
+  "main": "dist/index.cjs",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -12,7 +13,7 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.esm.js",
-      "require": "./dist/index.js"
+      "require": "./dist/index.cjs"
     }
   },
   "scripts": {

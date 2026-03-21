@@ -16,8 +16,8 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
       name: 'ShimmerVue',
-      formats: ['es', 'umd'],
-      fileName: (format: string) => `index.${format === 'es' ? 'esm.js' : 'js'}`,
+      formats: ['es', 'cjs'],
+      fileName: (format: string) => `index.${format === 'es' ? 'esm.js' : 'cjs'}`,
     },
     rollupOptions: {
       external: ['vue', '@shimmer-from-structure/core'],
