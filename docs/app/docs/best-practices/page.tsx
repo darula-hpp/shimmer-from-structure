@@ -50,6 +50,24 @@ export default function BestPractices() {
           maintain consistency and avoid repeating props.
         </p>
 
+        <h3>6. Use HTML Attribute Controls for Fine-Grained Control</h3>
+        <p>
+          Use <code>data-shimmer-ignore</code> and <code>data-shimmer-no-children</code> attributes
+          to control shimmer behavior at the element level:
+        </p>
+        <ul>
+          <li>
+            <strong>data-shimmer-ignore:</strong> Keep elements visible during loading (e.g., "LIVE"
+            badges, status indicators, static labels). The element and all its children are excluded
+            from shimmer measurement and remain visible.
+          </li>
+          <li>
+            <strong>data-shimmer-no-children:</strong> Treat complex nested structures as a single
+            shimmer block instead of creating multiple child blocks (e.g., metric rows with multiple
+            values, compact stat cards).
+          </li>
+        </ul>
+
         <hr className="my-8" />
 
         <h2>Framework-Specific Details</h2>
