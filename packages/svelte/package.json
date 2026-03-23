@@ -1,6 +1,6 @@
 {
   "name": "@shimmer-from-structure/svelte",
-  "version": "2.4.0",
+  "version": "2.4.2",
   "type": "module",
   "description": "Svelte adapter for shimmer-from-structure",
   "main": "dist/index.cjs",

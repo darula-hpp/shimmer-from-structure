@@ -354,6 +354,190 @@ bootstrapApplication(AppComponent, {
           </li>
         </ul>
 
+        <h2>HTML Attribute Controls</h2>
+
+        <p>
+          Control shimmer behavior at the element level using HTML data attributes. These attributes
+          provide fine-grained control over which elements are measured and how they are rendered
+          during the loading state.
+        </p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Attribute</th>
+              <th>Description</th>
+              <th>Use Case</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <code>data-shimmer-ignore</code>
+              </td>
+              <td>
+                Excludes the element and all its descendants from shimmer measurement and rendering.
+                Elements with this attribute remain visible during loading (text and media are not
+                hidden).
+              </td>
+              <td>
+                Live indicators, badges, static labels, or any content that should remain visible
+                during loading
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <code>data-shimmer-no-children</code>
+              </td>
+              <td>
+                Treats the element as a single shimmer block. The library does not recurse into its
+                children and uses the element's own bounding rect for the overlay.
+              </td>
+              <td>
+                Complex nested structures where you want a single unified shimmer block instead of
+                multiple child blocks
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Example Usage</h3>
+
+        <CodeTabs
+          tabs={[
+            {
+              id: 'react',
+              label: 'React',
+              content: (
+                <pre>
+                  <code>{`<Shimmer loading={loading}>
+  <div className="card">
+    {/* This badge stays visible during loading */}
+    <span className="badge" data-shimmer-ignore>
+      LIVE
+    </span>
+    
+    <h2>Card Title</h2>
+    <p>Card content that will be shimmered</p>
+    
+    {/* This entire row becomes one shimmer block */}
+    <div className="metric-row" data-shimmer-no-children>
+      <span>Views: 1,234</span>
+      <span>Likes: 567</span>
+      <span>Shares: 89</span>
+    </div>
+  </div>
+</Shimmer>`}</code>
+                </pre>
+              ),
+            },
+            {
+              id: 'vue',
+              label: 'Vue',
+              content: (
+                <pre>
+                  <code>{`<Shimmer :loading="loading">
+  <div class="card">
+    <!-- This badge stays visible during loading -->
+    <span class="badge" data-shimmer-ignore>
+      LIVE
+    </span>
+    
+    <h2>Card Title</h2>
+    <p>Card content that will be shimmered</p>
+    
+    <!-- This entire row becomes one shimmer block -->
+    <div class="metric-row" data-shimmer-no-children>
+      <span>Views: {{ views }}</span>
+      <span>Likes: {{ likes }}</span>
+      <span>Shares: {{ shares }}</span>
+    </div>
+  </div>
+</Shimmer>`}</code>
+                </pre>
+              ),
+            },
+            {
+              id: 'svelte',
+              label: 'Svelte',
+              content: (
+                <pre>
+                  <code>{`<Shimmer loading={loading}>
+  <div class="card">
+    <!-- This badge stays visible during loading -->
+    <span class="badge" data-shimmer-ignore>
+      LIVE
+    </span>
+    
+    <h2>Card Title</h2>
+    <p>Card content that will be shimmered</p>
+    
+    <!-- This entire row becomes one shimmer block -->
+    <div class="metric-row" data-shimmer-no-children>
+      <span>Views: {views}</span>
+      <span>Likes: {likes}</span>
+      <span>Shares: {shares}</span>
+    </div>
+  </div>
+</Shimmer>`}</code>
+                </pre>
+              ),
+            },
+            {
+              id: 'solid',
+              label: 'Solid',
+              content: (
+                <pre>
+                  <code>{`<Shimmer loading={loading()}>
+  <div class="card">
+    {/* This badge stays visible during loading */}
+    <span class="badge" data-shimmer-ignore>
+      LIVE
+    </span>
+    
+    <h2>Card Title</h2>
+    <p>Card content that will be shimmered</p>
+    
+    {/* This entire row becomes one shimmer block */}
+    <div class="metric-row" data-shimmer-no-children>
+      <span>Views: {views()}</span>
+      <span>Likes: {likes()}</span>
+      <span>Shares: {shares()}</span>
+    </div>
+  </div>
+</Shimmer>`}</code>
+                </pre>
+              ),
+            },
+            {
+              id: 'angular',
+              label: 'Angular',
+              content: (
+                <pre>
+                  <code>{`<shimmer [loading]="loading()">
+  <div class="card">
+    <!-- This badge stays visible during loading -->
+    <span class="badge" data-shimmer-ignore>
+      LIVE
+    </span>
+    
+    <h2>Card Title</h2>
+    <p>Card content that will be shimmered</p>
+    
+    <!-- This entire row becomes one shimmer block -->
+    <div class="metric-row" data-shimmer-no-children>
+      <span>Views: {{ views() }}</span>
+      <span>Likes: {{ likes() }}</span>
+      <span>Shares: {{ shares() }}</span>
+    </div>
+  </div>
+</shimmer>`}</code>
+                </pre>
+              ),
+            },
+          ]}
+        />
+
         <h2>TypeScript Support</h2>
 
         <p>All packages include full TypeScript definitions. Import types as needed:</p>

@@ -751,6 +751,244 @@ const teamTemplate = Array(4).fill({
           ]}
         />
 
+        <h2>HTML Attribute Controls</h2>
+
+        <p>
+          Use HTML data attributes to control shimmer behavior at the element level. This example
+          shows a card with a visible "LIVE" badge during loading and a metric row treated as a
+          single shimmer block:
+        </p>
+
+        <CodeTabs
+          tabs={[
+            {
+              id: 'react',
+              label: 'React',
+              content: (
+                <pre>
+                  <code>{`const MetricsCard = ({ metrics }) => (
+  <div className="metrics-card">
+    {/* Badge stays visible during loading */}
+    <span className="live-badge" data-shimmer-ignore>
+      LIVE
+    </span>
+    
+    <h3 className="card-title">{metrics.title}</h3>
+    <p className="card-description">{metrics.description}</p>
+    
+    {/* Entire row becomes one shimmer block instead of 3 separate blocks */}
+    <div className="metrics-row" data-shimmer-no-children>
+      <div className="metric">
+        <span className="metric-label">Views</span>
+        <span className="metric-value">{metrics.views}</span>
+      </div>
+      <div className="metric">
+        <span className="metric-label">Clicks</span>
+        <span className="metric-value">{metrics.clicks}</span>
+      </div>
+      <div className="metric">
+        <span className="metric-label">Rate</span>
+        <span className="metric-value">{metrics.rate}%</span>
+      </div>
+    </div>
+  </div>
+);
+
+const metricsTemplate = {
+  title: 'Campaign Performance',
+  description: 'Real-time metrics for your active campaign',
+  views: '12,345',
+  clicks: '1,234',
+  rate: '10.0',
+};
+
+<Shimmer loading={loading} templateProps={{ metrics: metricsTemplate }}>
+  <MetricsCard metrics={metrics || metricsTemplate} />
+</Shimmer>`}</code>
+                </pre>
+              ),
+            },
+            {
+              id: 'vue',
+              label: 'Vue',
+              content: (
+                <pre>
+                  <code>{`<script setup>
+const metricsTemplate = {
+  title: 'Campaign Performance',
+  description: 'Real-time metrics for your active campaign',
+  views: '12,345',
+  clicks: '1,234',
+  rate: '10.0',
+};
+</script>
+
+<template>
+  <Shimmer :loading="loading" :template-props="{ metrics: metricsTemplate }">
+    <div class="metrics-card">
+      <!-- Badge stays visible during loading -->
+      <span class="live-badge" data-shimmer-ignore>
+        LIVE
+      </span>
+      
+      <h3 class="card-title">{{ metrics.title }}</h3>
+      <p class="card-description">{{ metrics.description }}</p>
+      
+      <!-- Entire row becomes one shimmer block -->
+      <div class="metrics-row" data-shimmer-no-children>
+        <div class="metric">
+          <span class="metric-label">Views</span>
+          <span class="metric-value">{{ metrics.views }}</span>
+        </div>
+        <div class="metric">
+          <span class="metric-label">Clicks</span>
+          <span class="metric-value">{{ metrics.clicks }}</span>
+        </div>
+        <div class="metric">
+          <span class="metric-label">Rate</span>
+          <span class="metric-value">{{ metrics.rate }}%</span>
+        </div>
+      </div>
+    </div>
+  </Shimmer>
+</template>`}</code>
+                </pre>
+              ),
+            },
+            {
+              id: 'svelte',
+              label: 'Svelte',
+              content: (
+                <pre>
+                  <code>{`<script>
+const metricsTemplate = {
+  title: 'Campaign Performance',
+  description: 'Real-time metrics for your active campaign',
+  views: '12,345',
+  clicks: '1,234',
+  rate: '10.0',
+};
+</script>
+
+<Shimmer loading={loading} templateProps={{ metrics: metricsTemplate }}>
+  <div class="metrics-card">
+    <!-- Badge stays visible during loading -->
+    <span class="live-badge" data-shimmer-ignore>
+      LIVE
+    </span>
+    
+    <h3 class="card-title">{metrics.title}</h3>
+    <p class="card-description">{metrics.description}</p>
+    
+    <!-- Entire row becomes one shimmer block -->
+    <div class="metrics-row" data-shimmer-no-children>
+      <div class="metric">
+        <span class="metric-label">Views</span>
+        <span class="metric-value">{metrics.views}</span>
+      </div>
+      <div class="metric">
+        <span class="metric-label">Clicks</span>
+        <span class="metric-value">{metrics.clicks}</span>
+      </div>
+      <div class="metric">
+        <span class="metric-label">Rate</span>
+        <span class="metric-value">{metrics.rate}%</span>
+      </div>
+    </div>
+  </div>
+</Shimmer>`}</code>
+                </pre>
+              ),
+            },
+            {
+              id: 'angular',
+              label: 'Angular',
+              content: (
+                <pre>
+                  <code>{`metricsTemplate = {
+  title: 'Campaign Performance',
+  description: 'Real-time metrics for your active campaign',
+  views: '12,345',
+  clicks: '1,234',
+  rate: '10.0',
+};
+
+<shimmer [loading]="loading()" [templateProps]="{ metrics: metricsTemplate }">
+  <div class="metrics-card">
+    <!-- Badge stays visible during loading -->
+    <span class="live-badge" data-shimmer-ignore>
+      LIVE
+    </span>
+    
+    <h3 class="card-title">{{ metrics().title }}</h3>
+    <p class="card-description">{{ metrics().description }}</p>
+    
+    <!-- Entire row becomes one shimmer block -->
+    <div class="metrics-row" data-shimmer-no-children>
+      <div class="metric">
+        <span class="metric-label">Views</span>
+        <span class="metric-value">{{ metrics().views }}</span>
+      </div>
+      <div class="metric">
+        <span class="metric-label">Clicks</span>
+        <span class="metric-value">{{ metrics().clicks }}</span>
+      </div>
+      <div class="metric">
+        <span class="metric-label">Rate</span>
+        <span class="metric-value">{{ metrics().rate }}%</span>
+      </div>
+    </div>
+  </div>
+</shimmer>`}</code>
+                </pre>
+              ),
+            },
+            {
+              id: 'solid',
+              label: 'SolidJS',
+              content: (
+                <pre>
+                  <code>{`const metricsTemplate = {
+  title: 'Campaign Performance',
+  description: 'Real-time metrics for your active campaign',
+  views: '12,345',
+  clicks: '1,234',
+  rate: '10.0',
+};
+
+<Shimmer loading={loading()} templateProps={{ metrics: metricsTemplate }}>
+  <div class="metrics-card">
+    {/* Badge stays visible during loading */}
+    <span class="live-badge" data-shimmer-ignore>
+      LIVE
+    </span>
+    
+    <h3 class="card-title">{metrics().title}</h3>
+    <p class="card-description">{metrics().description}</p>
+    
+    {/* Entire row becomes one shimmer block */}
+    <div class="metrics-row" data-shimmer-no-children>
+      <div class="metric">
+        <span class="metric-label">Views</span>
+        <span class="metric-value">{metrics().views}</span>
+      </div>
+      <div class="metric">
+        <span class="metric-label">Clicks</span>
+        <span class="metric-value">{metrics().clicks}</span>
+      </div>
+      <div class="metric">
+        <span class="metric-label">Rate</span>
+        <span class="metric-value">{metrics().rate}%</span>
+      </div>
+    </div>
+  </div>
+</Shimmer>`}</code>
+                </pre>
+              ),
+            },
+          ]}
+        />
+
         <h2>Live Examples</h2>
 
         <p>
