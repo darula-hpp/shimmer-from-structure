@@ -1,6 +1,6 @@
 # Shimmer From Structure
 
-A structure-aware skeleton loader that mirrors your rendered UI at runtime. Automatically generates responsive shimmer states with zero layout duplication. Built for React, Vue, Angular, Svelte and SolidJS.
+A structure-aware skeleton generator that mirrors your rendered UI at runtime. Automatically generates responsive shimmer states with zero layout duplication. Built for React, Vue, Angular, Svelte and SolidJS.
 
 **Documentation:** [Access Full Docs](https://shimmer-from-structure-docs.vercel.app)
 
