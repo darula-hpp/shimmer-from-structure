@@ -91,7 +91,9 @@ export function Footer() {
         </div>
 
         <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800 text-center text-sm text-gray-600 dark:text-gray-400">
-          © {new Date().getFullYear()} Shimmer From Structure. All rights reserved.
+          <span className="w-fit">
+            © {new Date().getFullYear()} Shimmer From Structure. All rights reserved.
+          </span>
         </div>
       </div>
     </footer>
