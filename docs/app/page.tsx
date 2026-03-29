@@ -165,7 +165,7 @@ export default function Home() {
         {/* Quick Example */}
         <section className="px-6 py-20 bg-gray-50 dark:bg-gray-900/50">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold text-center mb-12">Quick Example</h2>
+            <h2 className="text-3xl font-bold text-center mb-12 w-fit mx-auto">Quick Example</h2>
 
             <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg p-6 overflow-x-auto">
               <pre className="text-sm">
@@ -185,7 +185,7 @@ function UserCard() {
               </pre>
             </div>
 
-            <p className="text-center mt-6 text-gray-600 dark:text-gray-400">
+            <p className="text-center mt-6 text-gray-600 dark:text-gray-400 w-fit mx-auto">
               That's it! No skeleton components to maintain.
             </p>
           </div>
