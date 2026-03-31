@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { Shimmer } from '@shimmer-from-structure/react';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
+import { NpmDownloadStats } from './components/NpmDownloadStats';
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -32,8 +33,8 @@ export default function Home() {
   const backgroundColor = isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)';
 
   return (
-    <Shimmer loading={loading} shimmerColor={shimmerColor} backgroundColor={backgroundColor}>
-      <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col">
+      <Shimmer loading={loading} shimmerColor={shimmerColor} backgroundColor={backgroundColor}>
         <Header />
 
         {/* Demo Button */}
@@ -161,8 +162,17 @@ export default function Home() {
             </div>
           </div>
         </section>
+      </Shimmer>
 
-        {/* Quick Example */}
+      {/* NPM Download Stats */}
+      <section className="px-6 py-20">
+        <div className="max-w-6xl mx-auto">
+          <NpmDownloadStats showShimmerDemo={loading} />
+        </div>
+      </section>
+
+      {/* Quick Example */}
+      <Shimmer loading={loading} shimmerColor={shimmerColor} backgroundColor={backgroundColor}>
         <section className="px-6 py-20 bg-gray-50 dark:bg-gray-900/50">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl font-bold text-center mb-12 w-fit mx-auto">Quick Example</h2>
@@ -192,7 +202,7 @@ function UserCard() {
         </section>
 
         <Footer />
-      </div>
-    </Shimmer>
+      </Shimmer>
+    </div>
   );
 }
