@@ -118,7 +118,7 @@ export default function Home() {
 
               <div className="grid md:grid-cols-3 gap-8">
                 <div className="p-6 border border-gray-200 dark:border-gray-800 rounded-lg bg-white dark:bg-transparent">
-                  <h3 className="text-xl font-semibold mb-3">Zero Maintenance</h3>
+                  <h3 className="text-xl font-semibold mb-3 w-fit">Zero Maintenance</h3>
                   <p className="text-gray-600 dark:text-gray-400">
                     Automatically measures your component's structure at runtime. No need to
                     maintain separate skeleton components.
@@ -126,7 +126,7 @@ export default function Home() {
                 </div>
 
                 <div className="p-6 border border-gray-200 dark:border-gray-800 rounded-lg bg-white dark:bg-transparent">
-                  <h3 className="text-xl font-semibold mb-3">Auto Border-Radius</h3>
+                  <h3 className="text-xl font-semibold mb-3 w-fit">Auto Border-Radius</h3>
                   <p className="text-gray-600 dark:text-gray-400">
                     Detects border-radius from your CSS automatically. Circular avatars get circular
                     shimmer blocks.
@@ -134,7 +134,7 @@ export default function Home() {
                 </div>
 
                 <div className="p-6 border border-gray-200 dark:border-gray-800 rounded-lg bg-white dark:bg-transparent">
-                  <h3 className="text-xl font-semibold mb-3">Framework Agnostic</h3>
+                  <h3 className="text-xl font-semibold mb-3 w-fit">Framework Agnostic</h3>
                   <p className="text-gray-600 dark:text-gray-400">
                     Dedicated adapters for React, Vue, Svelte, Angular, and SolidJS with
                     framework-specific APIs.
@@ -142,14 +142,14 @@ export default function Home() {
                 </div>
 
                 <div className="p-6 border border-gray-200 dark:border-gray-800 rounded-lg bg-white dark:bg-transparent">
-                  <h3 className="text-xl font-semibold mb-3">Tiny Bundle Size</h3>
+                  <h3 className="text-xl font-semibold mb-3 w-fit">Tiny Bundle Size</h3>
                   <p className="text-gray-600 dark:text-gray-400">
                     Core package is only 1.44 kB. Framework adapters range from 3.89 kB to 12.84 kB.
                   </p>
                 </div>
 
                 <div className="p-6 border border-gray-200 dark:border-gray-800 rounded-lg bg-white dark:bg-transparent">
-                  <h3 className="text-xl font-semibold mb-3">Dynamic Data Support</h3>
+                  <h3 className="text-xl font-semibold mb-3 w-fit">Dynamic Data Support</h3>
                   <p className="text-gray-600 dark:text-gray-400">
                     Use templateProps to provide mock data for components that receive dynamic
                     props.
@@ -157,7 +157,7 @@ export default function Home() {
                 </div>
 
                 <div className="p-6 border border-gray-200 dark:border-gray-800 rounded-lg bg-white dark:bg-transparent">
-                  <h3 className="text-xl font-semibold mb-3">Dark Mode Friendly</h3>
+                  <h3 className="text-xl font-semibold mb-3 w-fit">Dark Mode Friendly</h3>
                   <p className="text-gray-600 dark:text-gray-400">
                     Default colors use semi-transparent whites that work on any background.
                   </p>
