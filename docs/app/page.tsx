@@ -173,7 +173,6 @@ export default function Home() {
             <NpmDownloadStats showShimmerDemo={loading} />
           </div>
         </section>
-      </Shimmer>
 
         {/* Quick Example */}
         <Shimmer loading={loading} shimmerColor={shimmerColor} backgroundColor={backgroundColor}>
