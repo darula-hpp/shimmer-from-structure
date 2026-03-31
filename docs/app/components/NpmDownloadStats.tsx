@@ -104,12 +104,15 @@ const StatsContent = ({ stats }: { stats: PackageStats[] }) => {
             key={pkg.package}
             className="p-4 border border-gray-200 dark:border-gray-800 rounded-lg bg-white dark:bg-gray-900"
           >
-            <div className="text-xs text-gray-600 dark:text-gray-400 mb-1 w-fit mx-auto">
+            <div
+              className="text-xs text-gray-600 dark:text-gray-400 mb-1 w-fit mx-auto"
+              data-shimmer-ignore
+            >
               {pkg.package
                 .replace('@shimmer-from-structure/', '')
                 .replace('shimmer-from-structure', 'main')}
             </div>
-            <div className="text-xl font-bold">{pkg.total.toLocaleString()}</div>
+            <div className="text-xl font-bold w-fit mx-auto">{pkg.total.toLocaleString()}</div>
           </div>
         ))}
       </div>
