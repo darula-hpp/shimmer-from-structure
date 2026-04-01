@@ -4,7 +4,7 @@ export function Footer() {
       <div className="max-w-7xl mx-auto">
         <div className="grid md:grid-cols-4 gap-8">
           <div>
-            <h3 className="font-semibold mb-4">Documentation</h3>
+            <h3 className="font-semibold mb-4 w-fit">Documentation</h3>
             <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
               <li>
                 <a href="/docs/getting-started" className="hover:text-teal-600">
@@ -25,7 +25,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="font-semibold mb-4">Frameworks</h3>
+            <h3 className="font-semibold mb-4 w-fit">Frameworks</h3>
             <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
               <li>
                 <a href="/docs/react" className="hover:text-teal-600">
@@ -56,7 +56,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="font-semibold mb-4">Community</h3>
+            <h3 className="font-semibold mb-4 w-fit">Community</h3>
             <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
               <li>
                 <a
@@ -82,11 +82,11 @@ export function Footer() {
           </div>
 
           <div>
-            <h3 className="font-semibold mb-4">About</h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400">
+            <h3 className="font-semibold mb-4 w-fit">About</h3>
+            <p className="text-sm text-gray-600 dark:text-gray-400 w-fit">
               Made with ❤️ for developers tired of maintaining skeleton screens.
             </p>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mt-4">MIT License</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mt-4 w-fit">MIT License</p>
           </div>
         </div>
 
