@@ -57,6 +57,12 @@ export function Header() {
             >
               API
             </Link>
+            <Link
+              href="/docs/changelog"
+              className="text-gray-600 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400 transition-colors"
+            >
+              Changelog
+            </Link>
             <a
               href="https://github.com/darula-hpp/shimmer-from-structure"
               target="_blank"
@@ -133,6 +139,13 @@ export function Header() {
               onClick={() => setMobileMenuOpen(false)}
             >
               API
+            </Link>
+            <Link
+              href="/docs/changelog"
+              className="block text-gray-600 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400 transition-colors"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Changelog
             </Link>
             <a
               href="https://github.com/darula-hpp/shimmer-from-structure"
