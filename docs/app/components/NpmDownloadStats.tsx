@@ -89,11 +89,19 @@ const StatsContent = ({ stats }: { stats: PackageStats[] }) => {
   return (
     <div className="w-full">
       <div className="text-center mb-8">
-        <h3 className="text-2xl font-bold mb-2 w-fit mx-auto">NPM Downloads</h3>
+        <h3
+          className="text-2xl font-bold mb-2 w-fit mx-auto text-gray-900 dark:text-white"
+          data-shimmer-ignore
+        >
+          NPM Downloads
+        </h3>
         <p className="text-4xl font-bold text-gray-900 dark:text-white w-fit mx-auto">
           {totalDownloads.toLocaleString()}
         </p>
-        <p className="text-sm text-gray-600 dark:text-gray-400 mt-1 w-fit mx-auto">
+        <p
+          className="text-sm text-gray-600 dark:text-gray-400 mt-1 w-fit mx-auto"
+          data-shimmer-ignore
+        >
           Total downloads since January 2026
         </p>
       </div>
