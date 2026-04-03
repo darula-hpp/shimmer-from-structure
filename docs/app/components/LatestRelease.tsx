@@ -14,8 +14,8 @@ export function LatestRelease({ version, date, highlights }: LatestReleaseProps)
       <div className="max-w-4xl mx-auto">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">What's New</h2>
-            <p className="text-gray-600 dark:text-gray-400 mt-2">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white w-fit">What's New</h2>
+            <p className="text-gray-600 dark:text-gray-400 mt-2" data-shimmer-no-children>
               Latest release: <span className="font-semibold">v{version}</span> • {date}
             </p>
           </div>
