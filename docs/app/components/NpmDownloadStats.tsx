@@ -127,66 +127,80 @@ const StatsContent = ({ stats }: { stats: PackageStats[] }) => {
 
       <div className="grid md:grid-cols-2 gap-6">
         <div className="w-full h-[400px] bg-white dark:bg-gray-900 p-4 border border-gray-200 dark:border-gray-800 rounded-lg">
-          <h4 className="text-center font-semibold mb-4 w-fit mx-auto">
+          <h4
+            className="text-center font-semibold mb-4 w-fit mx-auto text-gray-900 dark:text-white"
+            data-shimmer-ignore
+          >
             Total Downloads by Package
           </h4>
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={chartData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-              <XAxis
-                dataKey="name"
-                stroke="#9CA3AF"
-                tick={{ fill: '#9CA3AF', fontSize: 12 }}
-                angle={-45}
-                textAnchor="end"
-                height={80}
-              />
-              <YAxis stroke="#9CA3AF" tick={{ fill: '#9CA3AF' }} />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: '#1F2937',
-                  border: '1px solid #374151',
-                  borderRadius: '8px',
-                  color: '#fff',
-                }}
-                formatter={(value) => (typeof value === 'number' ? value.toLocaleString() : value)}
-              />
-              <Bar dataKey="downloads" fill="#3B82F6" radius={[8, 8, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
+          <div className="w-full h-[calc(100%-2rem)]" data-shimmer-no-children>
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                <XAxis
+                  dataKey="name"
+                  stroke="#9CA3AF"
+                  tick={{ fill: '#9CA3AF', fontSize: 12 }}
+                  angle={-45}
+                  textAnchor="end"
+                  height={80}
+                />
+                <YAxis stroke="#9CA3AF" tick={{ fill: '#9CA3AF' }} />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: '#1F2937',
+                    border: '1px solid #374151',
+                    borderRadius: '8px',
+                    color: '#fff',
+                  }}
+                  formatter={(value) =>
+                    typeof value === 'number' ? value.toLocaleString() : value
+                  }
+                />
+                <Bar dataKey="downloads" fill="#3B82F6" radius={[8, 8, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
         </div>
 
         <div className="w-full h-[400px] bg-white dark:bg-gray-900 p-4 border border-gray-200 dark:border-gray-800 rounded-lg">
-          <h4 className="text-center font-semibold mb-4 w-fit mx-auto">
+          <h4
+            className="text-center font-semibold mb-4 w-fit mx-auto text-gray-900 dark:text-white"
+            data-shimmer-ignore
+          >
             Framework Distribution (excluding core)
           </h4>
-          <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
-              <Pie
-                data={pieData}
-                cx="50%"
-                cy="50%"
-                labelLine={false}
-                label={({ name, percent }) => `${name} ${((percent ?? 0) * 100).toFixed(0)}%`}
-                outerRadius={120}
-                fill="#8884d8"
-                dataKey="value"
-              >
-                {pieData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                ))}
-              </Pie>
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: '#1F2937',
-                  border: '1px solid #374151',
-                  borderRadius: '8px',
-                  color: '#fff',
-                }}
-                formatter={(value) => (typeof value === 'number' ? value.toLocaleString() : value)}
-              />
-            </PieChart>
-          </ResponsiveContainer>
+          <div className="w-full h-[calc(100%-2rem)]" data-shimmer-no-children>
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={pieData}
+                  cx="50%"
+                  cy="50%"
+                  labelLine={false}
+                  label={({ name, percent }) => `${name} ${((percent ?? 0) * 100).toFixed(0)}%`}
+                  outerRadius={120}
+                  fill="#8884d8"
+                  dataKey="value"
+                >
+                  {pieData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Pie>
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: '#1F2937',
+                    border: '1px solid #374151',
+                    borderRadius: '8px',
+                    color: '#fff',
+                  }}
+                  formatter={(value) =>
+                    typeof value === 'number' ? value.toLocaleString() : value
+                  }
+                />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
         </div>
       </div>
     </div>
