@@ -14,4 +14,11 @@ export const SHIMMER_CONTAINER_STYLES = `
   .shimmer-measure-container video:not([data-shimmer-ignore], [data-shimmer-ignore] *) {
     opacity: 0;
   }
+  
+  /* Hide backgrounds and borders of children inside data-shimmer-no-children elements */
+  .shimmer-measure-container [data-shimmer-no-children] * {
+    background: transparent !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+  }
 `;
