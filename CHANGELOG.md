@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.4.4] - 2026-04-08
+
+### Fixed
+
+- **Core: `data-shimmer-no-children` Visual Rendering**: Fixed an issue where child element backgrounds, borders, and shadows remained visible when using `data-shimmer-no-children`, causing the single shimmer block overlay to appear incomplete.
+  - Added CSS rule to make backgrounds, borders, and box-shadows transparent for all children inside `[data-shimmer-no-children]` elements.
+  - Ensures the shimmer overlay fully covers the parent element without child styling showing through.
+  - Particularly noticeable in flex/grid containers with styled children (e.g., badge groups, button rows).
+
 ## [2.4.3] - 2026-04-08
 
 ### Performance
