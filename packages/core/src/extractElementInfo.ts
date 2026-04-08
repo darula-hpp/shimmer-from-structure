@@ -1,89 +1,152 @@
 import { ElementInfo } from './types';
 import { isLeafElement } from './isLeafElement';
 
+interface LeafElement {
+  element: Element;
+  borderRadius: string;
+}
+
+interface WrappedCell {
+  element: HTMLElement;
+  span: HTMLSpanElement;
+  borderRadius: string;
+}
+
 /**
- * Extracts dimension information from content-bearing elements in a DOM tree
+ * Phase 1: Traverses the DOM tree, collects leaf elements, and wraps table cells
+ * Pure writes only - no getBoundingClientRect() calls to avoid triggering reflows
  */
-export function extractElementInfo(element: Element, parentRect: DOMRect): ElementInfo[] {
-  const elements: ElementInfo[] = [];
-  const rect = element.getBoundingClientRect();
-
-  // Skip elements with no dimensions
-  if (rect.width === 0 || rect.height === 0) {
-    return elements;
-  }
-
-  // Skip this element and all its descendants entirely
+function collectLeafElements(
+  element: Element,
+  leafElements: LeafElement[],
+  wrappedCells: WrappedCell[]
+): void {
+  // Skip elements marked to be ignored (no measurement needed)
   if (element.hasAttribute('data-shimmer-ignore')) {
-    return elements;
+    return;
   }
 
-  // Treat this element as a single block — capture it without recursing into children
   const isNoChildren = element.hasAttribute('data-shimmer-no-children');
 
-  // If this is a leaf element (or explicitly marked as a block), capture it
   if (isNoChildren || isLeafElement(element)) {
-    // Get computed border-radius from the element's styles
     const computedStyle = window.getComputedStyle(element);
-    const computedBorderRadius = computedStyle.borderRadius || '0px';
+    const borderRadius = computedStyle.borderRadius || '0px';
 
-    // Extract padding to inset shimmer blocks ONLY for table cells
-    // This prevents merged shimmer blocks in tables without affecting other layouts
+    // Handle text-only table cells specially
     const tag = element.tagName.toLowerCase();
     const isTableCell = tag === 'td' || tag === 'th';
 
-    // For table cells with text-only content, temporarily wrap in span to measure text width
-    let measureTarget: Element = element;
-    let tempSpan: HTMLSpanElement | null = null;
-
     if (isTableCell && element.childNodes.length > 0) {
-      // Check if all children are text nodes
       const hasOnlyText = Array.from(element.childNodes).every(
         (node) => node.nodeType === Node.TEXT_NODE
       );
 
       if (hasOnlyText) {
-        // Create temporary span wrapper
-        tempSpan = document.createElement('span');
-        tempSpan.style.display = 'inline';
+        const span = document.createElement('span');
+        span.style.display = 'inline';
 
-        // Move text content to span
         while (element.firstChild) {
-          tempSpan.appendChild(element.firstChild);
+          span.appendChild(element.firstChild);
         }
-        element.appendChild(tempSpan);
-        measureTarget = tempSpan;
+        element.appendChild(span);
+
+        wrappedCells.push({
+          element: element as HTMLElement,
+          span,
+          borderRadius,
+        });
+        return;
       }
     }
 
-    // Measure the target element (span if wrapped, original element otherwise)
-    const targetRect = measureTarget.getBoundingClientRect();
-
-    const info: ElementInfo = {
-      x: targetRect.left - parentRect.left,
-      y: targetRect.top - parentRect.top,
-      width: targetRect.width,
-      height: targetRect.height,
-      tag: element.tagName.toLowerCase(),
-      borderRadius: computedBorderRadius,
-    };
-
-    // Clean up temporary span
-    if (tempSpan) {
-      // Move text back to original element
-      while (tempSpan.firstChild) {
-        element.insertBefore(tempSpan.firstChild, tempSpan);
-      }
-      element.removeChild(tempSpan);
-    }
-
-    elements.push(info);
+    // Regular leaf elements - will filter zero-dimension ones in Phase 2
+    leafElements.push({ element, borderRadius });
   } else {
-    // Otherwise, recursively process children
+    // Recursively process children
     Array.from(element.children).forEach((child) => {
-      elements.push(...extractElementInfo(child, parentRect));
+      collectLeafElements(child, leafElements, wrappedCells);
     });
   }
+}
+
+/**
+ * Phase 2: Measures all collected elements and filters out zero-dimension ones
+ * First getBoundingClientRect() triggers one reflow, subsequent calls are cached
+ */
+function measureElements(
+  leafElements: LeafElement[],
+  wrappedCells: WrappedCell[],
+  parentRect: DOMRect
+): ElementInfo[] {
+  const elements: ElementInfo[] = [];
+
+  // Measure regular leaf elements
+  leafElements.forEach(({ element, borderRadius }) => {
+    const rect = element.getBoundingClientRect();
+
+    // Skip elements with no dimensions
+    if (rect.width === 0 || rect.height === 0) {
+      return;
+    }
+
+    elements.push({
+      x: rect.left - parentRect.left,
+      y: rect.top - parentRect.top,
+      width: rect.width,
+      height: rect.height,
+      tag: element.tagName.toLowerCase(),
+      borderRadius,
+    });
+  });
+
+  // Measure wrapped table cells
+  wrappedCells.forEach(({ span, borderRadius }) => {
+    const rect = span.getBoundingClientRect();
+
+    // Skip elements with no dimensions
+    if (rect.width === 0 || rect.height === 0) {
+      return;
+    }
+
+    elements.push({
+      x: rect.left - parentRect.left,
+      y: rect.top - parentRect.top,
+      width: rect.width,
+      height: rect.height,
+      tag: span.parentElement!.tagName.toLowerCase(),
+      borderRadius,
+    });
+  });
+
+  return elements;
+}
+
+/**
+ * Phase 3: Cleans up temporary span wrappers
+ */
+function cleanupWrappedCells(wrappedCells: WrappedCell[]): void {
+  wrappedCells.forEach(({ element, span }) => {
+    while (span.firstChild) {
+      element.insertBefore(span.firstChild, span);
+    }
+    element.removeChild(span);
+  });
+}
+
+/**
+ * Extracts dimension information from content-bearing elements in a DOM tree
+ * Uses a 3-phase approach to minimize reflows:
+ * 1. Collect leaf elements and wrap table cells (writes only, no measurements)
+ * 2. Measure all elements and filter zero-dimension ones (reads only - triggers one reflow)
+ * 3. Clean up temporary wrappers (writes only)
+ */
+export function extractElementInfo(element: Element, parentRect: DOMRect): ElementInfo[] {
+  const leafElements: LeafElement[] = [];
+  const wrappedCells: WrappedCell[] = [];
+
+  collectLeafElements(element, leafElements, wrappedCells);
+  const elements = measureElements(leafElements, wrappedCells, parentRect);
+  cleanupWrappedCells(wrappedCells);
 
   return elements;
 }
