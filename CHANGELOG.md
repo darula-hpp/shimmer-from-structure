@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.4.3] - 2026-04-08
+
+### Performance
+
+- **Core: Layout Thrashing Elimination**: Refactored `extractElementInfo` to batch DOM operations and minimize reflows.
+  - Implemented a 3-phase approach: collect elements (writes only), measure all elements (reads only - triggers one reflow), cleanup temporary wrappers (writes only).
+  - Previously, the function interleaved reads (`getBoundingClientRect`) and writes (DOM mutations) during recursion, causing N reflows for N table cells.
+  - Now defers all measurements until after DOM modifications are complete, reducing N reflows to 1 for the entire tree.
+  - Zero-dimension element filtering moved from Phase 1 to Phase 2 to maintain pure write-only collection phase.
+  - Benefits all framework adapters (React, Vue, Svelte, Angular, SolidJS) automatically.
+
 ## [2.4.2] - 2026-03-21
 
 ### Fixed
