@@ -1030,7 +1030,7 @@ The core package contains all DOM measurement logic, while React, Vue, Svelte, A
 
 ## 📚 Resources
 
-- [Build your own shimmer skeleton that never goes out of sync](https://neciudan.dev/lets-build-dynamic-shimmer-skeletons) - Deep dive blog post on the implementation
+- <a href="https://neciudan.dev/lets-build-dynamic-shimmer-skeletons" target="_blank" rel="noopener noreferrer">Build your own shimmer skeleton that never goes out of sync</a> - Deep dive blog post on the implementation
 
 ---
 

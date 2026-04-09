@@ -258,6 +258,16 @@ export class UserCard {
           <li>
             <a href="/docs/api">API Reference</a> - Explore all available props and options
           </li>
+          <li>
+            <a
+              href="https://neciudan.dev/lets-build-dynamic-shimmer-skeletons"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Deep Dive Blog Post
+            </a>{' '}
+            - Learn how to build your own shimmer skeleton from scratch
+          </li>
         </ul>
       </article>
     </DocsLayout>
