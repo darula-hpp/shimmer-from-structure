@@ -223,26 +223,33 @@ export class ShimmerComponent implements AfterViewInit, OnDestroy {
     const container = this.measureContainer()?.nativeElement;
     if (!container || !this.loading()) return;
 
-    // Temporarily disconnect mutation observer to avoid recursion
-    this.mutationObserver?.disconnect();
+    try {
+      // Temporarily disconnect mutation observer to avoid recursion
+      this.mutationObserver?.disconnect();
 
-    const containerRect = container.getBoundingClientRect();
-    const extractedElements: ElementInfo[] = [];
+      const containerRect = container.getBoundingClientRect();
+      const extractedElements: ElementInfo[] = [];
 
-    Array.from(container.children).forEach((child) => {
-      extractedElements.push(...extractElementInfo(child, containerRect));
-    });
-
-    this.elements.set(extractedElements);
-
-    // Reconnect mutation observer
-    if (this.mutationObserver && container) {
-      this.mutationObserver.observe(container, {
-        childList: true,
-        subtree: true,
-        characterData: true,
-        attributes: false,
+      Array.from(container.children).forEach((child) => {
+        extractedElements.push(...extractElementInfo(child, containerRect));
       });
+
+      this.elements.set(extractedElements);
+    } catch (error) {
+      // Silently handle measurement errors to prevent crashes
+      // This can occur with detached nodes or during rapid DOM changes
+      console.warn('Shimmer measurement error:', error);
+      this.elements.set([]);
+    } finally {
+      // Always reconnect mutation observer
+      if (this.mutationObserver && container) {
+        this.mutationObserver.observe(container, {
+          childList: true,
+          subtree: true,
+          characterData: true,
+          attributes: false,
+        });
+      }
     }
   }
 

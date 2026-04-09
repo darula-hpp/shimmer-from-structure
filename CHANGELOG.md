@@ -25,6 +25,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Zero-dimension element filtering moved from Phase 1 to Phase 2 to maintain pure write-only collection phase.
   - Benefits all framework adapters (React, Vue, Svelte, Angular, SolidJS) automatically.
 
+### Fixed
+
+- **Angular: Resilient DOM Measurement**: Added try-catch-finally error handling to `measureElements()` method to prevent crashes during DOM measurement.
+  - Catches and logs measurement errors that can occur with detached nodes or during rapid DOM changes.
+  - Sets empty elements array on error to gracefully degrade instead of throwing.
+  - Uses finally block to ensure MutationObserver is always reconnected, maintaining reactivity even after errors.
+  - Prevents component crashes while providing visibility into issues via console warnings.
+
 ## [2.4.2] - 2026-03-21
 
 ### Fixed
