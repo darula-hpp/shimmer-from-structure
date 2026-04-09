@@ -14,6 +14,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Ensures the shimmer overlay fully covers the parent element without child styling showing through.
   - Particularly noticeable in flex/grid containers with styled children (e.g., badge groups, button rows).
 
+### Changed
+
+- **Dependency Management (Angular)**: Replaced wildcard (`*`) version specifier with exact version `2.4.4` for `@shimmer-from-structure/core` dependency.
+  - Ensures version consistency and prevents potential compatibility issues when packages are published to npm.
+  - Follows best practices used by established npm monorepos for predictable dependency resolution.
+
 ## [2.4.3] - 2026-04-08
 
 ### Performance
@@ -32,6 +38,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Sets empty elements array on error to gracefully degrade instead of throwing.
   - Uses finally block to ensure MutationObserver is always reconnected, maintaining reactivity even after errors.
   - Prevents component crashes while providing visibility into issues via console warnings.
+
+### Changed
+
+- **Dependency Management (React, Vue, Svelte, Solid)**: Replaced wildcard (`*`) version specifier with exact version `2.4.4` for `@shimmer-from-structure/core` dependency.
+  - Ensures version consistency and prevents potential compatibility issues when packages are published to npm.
+  - Follows best practices used by established npm monorepos for predictable dependency resolution.
 
 ## [2.4.2] - 2026-03-21
 
