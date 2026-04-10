@@ -353,8 +353,12 @@ const StatsGrid = ({ stats }: { stats: StatCard[] }) => (
   <div className="stats-grid">
     {stats.map((stat, index) => (
       <div key={index} className="stat-card">
-        <p className="stat-label">{stat.label}</p>
-        <h3 className="stat-value">{stat.value}</h3>
+        <p className="stat-label">
+          <span>{stat.label}</span>
+        </p>
+        <h3 className="stat-value">
+          <span>{stat.value}</span>
+        </h3>
         <span className={`stat-change ${stat.trend}`}>
           {stat.trend === 'up' ? '↑' : '↓'} {stat.change}
         </span>
@@ -366,7 +370,9 @@ const StatsGrid = ({ stats }: { stats: StatCard[] }) => (
 // Transactions List
 const TransactionsList = ({ transactions }: { transactions: Transaction[] }) => (
   <div className="transactions-list">
-    <h3 className="section-title">Recent Transactions</h3>
+    <h3 className="section-title">
+      <span>Recent Transactions</span>
+    </h3>
     <div className="transactions">
       {transactions.map((tx) => (
         <div key={tx.id} className="transaction-item">
@@ -387,7 +393,9 @@ const TransactionsList = ({ transactions }: { transactions: Transaction[] }) => 
 // Revenue Chart
 const RevenueChart = ({ data }: { data: ChartDataPoint[] }) => (
   <div className="revenue-chart">
-    <h3 className="section-title">Weekly Revenue</h3>
+    <h3 className="section-title">
+      <span>Weekly Revenue</span>
+    </h3>
     <div className="chart-container">
       <ResponsiveContainer width="100%" height={250}>
         <AreaChart data={data} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
@@ -437,13 +445,15 @@ const RevenueChart = ({ data }: { data: ChartDataPoint[] }) => (
 // Activity Feed
 const ActivityFeed = ({ activities }: { activities: ActivityItem[] }) => (
   <div className="activity-feed">
-    <h3 className="section-title">Recent Activity</h3>
+    <h3 className="section-title">
+      <span>Recent Activity</span>
+    </h3>
     <div className="activities">
       {activities.map((activity) => (
         <div key={activity.id} className="activity-item">
           <div className="activity-dot"></div>
           <div className="activity-content">
-            <p>
+            <p data-shimmer-no-children>
               <strong>{activity.user}</strong> {activity.action}{' '}
               <span className="activity-target">{activity.target}</span>
             </p>
@@ -458,7 +468,9 @@ const ActivityFeed = ({ activities }: { activities: ActivityItem[] }) => (
 // Team Members
 const TeamMembers = ({ members }: { members: TeamMember[] }) => (
   <div className="team-members">
-    <h3 className="section-title">Team</h3>
+    <h3 className="section-title">
+      <span>Team</span>
+    </h3>
     <div className="members-grid">
       {members.map((member) => (
         <div key={member.id} className="member-card">
@@ -474,7 +486,9 @@ const TeamMembers = ({ members }: { members: TeamMember[] }) => (
 // Orders Table
 const OrdersTable = ({ orders }: { orders: Order[] }) => (
   <div className="orders-table-container">
-    <h3 className="section-title">Recent Orders</h3>
+    <h3 className="section-title">
+      <span>Recent Orders</span>
+    </h3>
     <table
       className="orders-table"
       style={{ width: '100%', borderCollapse: 'collapse', tableLayout: 'fixed' }}
@@ -557,11 +571,13 @@ const AttributesDemo = ({ cards }: { cards: MetricCard[] }) => (
         )}
 
         <p className="attr-card-note">
-          {i === 0
-            ? '"LIVE" badge skipped via data-shimmer-ignore'
-            : i === 1
-              ? 'Metric block is one shimmer via data-shimmer-no-children'
-              : 'Normal shimmer (no attributes)'}
+          <span>
+            {i === 0
+              ? '"LIVE" badge skipped via data-shimmer-ignore'
+              : i === 1
+                ? 'Metric block is one shimmer via data-shimmer-no-children'
+                : 'Normal shimmer (no attributes)'}
+          </span>
         </p>
       </div>
     ))}
@@ -607,7 +623,9 @@ const notificationsTemplate: Notification[] = [
 // The actual Notifications component
 const NotificationsPanel = ({ notifications }: { notifications: Notification[] }) => (
   <div className="notifications-panel">
-    <h3 className="section-title">🔔 Notifications (Suspense Demo)</h3>
+    <h3 className="section-title">
+      <span>🔔 Notifications (Suspense Demo)</span>
+    </h3>
     <div className="notifications-list">
       {notifications.map((notif) => (
         <div key={notif.id} className={`notification-item ${notif.type}`}>
@@ -615,7 +633,9 @@ const NotificationsPanel = ({ notifications }: { notifications: Notification[] }
             <span className="notification-title">{notif.title}</span>
             <span className="notification-time">{notif.time}</span>
           </div>
-          <p className="notification-message">{notif.message}</p>
+          <p className="notification-message">
+            <span>{notif.message}</span>
+          </p>
         </div>
       ))}
     </div>
@@ -704,55 +724,55 @@ function App() {
     setTimeout(() => {
       setUser(realUser);
       setLoadingUser(false);
-    }, 8000); // was 800ms
+    }, 3000); // was 800ms
 
     // Stats load second
     setTimeout(() => {
       setStats(realStats);
       setLoadingStats(false);
-    }, 12000); // was 1200ms
+    }, 3000); // was 1200ms
 
     // Chart loads third
     setTimeout(() => {
       setChartData(realChartData);
       setLoadingChart(false);
-    }, 14000); // was 1400ms
+    }, 3000); // was 1400ms
 
     // Team loads fourth
     setTimeout(() => {
       setTeam(realTeam);
       setLoadingTeam(false);
-    }, 16000); // was 1600ms
+    }, 3000); // was 1600ms
 
     // Activity loads fifth
     setTimeout(() => {
       setActivity(realActivity);
       setLoadingActivity(false);
-    }, 20000); // was 2000ms
+    }, 3000); // was 2000ms
 
     // Transactions load last (slowest API)
     setTimeout(() => {
       setTransactions(realTransactions);
       setLoadingTransactions(false);
-    }, 25000); // was 2500ms
+    }, 3000); // was 2500ms
 
     // Orders load independently
     setTimeout(() => {
       setOrders(realOrders);
       setLoadingOrders(false);
-    }, 18000); // was 1800ms
+    }, 3000); // was 1800ms
 
     // Context Example loads extra slow (to show off the theme)
     setTimeout(() => {
       setContextData(realTeam.slice(0, 2)); // Use subset of team data
       setLoadingContextExample(false);
-    }, 40000); // was 4000ms
+    }, 3000); // was 4000ms
 
     // Attribute Controls Demo
     setTimeout(() => {
       setAttributesDemoData(realMetricCards);
       setLoadingAttributesDemo(false);
-    }, 6000);
+    }, 3000);
   }, []);
 
   // Reset all data
@@ -781,47 +801,47 @@ function App() {
     setTimeout(() => {
       setUser(realUser);
       setLoadingUser(false);
-    }, 8000); // was 800ms
+    }, 3000); // was 800ms
 
     setTimeout(() => {
       setStats(realStats);
       setLoadingStats(false);
-    }, 12000); // was 1200ms
+    }, 3000); // was 1200ms
 
     setTimeout(() => {
       setChartData(realChartData);
       setLoadingChart(false);
-    }, 14000); // was 1400ms
+    }, 3000); // was 1400ms
 
     setTimeout(() => {
       setTeam(realTeam);
       setLoadingTeam(false);
-    }, 16000); // was 1600ms
+    }, 3000); // was 1600ms
 
     setTimeout(() => {
       setActivity(realActivity);
       setLoadingActivity(false);
-    }, 20000); // was 2000ms
+    }, 3000); // was 2000ms
 
     setTimeout(() => {
       setTransactions(realTransactions);
       setLoadingTransactions(false);
-    }, 25000); // was 2500ms
+    }, 3000); // was 2500ms
 
     setTimeout(() => {
       setOrders(realOrders);
       setLoadingOrders(false);
-    }, 18000); // was 1800ms
+    }, 3000); // was 1800ms
 
     setTimeout(() => {
       setContextData(realTeam.slice(0, 2));
       setLoadingContextExample(false);
-    }, 40000); // was 4000ms
+    }, 3000); // was 4000ms
 
     setTimeout(() => {
       setAttributesDemoData(realMetricCards);
       setLoadingAttributesDemo(false);
-    }, 6000);
+    }, 3000);
   };
 
   return (

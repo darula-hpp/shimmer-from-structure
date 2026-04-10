@@ -597,6 +597,7 @@ body {
   font-weight: 600;
   color: #ffffff;
   font-size: 0.95rem;
+  width: fit-content;
 }
 
 .notification-time {
