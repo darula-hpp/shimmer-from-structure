@@ -1028,9 +1028,11 @@ The core package contains all DOM measurement logic, while React, Vue, Svelte, A
 - [ ] Customizable shimmer direction (vertical, diagonal)
 - [ ] React Native support
 
-## 📚 Resources
+## 📚 Featured In
 
 - <a href="https://neciudan.dev/lets-build-dynamic-shimmer-skeletons" target="_blank" rel="noopener noreferrer">Build your own shimmer skeleton that never goes out of sync</a> - Deep dive blog post on the implementation
+- <a href="https://svelte.dev/blog/whats-new-in-svelte-march-2026" target="_blank" rel="noopener noreferrer">What's new in Svelte: March 2026</a> - Featured in Svelte's official blog
+- <a href="https://react.statuscode.com/issues/459" target="_blank" rel="noopener noreferrer">React Status Issue #459</a> - Featured in React Status newsletter
 
 ---
 

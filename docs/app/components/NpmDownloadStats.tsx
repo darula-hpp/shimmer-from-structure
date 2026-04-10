@@ -49,17 +49,35 @@ async function fetchPackageDownloads(packageName: string): Promise<PackageStats>
   const endDate = dayjs().format('YYYY-MM-DD');
   const url = `https://api.npmjs.org/downloads/range/${startDate}:${endDate}/${packageName}`;
 
-  const response = await fetch(url);
-  const data = await response.json();
+  try {
+    const response = await fetch(url, {
+      next: { revalidate: 3600 }, // Cache for 1 hour
+      signal: AbortSignal.timeout(5000), // 5 second timeout
+    });
 
-  const total =
-    data.downloads?.reduce((sum: number, day: DownloadData) => sum + day.downloads, 0) || 0;
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
 
-  return {
-    package: packageName,
-    total,
-    downloads: data.downloads || [],
-  };
+    const data = await response.json();
+
+    const total =
+      data.downloads?.reduce((sum: number, day: DownloadData) => sum + day.downloads, 0) || 0;
+
+    return {
+      package: packageName,
+      total,
+      downloads: data.downloads || [],
+    };
+  } catch (error) {
+    console.warn(`Failed to fetch downloads for ${packageName}:`, error);
+    // Return fallback data on error
+    return {
+      package: packageName,
+      total: 0,
+      downloads: [],
+    };
+  }
 }
 
 // Separate component that receives stats as props
@@ -133,8 +151,8 @@ const StatsContent = ({ stats }: { stats: PackageStats[] }) => {
           >
             Total Downloads by Package
           </h4>
-          <div className="w-full h-[calc(100%-2rem)]" data-shimmer-no-children>
-            <ResponsiveContainer width="100%" height="100%">
+          <div className="w-full h-[calc(100%-2rem)] min-h-[320px]" data-shimmer-no-children>
+            <ResponsiveContainer width="100%" height="100%" minHeight={320}>
               <BarChart data={chartData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
                 <XAxis
@@ -170,8 +188,8 @@ const StatsContent = ({ stats }: { stats: PackageStats[] }) => {
           >
             Framework Distribution (excluding core)
           </h4>
-          <div className="w-full h-[calc(100%-2rem)]" data-shimmer-no-children>
-            <ResponsiveContainer width="100%" height="100%">
+          <div className="w-full h-[calc(100%-2rem)] min-h-[320px]" data-shimmer-no-children>
+            <ResponsiveContainer width="100%" height="100%" minHeight={320}>
               <PieChart>
                 <Pie
                   data={pieData}
