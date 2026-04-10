@@ -50,6 +50,7 @@ export function HomeContent({ latestRelease }: HomeContentProps) {
             <button
               data-shimmer-ignore=""
               onClick={handleShowDemo}
+              style={{ cursor: 'pointer' }}
               className="px-4 py-2 bg-gray-900 dark:bg-white text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-100 rounded-lg font-medium transition-colors shadow-lg"
             >
               Show Shimmer Demo
