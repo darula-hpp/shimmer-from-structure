@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.4.5] - 2026-04-11
+
+### Changed
+
+- **Build: Automated Release Workflow**: Migrated from manual releases to Changesets for automated version management and publishing.
+  - Integrated `@changesets/cli` for semantic versioning and changelog generation.
+  - Configured GitHub Actions workflow to automatically create "Version Packages" PRs when changesets are merged to main.
+  - Automatic npm publishing when Version PR is merged, with support for all framework adapters.
+  - Added automatic `package-lock.json` synchronization during version bumps to prevent CI failures.
+  - Simplified release process: create changeset → merge to main → automated publish.
+
+- **Testing: Test Environment Migration**: Migrated test environment from jsdom to happy-dom for improved performance and standards compliance.
+  - Updated core package test setup to use `happy-dom` instead of `jsdom`.
+  - Modified ResizeObserver tests to be compatible with happy-dom's implementation.
+  - Faster test execution with better DOM API coverage.
+
 ## [2.4.4] - 2026-04-08
 
 ### Fixed
