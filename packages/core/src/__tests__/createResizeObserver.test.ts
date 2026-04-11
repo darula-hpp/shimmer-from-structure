@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach, afterEach, type Mock } from 'vitest';
+import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
 import { createResizeObserver } from '../createResizeObserver';
 
 describe('createResizeObserver', () => {
@@ -7,14 +7,14 @@ describe('createResizeObserver', () => {
   let element: HTMLElement;
   let callback: Mock;
   let triggerResize: (entries?: ResizeObserverEntry[]) => void;
+  let rafCallback: FrameRequestCallback | null = null;
 
   beforeEach(() => {
-    vi.useFakeTimers();
-
     observeMock = vi.fn();
     disconnectMock = vi.fn();
     callback = vi.fn();
     element = document.createElement('div');
+    rafCallback = null;
 
     // Mock ResizeObserver
     global.ResizeObserver = class ResizeObserver {
@@ -27,11 +27,14 @@ describe('createResizeObserver', () => {
       disconnect = disconnectMock;
       unobserve = vi.fn();
     } as unknown as typeof ResizeObserver;
-  });
 
-  afterEach(() => {
-    vi.restoreAllMocks();
-    vi.useRealTimers();
+    // Mock requestAnimationFrame to capture the callback
+    global.requestAnimationFrame = vi.fn((cb: FrameRequestCallback) => {
+      rafCallback = cb;
+      return 1;
+    }) as unknown as typeof requestAnimationFrame;
+
+    global.cancelAnimationFrame = vi.fn();
   });
 
   it('starts observing the element on creation', () => {
@@ -53,9 +56,12 @@ describe('createResizeObserver', () => {
 
     // Callback shouldn't run synchronously (waiting next frame)
     expect(callback).not.toHaveBeenCalled();
+    expect(requestAnimationFrame).toHaveBeenCalled();
 
-    // Fast-forward time
-    vi.runAllTimers();
+    // Manually trigger the RAF callback
+    if (rafCallback) {
+      rafCallback(0);
+    }
 
     expect(callback).toHaveBeenCalledTimes(1);
   });
@@ -65,14 +71,20 @@ describe('createResizeObserver', () => {
 
     // Trigger multiple resize events rapidly
     triggerResize();
+    const firstRafId = (requestAnimationFrame as Mock).mock.results[0]?.value;
+
     triggerResize();
     triggerResize();
 
     expect(callback).not.toHaveBeenCalled();
+    expect(cancelAnimationFrame).toHaveBeenCalledWith(firstRafId);
+
+    // Manually trigger the last RAF callback
+    if (rafCallback) {
+      rafCallback(0);
+    }
 
     // Should only execute once for the batch
-    vi.runAllTimers();
-
     expect(callback).toHaveBeenCalledTimes(1);
   });
 
@@ -80,14 +92,15 @@ describe('createResizeObserver', () => {
     const cleanup = createResizeObserver(element, callback);
 
     triggerResize();
+    const rafId = (requestAnimationFrame as Mock).mock.results[0]?.value;
 
-    // Clean up before timer fires
+    // Clean up before RAF fires
     cleanup();
 
     expect(disconnectMock).toHaveBeenCalledTimes(1);
+    expect(cancelAnimationFrame).toHaveBeenCalledWith(rafId);
 
-    // Run timers to verify cancelled RAF doesn't fire callback
-    vi.runAllTimers();
+    // The callback should not have been called yet
     expect(callback).not.toHaveBeenCalled();
   });
 });

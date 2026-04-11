@@ -20,7 +20,10 @@
     "test": "npm run test --workspaces --if-present -- --run",
     "lint": "npm run lint --workspaces --if-present",
     "format": "prettier --write .",
-    "prepare": "husky"
+    "prepare": "husky",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "release": "npm run build && changeset publish"
   },
   "lint-staged": {
     "*.{ts,tsx,vue}": [
@@ -51,6 +54,7 @@
     "url": "git+https://github.com/darula-hpp/shimmer-from-structure.git"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.30.0",
     "@exodus/bytes": "^1.0.0",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
@@ -68,8 +72,8 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.26",
     "globals": "^17.1.0",
+    "happy-dom": "^20.8.9",
     "husky": "^9.1.7",
-    "jsdom": "^27.4.0",
     "lint-staged": "^16.2.7",
     "prettier": "^3.8.1",
     "react": "^19.2.3",

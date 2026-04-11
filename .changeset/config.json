@@ -1,0 +1,27 @@
+{
+  "changelog": "@changesets/cli/changelog",
+  "commit": false,
+  "fixed": [],
+  "linked": [
+    [
+      "@shimmer-from-structure/core",
+      "@shimmer-from-structure/react",
+      "@shimmer-from-structure/vue",
+      "@shimmer-from-structure/svelte",
+      "@shimmer-from-structure/angular",
+      "@shimmer-from-structure/solid",
+      "shimmer-from-structure"
+    ]
+  ],
+  "access": "public",
+  "baseBranch": "main",
+  "updateInternalDependencies": "patch",
+  "ignore": [
+    "react-example",
+    "vue-example",
+    "svelte-example",
+    "angular-example",
+    "solid-example",
+    "react-benchmark"
+  ]
+}
