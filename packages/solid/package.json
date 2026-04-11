@@ -1,6 +1,6 @@
 {
   "name": "@shimmer-from-structure/solid",
-  "version": "2.4.3",
+  "version": "2.4.5",
   "description": "SolidJS adapter for shimmer-from-structure",
   "type": "module",
   "main": "dist/index.cjs",
@@ -26,7 +26,7 @@
     "solid-js": "^1.9.0"
   },
   "dependencies": {
-    "@shimmer-from-structure/core": "2.4.4"
+    "@shimmer-from-structure/core": "2.4.5"
   },
   "devDependencies": {
     "@solidjs/testing-library": "^0.8.10",
