@@ -45,7 +45,7 @@ jobs:
           title: 'chore: version packages'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_CONFIG_PROVENANCE: true
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish Angular from dist (if released)
         if: steps.changesets.outputs.published == 'true'
@@ -53,8 +53,10 @@ jobs:
         run: |
           if [ -f package.json ]; then
             echo "Publishing Angular from dist folder..."
-            npm publish --access public --provenance
+            npm publish --access public
           else
             echo "Angular dist/package.json not found, skipping..."
           fi
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         continue-on-error: true
