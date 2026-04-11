@@ -1,6 +1,6 @@
 {
   "name": "@shimmer-from-structure/svelte",
-  "version": "2.4.3",
+  "version": "2.4.5",
   "type": "module",
   "description": "Svelte adapter for shimmer-from-structure",
   "main": "dist/index.cjs",
@@ -27,7 +27,7 @@
     "svelte": "^5.53.5"
   },
   "dependencies": {
-    "@shimmer-from-structure/core": "2.4.4"
+    "@shimmer-from-structure/core": "2.4.5"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^5.0.0",
