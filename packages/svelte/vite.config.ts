@@ -42,9 +42,9 @@ export default defineConfig({
     },
   },
   test: {
-    pool: 'threads',
+    pool: 'forks',
     globals: true,
-    environment: 'jsdom',
+    environment: 'happy-dom',
     setupFiles: './src/__tests__/setup.ts',
     css: true,
   },
