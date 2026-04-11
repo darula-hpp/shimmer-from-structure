@@ -30,7 +30,7 @@ jobs:
         run: npm run lint
 
       - name: Test
-        run: echo "npm test currently has issues in CI"
+        run: npm test
 
       - name: Build
-        run: echo "npm run build currently has issues in CI"
+        run: npm run build
