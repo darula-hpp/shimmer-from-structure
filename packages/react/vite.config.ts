@@ -38,5 +38,11 @@ export default defineConfig({
       },
     },
   },
+  test: {
+    pool: 'forks',
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './src/__tests__/setup.ts',
+  },
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 } as any);
