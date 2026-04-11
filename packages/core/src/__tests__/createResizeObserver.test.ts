@@ -30,8 +30,9 @@ describe('createResizeObserver', () => {
   });
 
   afterEach(() => {
-    vi.restoreAllMocks();
+    vi.clearAllTimers();
     vi.useRealTimers();
+    vi.restoreAllMocks();
   });
 
   it('starts observing the element on creation', () => {
