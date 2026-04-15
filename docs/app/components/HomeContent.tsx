@@ -15,24 +15,85 @@ interface HomeContentProps {
   latestRelease: Release;
 }
 
+/** macOS-style terminal window — always rendered outside any <Shimmer> wrapper */
+function CliSnippet() {
+  return (
+    <div className="w-full max-w-lg mx-auto mb-10 px-6">
+      <div
+        className="rounded-xl overflow-hidden text-left shadow-xl"
+        style={{ backgroundColor: '#0d0d0d', border: '1px solid #2d2d2d' }}
+      >
+        {/* Traffic-light dots */}
+        <div
+          className="flex items-center gap-1.5 px-4 py-3"
+          style={{ borderBottom: '1px solid #2d2d2d' }}
+        >
+          <span
+            style={{
+              display: 'inline-block',
+              width: 12,
+              height: 12,
+              borderRadius: '50%',
+              backgroundColor: '#ff5f57',
+            }}
+          />
+          <span
+            style={{
+              display: 'inline-block',
+              width: 12,
+              height: 12,
+              borderRadius: '50%',
+              backgroundColor: '#febc2e',
+            }}
+          />
+          <span
+            style={{
+              display: 'inline-block',
+              width: 12,
+              height: 12,
+              borderRadius: '50%',
+              backgroundColor: '#28c840',
+            }}
+          />
+        </div>
+
+        {/* Command line */}
+        <pre
+          style={{
+            margin: 0,
+            padding: '1rem 1.25rem',
+            fontSize: '0.875rem',
+            color: '#e5e7eb',
+            overflowX: 'auto',
+            fontFamily:
+              "'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace",
+          }}
+        >
+          <code>
+            <span style={{ color: '#6b7280' }}>$</span>{' '}
+            <span style={{ color: '#14b8a6' }}>npm</span>{' '}
+            <span style={{ color: '#ffffff' }}>install shimmer-from-structure</span>
+            {'\n'}
+            <span style={{ color: '#6b7280' }}># → Zero-maintenance shimmer for your UI</span>
+          </code>
+        </pre>
+      </div>
+    </div>
+  );
+}
+
 export function HomeContent({ latestRelease }: HomeContentProps) {
   const [loading, setLoading] = useState(true);
   const { resolvedTheme } = useTheme();
 
   useEffect(() => {
-    // Show shimmer for 3 seconds on first mount
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 3000);
-
+    const timer = setTimeout(() => setLoading(false), 3000);
     return () => clearTimeout(timer);
   }, []);
 
   const handleShowDemo = () => {
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 3000);
+    setTimeout(() => setLoading(false), 3000);
   };
 
   const isDark = resolvedTheme === 'dark';
@@ -42,6 +103,7 @@ export function HomeContent({ latestRelease }: HomeContentProps) {
   return (
     <ShimmerProvider config={{ shimmerColor, backgroundColor }}>
       <div className="min-h-screen flex flex-col">
+        {/* ── Block 1: header + hero title/description ── */}
         <Shimmer loading={loading} shimmerColor={shimmerColor} backgroundColor={backgroundColor}>
           <Header />
 
@@ -57,13 +119,12 @@ export function HomeContent({ latestRelease }: HomeContentProps) {
             </button>
           </div>
 
-          {/* Hero Section */}
-          <section className="flex-1 flex items-center justify-center px-6 py-20">
+          <section className="flex-1 flex items-center justify-center px-6 pt-20 pb-6">
             <div className="max-w-4xl mx-auto text-center">
               <h1 className="text-5xl md:text-6xl font-bold mb-6 w-fit mx-auto">
                 Shimmer From Structure
               </h1>
-              <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8">
+              <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300">
                 <span className="block w-fit mx-auto">
                   A structure-aware skeleton loader that mirrors your rendered UI at runtime.
                 </span>
@@ -71,7 +132,17 @@ export function HomeContent({ latestRelease }: HomeContentProps) {
                   Zero layout duplication. Built for modern frameworks.
                 </span>
               </p>
+            </div>
+          </section>
+        </Shimmer>
 
+        {/* ── CLI snippet — never inside a Shimmer ── */}
+        <CliSnippet />
+
+        {/* ── Block 2: CTA buttons + badges + features ── */}
+        <Shimmer loading={loading} shimmerColor={shimmerColor} backgroundColor={backgroundColor}>
+          <section className="px-6 pb-20">
+            <div className="max-w-4xl mx-auto text-center">
               <div className="flex flex-wrap gap-4 justify-center mb-12">
                 <Link
                   href="/docs/getting-started"
@@ -97,21 +168,14 @@ export function HomeContent({ latestRelease }: HomeContentProps) {
 
               {/* Framework Badges */}
               <div className="flex flex-wrap gap-3 justify-center">
-                <span className="px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full text-sm font-medium">
-                  React
-                </span>
-                <span className="px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full text-sm font-medium">
-                  Vue
-                </span>
-                <span className="px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full text-sm font-medium">
-                  Svelte
-                </span>
-                <span className="px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full text-sm font-medium">
-                  Angular
-                </span>
-                <span className="px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full text-sm font-medium">
-                  SolidJS
-                </span>
+                {['React', 'Vue', 'Svelte', 'Angular', 'SolidJS'].map((fw) => (
+                  <span
+                    key={fw}
+                    className="px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full text-sm font-medium"
+                  >
+                    {fw}
+                  </span>
+                ))}
               </div>
             </div>
           </section>
@@ -190,7 +254,6 @@ export function HomeContent({ latestRelease }: HomeContentProps) {
           />
 
           {/* Quick Example */}
-
           <section className="px-6 py-20 bg-gray-50 dark:bg-gray-900/50">
             <div className="max-w-4xl mx-auto">
               <h2 className="text-3xl font-bold text-center mb-12 w-fit mx-auto">Quick Example</h2>
