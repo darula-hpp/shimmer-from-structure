@@ -166,6 +166,7 @@ export function HomeContent({ latestRelease }: HomeContentProps) {
   return (
     <ShimmerProvider config={{ shimmerColor, backgroundColor }}>
       <div className="min-h-screen flex flex-col">
+        {/* ── Block 1: header + hero title/description ── */}
         <Shimmer loading={loading} shimmerColor={shimmerColor} backgroundColor={backgroundColor}>
           <Header />
 
@@ -181,13 +182,12 @@ export function HomeContent({ latestRelease }: HomeContentProps) {
             </button>
           </div>
 
-          {/* Hero Section */}
-          <section className="flex-1 flex items-center justify-center px-6 py-20">
+          <section className="flex-1 flex items-center justify-center px-6 pt-20 pb-6">
             <div className="max-w-4xl mx-auto text-center">
               <h1 className="text-5xl md:text-6xl font-bold mb-6 w-fit mx-auto">
                 Shimmer From Structure
               </h1>
-              <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8">
+              <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300">
                 <span className="block w-fit mx-auto">
                   A structure-aware skeleton loader that mirrors your rendered UI at runtime.
                 </span>
@@ -195,7 +195,17 @@ export function HomeContent({ latestRelease }: HomeContentProps) {
                   Zero layout duplication. Built for modern frameworks.
                 </span>
               </p>
+            </div>
+          </section>
+        </Shimmer>
 
+        {/* ── CLI snippet — never inside a Shimmer ── */}
+        <CliSnippet />
+
+        {/* ── Block 2: CTA buttons + badges + features ── */}
+        <Shimmer loading={loading} shimmerColor={shimmerColor} backgroundColor={backgroundColor}>
+          <section className="px-6 pb-20">
+            <div className="max-w-4xl mx-auto text-center">
               <div className="flex flex-wrap gap-4 justify-center mb-12">
                 <Link
                   href="/docs/getting-started"
