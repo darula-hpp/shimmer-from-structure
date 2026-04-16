@@ -199,9 +199,6 @@ export function HomeContent({ latestRelease }: HomeContentProps) {
           </section>
         </Shimmer>
 
-        {/* ── CLI snippet — never inside a Shimmer ── */}
-        <CliSnippet />
-
         {/* ── Block 2: CTA buttons + badges + features ── */}
         <Shimmer loading={loading} shimmerColor={shimmerColor} backgroundColor={backgroundColor}>
           <section className="px-6 pb-20">
