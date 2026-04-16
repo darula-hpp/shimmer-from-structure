@@ -19,125 +19,89 @@ interface HomeContentProps {
 function QuickExampleTerminal() {
   return (
     <div className="w-full max-w-4xl mx-auto px-6">
-      <div
-        className="rounded-xl overflow-hidden text-left shadow-xl"
-        style={{ backgroundColor: '#0d0d0d', border: '1px solid #2d2d2d' }}
-      >
+      <div className="rounded-xl overflow-hidden text-left shadow-xl bg-white dark:bg-[#0d0d0d] border border-gray-200 dark:border-[#2d2d2d]">
         {/* Traffic-light dots */}
-        <div
-          className="flex items-center gap-1.5 px-4 py-3"
-          style={{ borderBottom: '1px solid #2d2d2d' }}
-        >
-          <span
-            style={{
-              display: 'inline-block',
-              width: 12,
-              height: 12,
-              borderRadius: '50%',
-              backgroundColor: '#ff5f57',
-            }}
-          />
-          <span
-            style={{
-              display: 'inline-block',
-              width: 12,
-              height: 12,
-              borderRadius: '50%',
-              backgroundColor: '#febc2e',
-            }}
-          />
-          <span
-            style={{
-              display: 'inline-block',
-              width: 12,
-              height: 12,
-              borderRadius: '50%',
-              backgroundColor: '#28c840',
-            }}
-          />
+        <div className="flex items-center gap-1.5 px-4 py-3 border-b border-gray-200 dark:border-[#2d2d2d]">
+          <span className="inline-block w-3 h-3 rounded-full bg-red-500" />
+          <span className="inline-block w-3 h-3 rounded-full bg-yellow-500" />
+          <span className="inline-block w-3 h-3 rounded-full bg-green-500" />
         </div>
 
         {/* Code example */}
         <pre
+          className="m-0 p-6 text-sm overflow-x-auto text-gray-800 dark:text-gray-200"
           style={{
-            margin: 0,
-            padding: '1.5rem 1.25rem',
-            fontSize: '0.875rem',
-            color: '#e5e7eb',
-            overflowX: 'auto',
             fontFamily:
               "'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace",
           }}
         >
           <code>
             <span data-shimmer-no-children>
-              <span style={{ color: '#c678dd' }}>import</span>{' '}
-              <span style={{ color: '#e5e7eb' }}>{'{ Shimmer }'}</span>{' '}
-              <span style={{ color: '#c678dd' }}>from</span>{' '}
-              <span style={{ color: '#98c379' }}>'shimmer-from-structure'</span>
-              <span style={{ color: '#e5e7eb' }}>;</span>
+              <span className="text-purple-600 dark:text-purple-400">import</span>{' '}
+              <span className="text-gray-800 dark:text-gray-200">{'{ Shimmer }'}</span>{' '}
+              <span className="text-purple-600 dark:text-purple-400">from</span>{' '}
+              <span className="text-green-600 dark:text-green-400">'shimmer-from-structure'</span>
+              <span className="text-gray-800 dark:text-gray-200">;</span>
             </span>
             {'\n\n'}
             <span data-shimmer-no-children>
-              <span style={{ color: '#c678dd' }}>function</span>{' '}
-              <span style={{ color: '#61afef' }}>UserCard</span>
-              <span style={{ color: '#e5e7eb' }}>() {'{'}</span>
+              <span className="text-purple-600 dark:text-purple-400">function</span>{' '}
+              <span className="text-blue-600 dark:text-blue-400">UserCard</span>
+              <span className="text-gray-800 dark:text-gray-200">() {'{'}</span>
             </span>
             {'\n  '}
             <span data-shimmer-no-children>
-              <span style={{ color: '#c678dd' }}>return</span>{' '}
-              <span style={{ color: '#e5e7eb' }}>(</span>
+              <span className="text-purple-600 dark:text-purple-400">return</span>{' '}
+              <span className="text-gray-800 dark:text-gray-200">(</span>
             </span>
             {'\n    '}
             <span data-shimmer-no-children>
-              <span style={{ color: '#e06c75' }}>{'<Shimmer'}</span>{' '}
-              <span style={{ color: '#d19a66' }}>loading</span>
-              <span style={{ color: '#e5e7eb' }}>={'{'}</span>
-              <span style={{ color: '#d19a66' }}>isLoading</span>
-              <span style={{ color: '#e5e7eb' }}>{'}'}</span>
-              <span style={{ color: '#e06c75' }}>{'>'}</span>
+              <span className="text-red-600 dark:text-red-400">{'<Shimmer'}</span>{' '}
+              <span className="text-orange-600 dark:text-orange-400">loading</span>
+              <span className="text-gray-800 dark:text-gray-200">={'{'}</span>
+              <span className="text-orange-600 dark:text-orange-400">isLoading</span>
+              <span className="text-gray-800 dark:text-gray-200">{'}'}</span>
+              <span className="text-red-600 dark:text-red-400">{'>'}</span>
             </span>
             {'\n      '}
             <span data-shimmer-no-children>
-              <span style={{ color: '#e06c75' }}>{'<div'}</span>{' '}
-              <span style={{ color: '#d19a66' }}>className</span>
-              <span style={{ color: '#e5e7eb' }}>=</span>
-              <span style={{ color: '#98c379' }}>"card"</span>
-              <span style={{ color: '#e06c75' }}>{'>'}</span>
+              <span className="text-red-600 dark:text-red-400">{'<div'}</span>{' '}
+              <span className="text-orange-600 dark:text-orange-400">className</span>
+              <span className="text-gray-800 dark:text-gray-200">=</span>
+              <span className="text-green-600 dark:text-green-400">"card"</span>
+              <span className="text-red-600 dark:text-red-400">{'>'}</span>
             </span>
             {'\n        '}
             <span data-shimmer-no-children>
-              <span style={{ color: '#e06c75' }}>{'<img'}</span>{' '}
-              <span style={{ color: '#d19a66' }}>src</span>
-              <span style={{ color: '#e5e7eb' }}>=</span>
-              <span style={{ color: '#98c379' }}>"avatar.jpg"</span>{' '}
-              <span style={{ color: '#d19a66' }}>className</span>
-              <span style={{ color: '#e5e7eb' }}>=</span>
-              <span style={{ color: '#98c379' }}>"avatar"</span>{' '}
-              <span style={{ color: '#e06c75' }}>{'/>'}</span>
+              <span className="text-red-600 dark:text-red-400">{'<img'}</span>{' '}
+              <span className="text-orange-600 dark:text-orange-400">src</span>
+              <span className="text-gray-800 dark:text-gray-200">=</span>
+              <span className="text-green-600 dark:text-green-400">"avatar.jpg"</span>{' '}
+              <span className="text-orange-600 dark:text-orange-400">className</span>
+              <span className="text-gray-800 dark:text-gray-200">=</span>
+              <span className="text-green-600 dark:text-green-400">"avatar"</span>{' '}
+              <span className="text-red-600 dark:text-red-400">{'/>'}</span>
             </span>
             {'\n        '}
             <span data-shimmer-no-children>
-              <span style={{ color: '#e06c75' }}>{'<h2>'}</span>
-              <span style={{ color: '#e5e7eb' }}>John Doe</span>
-              <span style={{ color: '#e06c75' }}>{'</h2>'}</span>
+              <span className="text-red-600 dark:text-red-400">{'<h2>'}</span>
+              <span className="text-gray-800 dark:text-gray-200">John Doe</span>
+              <span className="text-red-600 dark:text-red-400">{'</h2>'}</span>
             </span>
             {'\n        '}
             <span data-shimmer-no-children>
-              <span style={{ color: '#e06c75' }}>{'<p>'}</span>
-              <span style={{ color: '#e5e7eb' }}>Software Engineer</span>
-              <span style={{ color: '#e06c75' }}>{'</p>'}</span>
+              <span className="text-red-600 dark:text-red-400">{'<p>'}</span>
+              <span className="text-gray-800 dark:text-gray-200">Software Engineer</span>
+              <span className="text-red-600 dark:text-red-400">{'</p>'}</span>
             </span>
             {'\n      '}
-            <span data-shimmer-no-children>
-              <span style={{ color: '#e06c75' }}>{'</div>'}</span>
-            </span>
+            <span className="text-red-600 dark:text-red-400">{'</div>'}</span>
             {'\n    '}
-            <span style={{ color: '#e06c75' }}>{'</Shimmer>'}</span>
+            <span className="text-red-600 dark:text-red-400">{'</Shimmer>'}</span>
             {'\n  '}
-            <span style={{ color: '#e5e7eb' }}>);</span>
+            <span className="text-gray-800 dark:text-gray-200">);</span>
             {'\n'}
-            <span style={{ color: '#e5e7eb' }}>{'}'}</span>
+            <span className="text-gray-800 dark:text-gray-200">{'}'}</span>
           </code>
         </pre>
       </div>
@@ -166,7 +130,6 @@ export function HomeContent({ latestRelease }: HomeContentProps) {
   return (
     <ShimmerProvider config={{ shimmerColor, backgroundColor }}>
       <div className="min-h-screen flex flex-col">
-        {/* ── Block 1: header + hero title/description ── */}
         <Shimmer loading={loading} shimmerColor={shimmerColor} backgroundColor={backgroundColor}>
           <Header />
 
@@ -182,12 +145,13 @@ export function HomeContent({ latestRelease }: HomeContentProps) {
             </button>
           </div>
 
-          <section className="flex-1 flex items-center justify-center px-6 pt-20 pb-6">
+          {/* Hero Section */}
+          <section className="flex-1 flex items-center justify-center px-6 py-20">
             <div className="max-w-4xl mx-auto text-center">
               <h1 className="text-5xl md:text-6xl font-bold mb-6 w-fit mx-auto">
                 Shimmer From Structure
               </h1>
-              <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300">
+              <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8">
                 <span className="block w-fit mx-auto">
                   A structure-aware skeleton loader that mirrors your rendered UI at runtime.
                 </span>
@@ -195,17 +159,7 @@ export function HomeContent({ latestRelease }: HomeContentProps) {
                   Zero layout duplication. Built for modern frameworks.
                 </span>
               </p>
-            </div>
-          </section>
-        </Shimmer>
 
-        {/* ── CLI snippet — never inside a Shimmer ── */}
-        <CliSnippet />
-
-        {/* ── Block 2: CTA buttons + badges + features ── */}
-        <Shimmer loading={loading} shimmerColor={shimmerColor} backgroundColor={backgroundColor}>
-          <section className="px-6 pb-20">
-            <div className="max-w-4xl mx-auto text-center">
               <div className="flex flex-wrap gap-4 justify-center mb-12">
                 <Link
                   href="/docs/getting-started"
