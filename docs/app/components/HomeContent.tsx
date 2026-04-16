@@ -18,7 +18,7 @@ interface HomeContentProps {
 /** macOS-style terminal window for code example */
 function QuickExampleTerminal() {
   return (
-    <div className="w-full max-w-4xl mx-auto px-6">
+    <div className="w-full max-w-4xl mx-auto">
       <div className="rounded-xl overflow-hidden text-left shadow-xl bg-white dark:bg-[#0d0d0d] border border-gray-200 dark:border-[#2d2d2d]">
         {/* Traffic-light dots */}
         <div className="flex items-center gap-1.5 px-4 py-3 border-b border-gray-200 dark:border-[#2d2d2d]">
