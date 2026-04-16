@@ -15,10 +15,10 @@ interface HomeContentProps {
   latestRelease: Release;
 }
 
-/** macOS-style terminal window — always rendered outside any <Shimmer> wrapper */
-function CliSnippet() {
+/** macOS-style terminal window for code example */
+function QuickExampleTerminal() {
   return (
-    <div className="w-full max-w-lg mx-auto mb-10 px-6">
+    <div className="w-full max-w-4xl mx-auto px-6">
       <div
         className="rounded-xl overflow-hidden text-left shadow-xl"
         style={{ backgroundColor: '#0d0d0d', border: '1px solid #2d2d2d' }}
@@ -57,11 +57,11 @@ function CliSnippet() {
           />
         </div>
 
-        {/* Command line */}
+        {/* Code example */}
         <pre
           style={{
             margin: 0,
-            padding: '1rem 1.25rem',
+            padding: '1.5rem 1.25rem',
             fontSize: '0.875rem',
             color: '#e5e7eb',
             overflowX: 'auto',
@@ -70,11 +70,74 @@ function CliSnippet() {
           }}
         >
           <code>
-            <span style={{ color: '#6b7280' }}>$</span>{' '}
-            <span style={{ color: '#14b8a6' }}>npm</span>{' '}
-            <span style={{ color: '#ffffff' }}>install shimmer-from-structure</span>
+            <span data-shimmer-no-children>
+              <span style={{ color: '#c678dd' }}>import</span>{' '}
+              <span style={{ color: '#e5e7eb' }}>{'{ Shimmer }'}</span>{' '}
+              <span style={{ color: '#c678dd' }}>from</span>{' '}
+              <span style={{ color: '#98c379' }}>'shimmer-from-structure'</span>
+              <span style={{ color: '#e5e7eb' }}>;</span>
+            </span>
+            {'\n\n'}
+            <span data-shimmer-no-children>
+              <span style={{ color: '#c678dd' }}>function</span>{' '}
+              <span style={{ color: '#61afef' }}>UserCard</span>
+              <span style={{ color: '#e5e7eb' }}>() {'{'}</span>
+            </span>
+            {'\n  '}
+            <span data-shimmer-no-children>
+              <span style={{ color: '#c678dd' }}>return</span>{' '}
+              <span style={{ color: '#e5e7eb' }}>(</span>
+            </span>
+            {'\n    '}
+            <span data-shimmer-no-children>
+              <span style={{ color: '#e06c75' }}>{'<Shimmer'}</span>{' '}
+              <span style={{ color: '#d19a66' }}>loading</span>
+              <span style={{ color: '#e5e7eb' }}>={'{'}</span>
+              <span style={{ color: '#d19a66' }}>isLoading</span>
+              <span style={{ color: '#e5e7eb' }}>{'}'}</span>
+              <span style={{ color: '#e06c75' }}>{'>'}</span>
+            </span>
+            {'\n      '}
+            <span data-shimmer-no-children>
+              <span style={{ color: '#e06c75' }}>{'<div'}</span>{' '}
+              <span style={{ color: '#d19a66' }}>className</span>
+              <span style={{ color: '#e5e7eb' }}>=</span>
+              <span style={{ color: '#98c379' }}>"card"</span>
+              <span style={{ color: '#e06c75' }}>{'>'}</span>
+            </span>
+            {'\n        '}
+            <span data-shimmer-no-children>
+              <span style={{ color: '#e06c75' }}>{'<img'}</span>{' '}
+              <span style={{ color: '#d19a66' }}>src</span>
+              <span style={{ color: '#e5e7eb' }}>=</span>
+              <span style={{ color: '#98c379' }}>"avatar.jpg"</span>{' '}
+              <span style={{ color: '#d19a66' }}>className</span>
+              <span style={{ color: '#e5e7eb' }}>=</span>
+              <span style={{ color: '#98c379' }}>"avatar"</span>{' '}
+              <span style={{ color: '#e06c75' }}>{'/>'}</span>
+            </span>
+            {'\n        '}
+            <span data-shimmer-no-children>
+              <span style={{ color: '#e06c75' }}>{'<h2>'}</span>
+              <span style={{ color: '#e5e7eb' }}>John Doe</span>
+              <span style={{ color: '#e06c75' }}>{'</h2>'}</span>
+            </span>
+            {'\n        '}
+            <span data-shimmer-no-children>
+              <span style={{ color: '#e06c75' }}>{'<p>'}</span>
+              <span style={{ color: '#e5e7eb' }}>Software Engineer</span>
+              <span style={{ color: '#e06c75' }}>{'</p>'}</span>
+            </span>
+            {'\n      '}
+            <span data-shimmer-no-children>
+              <span style={{ color: '#e06c75' }}>{'</div>'}</span>
+            </span>
+            {'\n    '}
+            <span style={{ color: '#e06c75' }}>{'</Shimmer>'}</span>
+            {'\n  '}
+            <span style={{ color: '#e5e7eb' }}>);</span>
             {'\n'}
-            <span style={{ color: '#6b7280' }}># → Zero-maintenance shimmer for your UI</span>
+            <span style={{ color: '#e5e7eb' }}>{'}'}</span>
           </code>
         </pre>
       </div>
@@ -103,7 +166,6 @@ export function HomeContent({ latestRelease }: HomeContentProps) {
   return (
     <ShimmerProvider config={{ shimmerColor, backgroundColor }}>
       <div className="min-h-screen flex flex-col">
-        {/* ── Block 1: header + hero title/description ── */}
         <Shimmer loading={loading} shimmerColor={shimmerColor} backgroundColor={backgroundColor}>
           <Header />
 
@@ -119,12 +181,13 @@ export function HomeContent({ latestRelease }: HomeContentProps) {
             </button>
           </div>
 
-          <section className="flex-1 flex items-center justify-center px-6 pt-20 pb-6">
+          {/* Hero Section */}
+          <section className="flex-1 flex items-center justify-center px-6 py-20">
             <div className="max-w-4xl mx-auto text-center">
               <h1 className="text-5xl md:text-6xl font-bold mb-6 w-fit mx-auto">
                 Shimmer From Structure
               </h1>
-              <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300">
+              <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8">
                 <span className="block w-fit mx-auto">
                   A structure-aware skeleton loader that mirrors your rendered UI at runtime.
                 </span>
@@ -132,17 +195,7 @@ export function HomeContent({ latestRelease }: HomeContentProps) {
                   Zero layout duplication. Built for modern frameworks.
                 </span>
               </p>
-            </div>
-          </section>
-        </Shimmer>
 
-        {/* ── CLI snippet — never inside a Shimmer ── */}
-        <CliSnippet />
-
-        {/* ── Block 2: CTA buttons + badges + features ── */}
-        <Shimmer loading={loading} shimmerColor={shimmerColor} backgroundColor={backgroundColor}>
-          <section className="px-6 pb-20">
-            <div className="max-w-4xl mx-auto text-center">
               <div className="flex flex-wrap gap-4 justify-center mb-12">
                 <Link
                   href="/docs/getting-started"
@@ -258,23 +311,7 @@ export function HomeContent({ latestRelease }: HomeContentProps) {
             <div className="max-w-4xl mx-auto">
               <h2 className="text-3xl font-bold text-center mb-12 w-fit mx-auto">Quick Example</h2>
 
-              <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg p-6 overflow-x-auto">
-                <pre className="text-sm">
-                  <code>{`import { Shimmer } from 'shimmer-from-structure';
-
-function UserCard() {
-  return (
-    <Shimmer loading={isLoading}>
-      <div className="card">
-        <img src="avatar.jpg" className="avatar" />
-        <h2>John Doe</h2>
-        <p>Software Engineer</p>
-      </div>
-    </Shimmer>
-  );
-}`}</code>
-                </pre>
-              </div>
+              <QuickExampleTerminal />
 
               <p className="text-center mt-6 text-gray-600 dark:text-gray-400 w-fit mx-auto">
                 That's it! No skeleton components to maintain.
