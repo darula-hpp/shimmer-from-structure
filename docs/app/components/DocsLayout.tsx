@@ -29,6 +29,7 @@ const navigation = [
       { title: 'API Reference', href: '/docs/api' },
       { title: 'Examples', href: '/docs/examples' },
       { title: 'Best Practices', href: '/docs/best-practices' },
+      { title: 'How This Works', href: '/docs/how-this-works' },
       { title: 'Changelog', href: '/docs/changelog' },
     ],
   },

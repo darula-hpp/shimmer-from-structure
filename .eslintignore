@@ -2,3 +2,7 @@
 packages/angular/**/*.test.ts
 packages/angular/**/*.config.ts
 examples/angular-example/**/*.config.ts
+
+# Next.js build output
+docs/.next/**
+docs/node_modules/**
