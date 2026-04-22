@@ -59,6 +59,12 @@ export function Header() {
               API
             </Link>
             <Link
+              href="/docs/how-this-works"
+              className="text-gray-600 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400 transition-colors"
+            >
+              How This Works
+            </Link>
+            <Link
               href="/docs/changelog"
               className="text-gray-600 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400 transition-colors"
             >
@@ -140,6 +146,13 @@ export function Header() {
               onClick={() => setMobileMenuOpen(false)}
             >
               API
+            </Link>
+            <Link
+              href="/docs/how-this-works"
+              className="block text-gray-600 dark:text-gray-300 hover:text-teal-600 dark:hover:text-teal-400 transition-colors"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              How This Works
             </Link>
             <Link
               href="/docs/changelog"
