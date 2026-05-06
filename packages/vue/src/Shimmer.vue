@@ -70,7 +70,6 @@ const resolvedFallbackBorderRadius = computed(
 // Measurement logic
 const measureElements = async () => {
   try {
-    console.log('measureElements called', { loading: props.loading, hasRef: !!measureRef.value });
     if (!props.loading || !measureRef.value) return;
 
     await nextTick();
