@@ -1,5 +1,11 @@
 # @shimmer-from-structure/vue
 
+## 2.5.0
+
+### Patch Changes
+
+- af36254: Remove debug console log from measureElements function
+
 ## 2.4.5
 
 ### Patch Changes

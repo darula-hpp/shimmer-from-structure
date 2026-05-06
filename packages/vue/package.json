@@ -1,6 +1,6 @@
 {
   "name": "@shimmer-from-structure/vue",
-  "version": "2.4.5",
+  "version": "2.5.0",
   "description": "Vue 3 adapter for shimmer-from-structure",
   "type": "module",
   "main": "dist/index.cjs",
