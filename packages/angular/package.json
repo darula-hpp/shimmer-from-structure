@@ -1,13 +1,13 @@
 {
   "name": "@shimmer-from-structure/angular",
-  "version": "2.4.5",
+  "version": "2.4.6",
   "description": "Angular adapter for shimmer-from-structure",
   "peerDependencies": {
     "@angular/common": "^19.0.0 || ^20.0.0 || ^21.0.0",
     "@angular/core": "^19.0.0 || ^20.0.0 || ^21.0.0"
   },
   "dependencies": {
-    "@shimmer-from-structure/core": "2.4.5"
+    "@shimmer-from-structure/core": "2.4.6"
   },
   "devDependencies": {
     "@analogjs/vite-plugin-angular": "^2.2.3",

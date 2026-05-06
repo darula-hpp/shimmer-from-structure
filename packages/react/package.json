@@ -1,6 +1,6 @@
 {
   "name": "@shimmer-from-structure/react",
-  "version": "2.4.5",
+  "version": "2.4.6",
   "description": "React adapter for shimmer-from-structure",
   "type": "module",
   "main": "dist/index.cjs",
@@ -34,7 +34,7 @@
     "react-dom": "^18.2.0"
   },
   "dependencies": {
-    "@shimmer-from-structure/core": "2.4.5"
+    "@shimmer-from-structure/core": "2.4.6"
   },
   "keywords": [
     "react",

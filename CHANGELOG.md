@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.4.6] - 2026-05-06
+
+### Fixed
+
+- **Vue: Code Cleanup**: Removed debug console log from `measureElements` function in Vue adapter.
+  - Eliminates unnecessary console output during shimmer measurement.
+  - No functional changes to the adapter behavior.
+
 ## [2.4.5] - 2026-04-11
 
 ### Changed
