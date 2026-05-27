@@ -128,6 +128,17 @@ pre code {
   display: list-item;
 }
 
+.prose li > p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.prose li > ul,
+.prose li > ol {
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+}
+
 .prose a {
   color: var(--primary);
   text-decoration: underline;
