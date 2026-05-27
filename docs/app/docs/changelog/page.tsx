@@ -83,15 +83,19 @@ export default async function ChangelogPage() {
               );
             },
             ul: ({ children }) => (
-              <ul className="space-y-2 my-4 list-disc list-inside text-gray-700 dark:text-gray-300">
+              <ul className="my-4 list-disc list-outside space-y-2 pl-5 text-gray-700 dark:text-gray-300">
                 {children}
               </ul>
             ),
             li: ({ children }) => (
-              <li className="leading-relaxed text-gray-700 dark:text-gray-300">{children}</li>
+              <li className="leading-relaxed text-gray-700 dark:text-gray-300 [&>p]:!my-0">
+                {children}
+              </li>
             ),
             p: ({ children }) => (
-              <p className="my-4 leading-relaxed text-gray-700 dark:text-gray-300">{children}</p>
+              <p className="my-4 leading-relaxed text-gray-700 dark:text-gray-300 last:mb-0">
+                {children}
+              </p>
             ),
             code: ({ children, className }) => {
               const isInline = !className;
