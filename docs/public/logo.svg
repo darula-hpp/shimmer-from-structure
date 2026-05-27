@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" role="img" aria-label="Shimmer From Structure">
+  <rect width="32" height="32" rx="7" fill="#0a0a0a" />
+  <rect x="0.5" y="0.5" width="31" height="31" rx="6.5" stroke="#27272a" stroke-width="1" />
+  <rect x="5" y="6" width="10" height="10" rx="2.5" fill="#ffffff" fill-opacity="0.08" />
+  <rect x="18" y="7" width="9" height="3" rx="1.5" fill="#ffffff" fill-opacity="0.14" />
+  <rect x="18" y="12" width="7" height="3" rx="1.5" fill="#ffffff" fill-opacity="0.08" />
+  <rect x="5" y="19" width="22" height="3" rx="1.5" fill="#ffffff" fill-opacity="0.11" />
+  <rect x="5" y="24" width="15" height="3" rx="1.5" fill="#ffffff" fill-opacity="0.06" />
+  <defs>
+    <linearGradient id="sfs-shimmer" x1="4" y1="2" x2="28" y2="30" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0" />
+      <stop offset="42%" stop-color="#ffffff" stop-opacity="0" />
+      <stop offset="50%" stop-color="#ffffff" stop-opacity="0.22" />
+      <stop offset="58%" stop-color="#ffffff" stop-opacity="0" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </linearGradient>
+  </defs>
+  <rect width="32" height="32" rx="7" fill="url(#sfs-shimmer)" />
+</svg>

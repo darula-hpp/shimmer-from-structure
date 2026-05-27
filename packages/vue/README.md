@@ -2,7 +2,7 @@
 
 A structure-aware skeleton generator that mirrors your rendered UI at runtime. Automatically generates responsive shimmer states with zero layout duplication. Built for React, Vue, Angular, Svelte and SolidJS.
 
-**Documentation:** [Access Full Docs](https://shimmer-from-structure-docs.vercel.app)
+**Documentation:** <a href="https://shimmer-from-structure-docs.vercel.app" target="_blank" rel="noopener noreferrer">Access Full Docs</a>
 
 ![React](https://img.shields.io/badge/React-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 ![Vue](https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D)
@@ -1028,9 +1028,11 @@ The core package contains all DOM measurement logic, while React, Vue, Svelte, A
 - [ ] Customizable shimmer direction (vertical, diagonal)
 - [ ] React Native support
 
-## 📚 Resources
+## 📚 Featured In
 
 - <a href="https://neciudan.dev/lets-build-dynamic-shimmer-skeletons" target="_blank" rel="noopener noreferrer">Build your own shimmer skeleton that never goes out of sync</a> - Deep dive blog post on the implementation
+- <a href="https://svelte.dev/blog/whats-new-in-svelte-march-2026" target="_blank" rel="noopener noreferrer">What's new in Svelte: March 2026</a> - Featured in Svelte's official blog
+- <a href="https://react.statuscode.com/issues/459" target="_blank" rel="noopener noreferrer">React Status Issue #459</a> - Featured in React Status newsletter
 
 ---
 

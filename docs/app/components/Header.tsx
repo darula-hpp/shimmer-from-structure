@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { ThemeToggle } from './ThemeToggle';
+import { Logo } from './Logo';
 import { formatCompactNumber } from '@/lib/formatNumber';
 
 export function Header() {
@@ -32,7 +33,8 @@ export function Header() {
       data-shimmer-ignore=""
     >
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        <Link href="/" className="font-bold text-xl flex items-center gap-2">
+        <Link href="/" className="font-bold text-xl flex items-center gap-2.5">
+          <Logo size={28} className="shrink-0" />
           <span className="hidden sm:inline">Shimmer From Structure</span>
           <span className="sm:hidden">Shimmer</span>
         </Link>
