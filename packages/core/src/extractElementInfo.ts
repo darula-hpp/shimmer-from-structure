@@ -1,15 +1,35 @@
 import { ElementInfo } from './types';
 import { isLeafElement } from './isLeafElement';
+import { insetTextLineRect } from './insetTextLineRect';
+
+interface TextLineStyle {
+  fontSize: string;
+  lineHeight: string;
+  paddingTop: string;
+  paddingBottom: string;
+}
 
 interface LeafElement {
   element: Element;
   borderRadius: string;
+  isNoChildren: boolean;
+  textStyle: TextLineStyle;
 }
 
 interface WrappedCell {
   element: HTMLElement;
   span: HTMLSpanElement;
   borderRadius: string;
+  textStyle: TextLineStyle;
+}
+
+function readTextLineStyle(computedStyle: CSSStyleDeclaration): TextLineStyle {
+  return {
+    fontSize: computedStyle.fontSize || '',
+    lineHeight: computedStyle.lineHeight || '',
+    paddingTop: computedStyle.paddingTop || '',
+    paddingBottom: computedStyle.paddingBottom || '',
+  };
 }
 
 /**
@@ -31,12 +51,13 @@ function collectLeafElements(
   if (isNoChildren || isLeafElement(element)) {
     const computedStyle = window.getComputedStyle(element);
     const borderRadius = computedStyle.borderRadius || '0px';
+    const textStyle = readTextLineStyle(computedStyle);
 
-    // Handle text-only table cells specially
+    // Handle text-only table cells specially (skip when treating the cell as one block)
     const tag = element.tagName.toLowerCase();
     const isTableCell = tag === 'td' || tag === 'th';
 
-    if (isTableCell && element.childNodes.length > 0) {
+    if (!isNoChildren && isTableCell && element.childNodes.length > 0) {
       const hasOnlyText = Array.from(element.childNodes).every(
         (node) => node.nodeType === Node.TEXT_NODE
       );
@@ -54,13 +75,15 @@ function collectLeafElements(
           element: element as HTMLElement,
           span,
           borderRadius,
+          // Span excludes cell padding; still inset using the cell's font metrics
+          textStyle: { ...textStyle, paddingTop: '0px', paddingBottom: '0px' },
         });
         return;
       }
     }
 
     // Regular leaf elements - will filter zero-dimension ones in Phase 2
-    leafElements.push({ element, borderRadius });
+    leafElements.push({ element, borderRadius, isNoChildren, textStyle });
   } else {
     // Recursively process children
     Array.from(element.children).forEach((child) => {
@@ -81,7 +104,7 @@ function measureElements(
   const elements: ElementInfo[] = [];
 
   // Measure regular leaf elements
-  leafElements.forEach(({ element, borderRadius }) => {
+  leafElements.forEach(({ element, borderRadius, isNoChildren, textStyle }) => {
     const rect = element.getBoundingClientRect();
 
     // Skip elements with no dimensions
@@ -89,18 +112,25 @@ function measureElements(
       return;
     }
 
-    elements.push({
+    const inset = insetTextLineRect({
       x: rect.left - parentRect.left,
       y: rect.top - parentRect.top,
       width: rect.width,
       height: rect.height,
+      tag: element.tagName.toLowerCase(),
+      isNoChildren,
+      ...textStyle,
+    });
+
+    elements.push({
+      ...inset,
       tag: element.tagName.toLowerCase(),
       borderRadius,
     });
   });
 
   // Measure wrapped table cells
-  wrappedCells.forEach(({ span, borderRadius }) => {
+  wrappedCells.forEach(({ span, borderRadius, textStyle }) => {
     const rect = span.getBoundingClientRect();
 
     // Skip elements with no dimensions
@@ -108,12 +138,19 @@ function measureElements(
       return;
     }
 
-    elements.push({
+    const tag = span.parentElement!.tagName.toLowerCase();
+    const inset = insetTextLineRect({
       x: rect.left - parentRect.left,
       y: rect.top - parentRect.top,
       width: rect.width,
       height: rect.height,
-      tag: span.parentElement!.tagName.toLowerCase(),
+      tag,
+      ...textStyle,
+    });
+
+    elements.push({
+      ...inset,
+      tag,
       borderRadius,
     });
   });
