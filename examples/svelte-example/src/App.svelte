@@ -78,7 +78,7 @@
     name: 'Sarah Johnson',
     email: 'sarah.johnson@company.com',
     role: 'software Engineer',
-    avatar: 'https://via.placeholder.com/64',
+    avatar: 'https://placeholder.photo/64',
     status: 'offline',
   };
 
@@ -115,7 +115,7 @@
       id: `${i}`,
       name: 'Loading...',
       role: 'Role',
-      avatar: 'https://via.placeholder.com/40',
+      avatar: 'https://placeholder.photo/40',
     }));
 
   const ordersTemplate: Order[] = Array(5)

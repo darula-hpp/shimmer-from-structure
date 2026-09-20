@@ -86,7 +86,7 @@ const userTemplate: User = {
   name: 'Sarah Johnson',
   email: 'sarah.johnson@company.com',
   role: 'software Engineer',
-  avatar: 'https://via.placeholder.com/64',
+  avatar: 'https://placeholder.photo/64',
   status: 'offline',
 };
 
@@ -135,14 +135,14 @@ const activityTemplate: ActivityItem[] = [
 ];
 
 const teamTemplate: TeamMember[] = [
-  { id: '1', name: 'Loading...', role: 'Role', avatar: 'https://via.placeholder.com/40' },
-  { id: '2', name: 'Loading...', role: 'Lead Developer', avatar: 'https://via.placeholder.com/40' },
-  { id: '3', name: 'Loading...', role: 'Role', avatar: 'https://via.placeholder.com/40' },
+  { id: '1', name: 'Loading...', role: 'Role', avatar: 'https://placeholder.photo/40' },
+  { id: '2', name: 'Loading...', role: 'Lead Developer', avatar: 'https://placeholder.photo/40' },
+  { id: '3', name: 'Loading...', role: 'Role', avatar: 'https://placeholder.photo/40' },
   {
     id: '4',
     name: 'Loading...',
     role: 'Backend Developer',
-    avatar: 'https://via.placeholder.com/40',
+    avatar: 'https://placeholder.photo/40',
   },
 ];
 
