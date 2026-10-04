@@ -31,7 +31,7 @@ const userTemplate = {
   name: 'Sarah Johnson',
   email: 'sarah.johnson@company.com',
   role: 'Software Engineer',
-  avatar: 'https://via.placeholder.com/64',
+  avatar: 'https://placeholder.photo/64',
   status: 'offline',
 };
 
@@ -106,7 +106,7 @@ const userTemplate = {
   name: 'Sarah Johnson',
   email: 'sarah.johnson@company.com',
   role: 'Software Engineer',
-  avatar: 'https://via.placeholder.com/64',
+  avatar: 'https://placeholder.photo/64',
   status: 'offline',
 };
 
@@ -136,7 +136,7 @@ let loading = $state(true);
   name: 'Sarah Johnson',
   email: 'sarah.johnson@company.com',
   role: 'Software Engineer',
-  avatar: 'https://via.placeholder.com/64',
+  avatar: 'https://placeholder.photo/64',
   status: 'offline',
 };
 
@@ -166,7 +166,7 @@ user = signal<User | null>(null);
   name: 'Sarah Johnson',
   email: 'sarah.johnson@company.com',
   role: 'Software Engineer',
-  avatar: 'https://via.placeholder.com/64',
+  avatar: 'https://placeholder.photo/64',
   status: 'offline',
 };
 
@@ -592,10 +592,10 @@ const ordersTemplate = Array(5).fill({
               content: (
                 <pre>
                   <code>{`const teamTemplate = [
-  { id: '1', name: 'Loading...', role: 'Role', avatar: 'https://via.placeholder.com/40' },
-  { id: '2', name: 'Loading...', role: 'Lead Developer', avatar: 'https://via.placeholder.com/40' },
-  { id: '3', name: 'Loading...', role: 'Role', avatar: 'https://via.placeholder.com/40' },
-  { id: '4', name: 'Loading...', role: 'Backend Developer', avatar: 'https://via.placeholder.com/40' },
+  { id: '1', name: 'Loading...', role: 'Role', avatar: 'https://placeholder.photo/40' },
+  { id: '2', name: 'Loading...', role: 'Lead Developer', avatar: 'https://placeholder.photo/40' },
+  { id: '3', name: 'Loading...', role: 'Role', avatar: 'https://placeholder.photo/40' },
+  { id: '4', name: 'Loading...', role: 'Backend Developer', avatar: 'https://placeholder.photo/40' },
 ];
 
 const TeamMembers = ({ members }) => (
@@ -667,7 +667,7 @@ const teamTemplate = Array(4).fill({
   id: '1',
   name: 'Loading...',
   role: 'Role',
-  avatar: 'https://via.placeholder.com/40',
+  avatar: 'https://placeholder.photo/40',
 });
 </script>
 
@@ -694,10 +694,10 @@ const teamTemplate = Array(4).fill({
               content: (
                 <pre>
                   <code>{`teamTemplate = [
-  { id: '1', name: 'Loading...', role: 'Role', avatar: 'https://via.placeholder.com/40' },
-  { id: '2', name: 'Loading...', role: 'Lead Developer', avatar: 'https://via.placeholder.com/40' },
-  { id: '3', name: 'Loading...', role: 'Role', avatar: 'https://via.placeholder.com/40' },
-  { id: '4', name: 'Loading...', role: 'Backend Developer', avatar: 'https://via.placeholder.com/40' },
+  { id: '1', name: 'Loading...', role: 'Role', avatar: 'https://placeholder.photo/40' },
+  { id: '2', name: 'Loading...', role: 'Lead Developer', avatar: 'https://placeholder.photo/40' },
+  { id: '3', name: 'Loading...', role: 'Role', avatar: 'https://placeholder.photo/40' },
+  { id: '4', name: 'Loading...', role: 'Backend Developer', avatar: 'https://placeholder.photo/40' },
 ];
 
 <shimmer [loading]="loadingTeam()" [templateProps]="{ members: teamTemplate }">
@@ -723,10 +723,10 @@ const teamTemplate = Array(4).fill({
               content: (
                 <pre>
                   <code>{`const teamTemplate = [
-  { id: '1', name: 'Loading...', role: 'Role', avatar: 'https://via.placeholder.com/40' },
-  { id: '2', name: 'Loading...', role: 'Lead Developer', avatar: 'https://via.placeholder.com/40' },
-  { id: '3', name: 'Loading...', role: 'Role', avatar: 'https://via.placeholder.com/40' },
-  { id: '4', name: 'Loading...', role: 'Backend Developer', avatar: 'https://via.placeholder.com/40' },
+  { id: '1', name: 'Loading...', role: 'Role', avatar: 'https://placeholder.photo/40' },
+  { id: '2', name: 'Loading...', role: 'Lead Developer', avatar: 'https://placeholder.photo/40' },
+  { id: '3', name: 'Loading...', role: 'Role', avatar: 'https://placeholder.photo/40' },
+  { id: '4', name: 'Loading...', role: 'Backend Developer', avatar: 'https://placeholder.photo/40' },
 ];
 
 <Shimmer loading={loadingTeam()} templateProps={{ members: teamTemplate }}>

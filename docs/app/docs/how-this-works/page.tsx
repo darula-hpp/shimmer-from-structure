@@ -291,7 +291,7 @@ function UserProfile({ userId }) {
           <code>{`import { Shimmer } from '@shimmer-from-structure/react';
 
 const mockUser = {
-  avatar: 'https://via.placeholder.com/150',
+  avatar: 'https://placeholder.photo/150',
   name: 'John Doe',
   bio: 'Software engineer and open source contributor.',
 };
@@ -618,7 +618,7 @@ function UserProfile({ userId }) {
 
 // Define mock data that matches the shape of real API data
 const mockUser = {
-  avatar: 'https://via.placeholder.com/150',
+  avatar: 'https://placeholder.photo/150',
   name: 'John Doe',
   bio: 'Software engineer and open source contributor with 6 years of experience.',
   role: 'Senior Developer',
