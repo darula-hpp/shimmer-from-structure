@@ -88,6 +88,15 @@ export default function HowThisWorks() {
         </ul>
 
         <p>
+          Text overlays are then <strong>vertically inset inside that measured box</strong>. CSS
+          line boxes are taller than the glyphs they contain, so filling the full rect makes stacked
+          lines look like one merged slab. The reserved layout stays the same (no layout shift);
+          only the visible bar shrinks, using leftover line-height leading so stacked lines separate
+          without shrinking large display text down to a hairline. Images, buttons, padded pills,
+          and <code>data-shimmer-no-children</code> blocks keep their full measured size.
+        </p>
+
+        <p>
           The real content underneath is made transparent using <code>color: transparent</code> (not{' '}
           <code>opacity: 0</code>, which would hide backgrounds and borders). This means the shimmer
           blocks appear exactly where your text, images, and UI elements will be - because they're

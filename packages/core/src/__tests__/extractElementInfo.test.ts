@@ -155,4 +155,175 @@ describe('extractElementInfo', () => {
       expect(info).toHaveLength(0);
     });
   });
+
+  describe('text line inset', () => {
+    const textStyle = {
+      borderRadius: '4px',
+      fontSize: '16px',
+      lineHeight: '24px',
+      paddingTop: '0px',
+      paddingBottom: '0px',
+    };
+
+    beforeEach(() => {
+      window.getComputedStyle = vi
+        .fn()
+        .mockReturnValue(textStyle) as unknown as typeof window.getComputedStyle;
+    });
+
+    it('insets a text leaf so stacked lines have a visual gap', () => {
+      const p = document.createElement('p');
+      p.textContent = 'Stacked line';
+
+      const info = extractElementInfo(p, parentRect);
+
+      expect(info).toHaveLength(1);
+      expect(info[0].x).toBe(10);
+      expect(info[0].width).toBe(100);
+      expect(info[0].y).toBeCloseTo(14);
+      expect(info[0].height).toBeCloseTo(42);
+    });
+
+    it('does not inset img or button leaves', () => {
+      const img = document.createElement('img');
+      const button = document.createElement('button');
+      button.textContent = 'Save';
+
+      expect(extractElementInfo(img, parentRect)[0]).toMatchObject({
+        x: 10,
+        y: 10,
+        width: 100,
+        height: 50,
+      });
+      expect(extractElementInfo(button, parentRect)[0]).toMatchObject({
+        x: 10,
+        y: 10,
+        width: 100,
+        height: 50,
+      });
+    });
+
+    it('does not inset data-shimmer-no-children blocks', () => {
+      const parent = document.createElement('div');
+      parent.setAttribute('data-shimmer-no-children', '');
+      const child = document.createElement('p');
+      child.textContent = 'Child';
+      parent.appendChild(child);
+
+      const info = extractElementInfo(parent, parentRect);
+
+      expect(info).toHaveLength(1);
+      expect(info[0]).toMatchObject({
+        x: 10,
+        y: 10,
+        width: 100,
+        height: 50,
+        tag: 'div',
+      });
+    });
+
+    it('does not inset padded leaves such as buttons or pills', () => {
+      window.getComputedStyle = vi.fn().mockReturnValue({
+        ...textStyle,
+        paddingTop: '8px',
+        paddingBottom: '8px',
+      }) as unknown as typeof window.getComputedStyle;
+
+      const span = document.createElement('span');
+      span.textContent = 'Pill';
+
+      const info = extractElementInfo(span, parentRect);
+
+      expect(info[0]).toMatchObject({
+        x: 10,
+        y: 10,
+        width: 100,
+        height: 50,
+      });
+    });
+
+    it('insets text-only table cells measured via the inner span', () => {
+      const td = document.createElement('td');
+      td.textContent = 'Cell text';
+
+      const info = extractElementInfo(td, parentRect);
+
+      expect(info).toHaveLength(1);
+      expect(info[0].tag).toBe('td');
+      expect(info[0].x).toBe(10);
+      expect(info[0].width).toBe(100);
+      expect(info[0].y).toBeCloseTo(14);
+      expect(info[0].height).toBeCloseTo(42);
+    });
+
+    it('measures text-only no-children table cells as the full cell, not a text span', () => {
+      Element.prototype.getBoundingClientRect = vi.fn(function (this: Element) {
+        // Cell includes padding; a wrapped text span would be smaller
+        if (this.tagName === 'TD' || this.tagName === 'TH') {
+          return {
+            width: 120,
+            height: 66,
+            top: 10,
+            left: 10,
+            bottom: 76,
+            right: 130,
+            x: 10,
+            y: 10,
+            toJSON: () => {},
+          };
+        }
+        return {
+          width: 100,
+          height: 50,
+          top: 18,
+          left: 18,
+          bottom: 68,
+          right: 118,
+          x: 18,
+          y: 18,
+          toJSON: () => {},
+        };
+      });
+
+      const td = document.createElement('td');
+      td.setAttribute('data-shimmer-no-children', '');
+      td.textContent = 'Cell text';
+
+      const info = extractElementInfo(td, parentRect);
+
+      expect(info).toHaveLength(1);
+      expect(info[0]).toMatchObject({
+        x: 10,
+        y: 10,
+        width: 120,
+        height: 66,
+        tag: 'td',
+      });
+      // No temporary span left behind
+      expect(td.childNodes).toHaveLength(1);
+      expect(td.firstChild?.nodeType).toBe(Node.TEXT_NODE);
+    });
+
+    it('does not shrink a box that is already shorter than 75% of font-size', () => {
+      Element.prototype.getBoundingClientRect = vi.fn(() => ({
+        width: 100,
+        height: 6,
+        top: 10,
+        left: 10,
+        bottom: 16,
+        right: 110,
+        x: 10,
+        y: 10,
+        toJSON: () => {},
+      }));
+
+      const p = document.createElement('p');
+      p.textContent = 'Tiny';
+
+      const info = extractElementInfo(p, parentRect);
+
+      expect(info[0].height).toBe(6);
+      expect(info[0].y).toBe(10);
+    });
+  });
 });
